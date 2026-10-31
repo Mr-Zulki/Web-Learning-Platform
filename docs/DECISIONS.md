@@ -39,3 +39,19 @@ Why: Fast, modern test runner with native Vite/ESM support, jsdom environment fo
 ## 010 — Static Site Generation (`generateStaticParams`) for Lessons
 
 Why: All lesson content is static JSON known at build time. Generating static HTML eliminates database or filesystem overhead at request time and ensures instant page transitions.
+
+## 011 — CodeMirror 6 for In-Browser Code Editing
+
+Why: Lightweight, modular, modern editor architecture supporting modular extensions (`@codemirror/lang-html`, `@codemirror/lang-css`), accessible keyboard trap releases, line wrapping, and customizable themes (`oneDark`).
+
+## 012 — iframe `sandbox="allow-scripts"` Without `allow-same-origin`
+
+Why: Strict sandbox separation. Omitting `allow-same-origin` ensures that user code runs under an opaque `null` origin, completely preventing access to the parent application's DOM, cookies, local storage, and session tokens.
+
+## 013 — Content Security Policy (CSP) Injected into `srcDoc`
+
+Why: Prohibits outbound network communication (`connect-src 'none'`), form submission (`form-action 'none'`), and base URI modification (`base-uri 'none'`). Ensures scripts cannot exfiltrate data or initiate requests back to the application origin.
+
+## 014 — LocalStorage for Draft Persistence
+
+Why: Seamless learner experience preserving uncommitted work across page reloads under `uni:draft:<lessonId>`. All accesses are safely wrapped in try/catch to protect against storage quota failures or incognito restrictions.

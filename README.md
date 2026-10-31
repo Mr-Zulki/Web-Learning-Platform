@@ -11,6 +11,10 @@ aur challenges auto-check hote hain.
 - User auth aur progress tracking
 - Load balanced deployment (Docker + Nginx)
 
+## Editor and sandbox
+
+The platform features an in-browser live editor powered by CodeMirror 6 with HTML/CSS support, 300ms preview debounce, and localStorage draft persistence. Previews are rendered inside an isolated `<iframe>` configured with `sandbox="allow-scripts"` (strictly excluding `allow-same-origin`) and protected by a restrictive Content Security Policy (`connect-src 'none'`, etc.) to guarantee that learner code cannot access the parent DOM, storage, or network.
+
 ## Quick start
 
 ```bash
