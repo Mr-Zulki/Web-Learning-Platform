@@ -129,3 +129,58 @@ Browser → Nginx (load balancer) → app replicas (Next.js) → PostgreSQL
   - `toClientChallenge` sanitizes challenge structures before serialization into page props.
   - Solutions remain exclusively on disk in `tests/fixtures/solutions/*.json` and are never loaded or bundled to the client.
   - `ChallengePanel` evaluates submissions client-side instantly; upon passing, state is cached in `sessionStorage` under `uni:challenge:completed:<challengeId>`.
+
+## Container Deployment & Load Balancing Module (Phase 5)
+
+### Deployment Architecture
+
+```mermaid
+flowchart TD
+    Client["Browser / Client"] -->|Port 8080| Nginx["Nginx Reverse Proxy & Load Balancer<br/>(round-robin, passive failover, rate-limit)"]
+
+    subgraph Internal Docker Network ["Docker internal_net (isolated)"]
+        Nginx -->|app:3000| App1["Next.js Replica 1<br/>(Node 22 standalone, non-root)"]
+        Nginx -->|app:3000| App2["Next.js Replica 2<br/>(Node 22 standalone, non-root)"]
+        Nginx -.->|app:3000 (scaled)| AppN["Next.js Replica N<br/>(Node 22 standalone, non-root)"]
+
+        App1 -->|5432| DB[("PostgreSQL 16 Alpine<br/>(uni_prod / named volume)")]
+        App2 -->|5432| DB
+        AppN -.->|5432| DB
+
+        Migrate["Prisma Migrate Job<br/>(runs on startup, exits 0)"] -->|5432| DB
+    end
+```
+
+### Multi-Replica Statelessness Guarantees
+
+1. **Shared-Nothing Node Design**:
+   - Next.js application instances share zero memory or local state.
+   - User sessions are encoded as tamper-proof JWT cookies signed with `AUTH_SECRET`, verified autonomously by any replica without session affinity or sticky cookies.
+2. **Database-Backed Coordination**:
+   - User progress, challenge completions, and accounts are stored strictly in PostgreSQL.
+   - Application rate limiting uses an atomic PostgreSQL `RateLimit` table (`INSERT ... ON CONFLICT DO UPDATE`), ensuring synchronized window counts across all replicas.
+3. **Instance Visibility**:
+   - Next.js proxy (`src/proxy.ts`) and API routes dynamically inject `X-Served-By: os.hostname()` to verify round-robin distribution during operations.
+
+### Health vs. Readiness Split
+
+| Endpoint      | Probe Type    | Behavior & Contract                                                                                                                                                                                                                                                              |
+| :------------ | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/api/health` | **Liveness**  | Ultra-lightweight in-memory check. Returns `200 OK` with `{ status: "ok", instance, uptimeSeconds }`. Fails only if the Node.js event loop or process crashes.                                                                                                                   |
+| `/api/ready`  | **Readiness** | Deep dependency check. Executes `SELECT 1` against PostgreSQL with a 2-second timeout. Returns `200 OK` with `{ status: "ready" }` if database is connected, or `503 Service Unavailable` with `{ status: "not ready" }` if unreachable. Never leaks raw database error strings. |
+
+### Client IP Security Flow
+
+```
+[Browser Client]
+     │ (arbitrary/spoofed X-Forwarded-For: 1.2.3.4)
+     ▼
+[Nginx Reverse Proxy]
+     │ Overwrites header: proxy_set_header X-Forwarded-For $remote_addr;
+     │ (replaces spoofed headers with true socket IP, e.g. 172.25.0.1)
+     ▼
+[Next.js App Replicas]
+     │ Reads getClientIp(headers) -> reliably trusts first IP
+     ▼
+[Atomic Rate Limiter / Audit Log]
+```

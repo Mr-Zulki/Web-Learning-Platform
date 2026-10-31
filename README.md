@@ -56,12 +56,43 @@ npm run db:logs   # View PostgreSQL logs
 npm run db:down   # Stop PostgreSQL container
 ```
 
-## Docker (load balancing demo)
+## Docker (Production Multi-Replica Stack & Load Balancing Demo)
+
+The production stack runs a multi-stage standalone Next.js server with 2+ stateless replicas, an isolated PostgreSQL 16 database, an automated migration runner, and an Nginx reverse proxy load balancer listening on port `8080`.
+
+### Quick Start
 
 ```bash
-docker compose up --build --scale app=2
+# 1. Set up Docker production environment variables
+cp .env.docker.example .env.docker
+
+# 2. Build and launch the cluster
+npm run docker:up
+
+# 3. Access the application
 # http://localhost:8080
 ```
+
+### Load Balancing & Failover Verification
+
+```bash
+# Verify round-robin distribution across running replicas
+npm run lb:check
+
+# Scale up live to 3 replicas
+npm run docker:scale 3
+
+# Verify passive failover with zero downtime during simulated failure
+npm run lb:failover
+
+# Run k6 smoke load test (up to 50 concurrent virtual users)
+Get-Content tests/load/smoke.js -Raw | docker run --rm -i --network uni-project_internal_net -e TARGET_URL=http://nginx:80 grafana/k6 run -
+
+# Tear down the cluster
+npm run docker:down
+```
+
+See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for full deployment architecture, benchmark comparisons, and teacher demonstration notes.
 
 ## Scripts
 

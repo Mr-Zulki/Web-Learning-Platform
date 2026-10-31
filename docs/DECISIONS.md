@@ -91,3 +91,27 @@ Why: Client-side verification provides instant UI feedback to learners, but clie
 ## 023 — Progress Model: Non-Nullable `challengeId`
 
 Why: Every lesson in the curriculum is paired 1:1 with an interactive challenge (`challengeId` is a required field in `Lesson`). Making `challengeId` non-nullable on the `Progress` table ensures data integrity, simplifies unique constraints (`@@unique([userId, challengeId])`), and prevents orphaned or ambiguous progress states.
+
+## 024 — Standalone Next.js Output for Containers
+
+Why: Next.js `output: "standalone"` traces node_modules and dependencies automatically during build time, creating a self-contained `server.js` and bundling only imported packages. This reduces the final container image content size from over 1.2 GB down to 151 MB (well below the 400 MB requirement) and speeds up horizontal replica scaling.
+
+## 025 — Dedicated Migrate Target in Multi-Stage Dockerfile
+
+Why: Bundling the Prisma CLI inside the minimal production `runner` image bloats runtime size and introduces permission issues when running as non-root. Creating an isolated `AS migrate` build target runs `prisma migrate deploy` as a deterministic one-off initialization container that exits with code 0 before app replicas launch.
+
+## 026 — Docker DNS Round-Robin & Seamless Nginx Reload
+
+Why: Docker's embedded DNS server (`127.0.0.11`) resolves the service hostname `app` across all running container replica IPs. By setting `valid=5s` on the Nginx resolver and configuring `proxy_next_upstream`, Nginx automatically distributes traffic round-robin and fails over passively without downtime. Scaling events refresh DNS instantly via `nginx -s reload`.
+
+## 027 — Overwriting `X-Forwarded-For` with `$remote_addr`
+
+Why: Using `$proxy_add_x_forwarded_for` appends the incoming client header, allowing malicious actors to spoof client IP addresses by prepending arbitrary IP chains. By explicitly configuring `proxy_set_header X-Forwarded-For $remote_addr;` at the Nginx reverse proxy perimeter, upstream Next.js replicas can securely trust the client IP for audit logging and DB-backed rate limiting.
+
+## 028 — Two-Layer Defense-in-Depth Rate Limiting
+
+Why: High-frequency denial-of-service and brute-force attacks on auth endpoints are intercepted at the Nginx perimeter (`limit_req_zone` with 10r/m and burst=5) before hitting application workers. Legitimate traffic is further protected inside the application layer via atomic PostgreSQL fixed-window rate limiting, guaranteeing consistent rate limits even across dynamically scaled app replicas.
+
+## 029 — Automated Load Testing via k6
+
+Why: k6 provides scriptable, lightweight JavaScript scenarios capable of running both natively or in ephemeral Docker containers without JVM overhead. It offers granular metrics (avg, med, p95 latencies, throughput, error rates) and automated threshold assertions (`p(95)<800`, `rate<0.01`) ideal for validating cluster performance and multi-replica efficiency.

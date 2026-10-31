@@ -1,6 +1,6 @@
 # Progress
 
-## Current phase: 5
+## Current phase: 6
 
 ## Done
 
@@ -9,10 +9,11 @@
 - [x] Phase 2 — Live editor and sandboxed preview (CodeMirror 6 integration, preview document builder with CSP and breakout escape, 300ms debounce, HTML/CSS tabs, localStorage draft persistence, mobile Lesson/Editor/Preview tabs, 100% src/lib test coverage)
 - [x] Phase 3 — Challenges and automatic checking (Zod challenge schema, 5 challenges matching lessons, server loader with loud bi-directional cross-validation, pure static analysis checker via parse5 and css-tree, 7 rule evaluators, ChallengePanel UI with progressive hints, mobile Challenge tab, sessionStorage challenge completion caching, >95% src/lib/checker coverage)
 - [x] Phase 4 — Database, authentication, and progress tracking (PostgreSQL 16 docker-compose, Prisma schema with User, Progress, and RateLimit, Auth.js credentials provider with cost 12 bcrypt, stateless JWT sessions, DB-backed atomic rate limiting, server-side re-check of submissions, authenticated learner dashboard, integration tests against uni_test DB)
+- [x] Phase 5 — Full Dockerization & reverse proxy (multi-stage Docker build under 151MB, non-root nextjs user, Nginx reverse proxy load balancer with round-robin and passive failover on port 8080, production docker-compose with PostgreSQL 16 and one-off migrate job, liveness/readiness probes, dynamic X-Served-By header, k6 smoke testing suite, PowerShell lb-check and failover verification scripts)
 
 ## Next
 
-- Phase 5 — Full Dockerization & reverse proxy (multi-replica Next.js, Nginx load balancer, production Docker Compose)
+- Phase 6 — Testing + CI (comprehensive test coverage, Playwright e2e, GitHub Actions CI pipeline)
 
 ## Blockers
 

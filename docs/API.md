@@ -94,6 +94,52 @@ Records initial progress (`STARTED`) or verifies and records completion (`COMPLE
 
 ---
 
+## Infrastructure & Cluster Monitoring (Phase 5)
+
+All responses across the application include the `X-Served-By` header indicating the container hostname of the replica that handled the request:
+
+```http
+X-Served-By: 88eb565152a8
+```
+
+### 5. `GET /api/health` (Liveness Probe)
+
+Lightweight process healthcheck verifying that the Next.js standalone process is active and responsive.
+
+- **Authentication**: Public
+- **Headers Returned**: `X-Served-By: <container-id>`
+- **Status Codes**:
+  - `200 OK`:
+    ```json
+    {
+      "status": "ok",
+      "instance": "88eb565152a8",
+      "uptimeSeconds": 142
+    }
+    ```
+
+### 6. `GET /api/ready` (Readiness Probe)
+
+Deep dependency probe verifying database connectivity before routing user traffic. Executes `SELECT 1` with a 2-second timeout.
+
+- **Authentication**: Public
+- **Headers Returned**: `X-Served-By: <container-id>`
+- **Status Codes**:
+  - `200 OK`: Database connected and ready to accept queries.
+    ```json
+    {
+      "status": "ready"
+    }
+    ```
+  - `503 Service Unavailable`: Database unreachable or connection timed out (no internal error leakage).
+    ```json
+    {
+      "status": "not ready"
+    }
+    ```
+
+---
+
 ## Phase 1 Implementation Note
 
 Lessons are loaded directly on the server via React Server Components (`src/lib/lessons.ts` with `server-only`) and static generation (`generateStaticParams`). Standalone HTTP read endpoints `/api/lessons` remain unnecessary as RSC handles routing natively.

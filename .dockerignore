@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.env*
+coverage
+tests
+docs
+playwright-report
+test-results
+*.md
+.gitattributes
+.gitignore
+.prettier*
+eslint.config.*
+vitest*.ts
+
