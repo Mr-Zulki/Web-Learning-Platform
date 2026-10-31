@@ -11,6 +11,8 @@ import { MarkdownContent } from "@/components/MarkdownContent";
 import { LessonPager } from "@/components/LessonPager";
 import { LessonWorkspace } from "@/components/editor/LessonWorkspace";
 
+export const instant = false;
+
 interface PageProps {
   params: Promise<{ id: string }>;
 }

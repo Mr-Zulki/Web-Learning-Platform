@@ -18,10 +18,16 @@ export default defineConfig({
         "src/components/challenge/**/*.{ts,tsx}",
       ],
     },
+    server: {
+      deps: {
+        inline: ["next-auth"],
+      },
+    },
   },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "next/server": path.resolve(__dirname, "./node_modules/next/server.js"),
       "server-only": path.resolve(
         __dirname,
         "./node_modules/server-only/empty.js"

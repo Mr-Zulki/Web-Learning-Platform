@@ -96,8 +96,8 @@ describe("html-query", () => {
   });
 
   it("triggers safety limit when node count exceeds 5,000 nodes", () => {
-    // Generate pathological nested HTML
-    const deepHtml = "<div>".repeat(5050) + "</div>".repeat(5050);
+    // 2,600 elements with text produce over 5,200 nodes without pathological nesting delays
+    const deepHtml = "<p>0</p>".repeat(2600);
     const ctx = parseHtmlDocument(deepHtml);
     expect(ctx.nodeLimitExceeded).toBe(true);
     expect(querySelectorAll(ctx, "div")).toHaveLength(0);

@@ -71,3 +71,23 @@ Why: Expressing challenge criteria as structured, declarative rules (`element-ex
 ## 018 — Client-Side Instant Feedback with Planned Phase 4 Server Re-Check
 
 Why: Instant feedback is critical for the learning experience, so the pure static checker runs client-side inside `ChallengePanel` without network round-trip delay. To prevent progress tampering or client spoofing, the same pure checker function will be invoked on the server in Phase 4 prior to writing verified completions to PostgreSQL.
+
+## 019 — Stateless JWT Sessions over Database Sessions
+
+Why: In Phase 5, the application runs multiple Next.js container replicas behind an Nginx load balancer. Database-backed sessions require a database query on every single request or sticky sessions on the load balancer. Stateless, signed and encrypted JWT tokens stored in `httpOnly`, `SameSite=Lax` cookies allow any replica to authenticate incoming requests independently using `AUTH_SECRET`, with zero inter-replica state or shared cache needed.
+
+## 020 — Bcryptjs with Cost Factor 12 and Constant-Time Verification
+
+Why: Cost 12 provides a strong defense against offline brute-force attacks (~250-300ms compute time per hash). To eliminate user enumeration via timing attacks, a constant-time dummy bcrypt verification (`bcrypt.compare(password, DUMMY_HASH)`) is executed whenever an unrecognized email attempts to log in, ensuring identical latency profiles regardless of account existence.
+
+## 021 — PostgreSQL-Backed Atomic Rate Limiting
+
+Why: In-memory rate limiting (e.g. Map or LRU cache) leaks between restarts and is completely bypassed when requests are distributed across multiple independent Next.js replicas. Storing fixed-window counters directly in PostgreSQL using atomic upserts (`INSERT ... ON CONFLICT DO UPDATE`) ensures consistent, globally enforced rate limiting across all instances without requiring an external Redis deployment.
+
+## 022 — Server-Side Static Re-Check on Challenge Submission
+
+Why: Client-side verification provides instant UI feedback to learners, but client requests can be intercepted or spoofed. The `/api/progress` endpoint enforces a mandatory server-side re-evaluation using the same pure Phase 3 `checkSubmission` static analysis engine before persisting a `COMPLETED` record. A submission that fails static check rules is rejected with `422 Unprocessable Content`.
+
+## 023 — Progress Model: Non-Nullable `challengeId`
+
+Why: Every lesson in the curriculum is paired 1:1 with an interactive challenge (`challengeId` is a required field in `Lesson`). Making `challengeId` non-nullable on the `Progress` table ensures data integrity, simplifies unique constraints (`@@unique([userId, challengeId])`), and prevents orphaned or ambiguous progress states.

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { Lesson } from "@/lib/lesson-schema";
+import { useUserProgress } from "@/lib/use-user-progress";
 
 interface LessonSidebarProps {
   lessons: Lesson[];
@@ -14,6 +15,7 @@ export function LessonSidebar({
   currentLessonId,
 }: LessonSidebarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { completedLessonIds } = useUserProgress();
   const currentLesson = lessons.find((l) => l.id === currentLessonId);
 
   return (
@@ -52,22 +54,35 @@ export function LessonSidebar({
         <ul className="space-y-1">
           {lessons.map((lesson) => {
             const isActive = lesson.id === currentLessonId;
+            const isCompleted = completedLessonIds.has(lesson.id);
             return (
               <li key={lesson.id}>
                 <Link
                   href={`/lessons/${lesson.id}`}
                   aria-current={isActive ? "page" : undefined}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-start gap-2.5 rounded-lg px-3 py-2.5 text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 ${
+                  className={`flex items-start justify-between gap-2.5 rounded-lg px-3 py-2.5 text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 ${
                     isActive
                       ? "border-l-4 border-blue-600 bg-blue-50 font-semibold text-blue-700 dark:border-blue-500 dark:bg-blue-950/60 dark:text-blue-300"
                       : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-slate-100"
                   }`}
                 >
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-200 text-[11px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                    {lesson.order}
-                  </span>
-                  <span className="leading-snug">{lesson.title}</span>
+                  <div className="flex items-start gap-2.5 truncate">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-200 text-[11px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                      {lesson.order}
+                    </span>
+                    <span className="truncate leading-snug">
+                      {lesson.title}
+                    </span>
+                  </div>
+                  {isCompleted && (
+                    <span
+                      aria-label="Completed"
+                      className="ml-1 text-xs font-bold text-emerald-600 dark:text-emerald-400"
+                    >
+                      ✓
+                    </span>
+                  )}
                 </Link>
               </li>
             );

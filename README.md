@@ -18,9 +18,42 @@ The platform features an in-browser live editor powered by CodeMirror 6 with HTM
 ## Quick start
 
 ```bash
+# 1. Install dependencies
 npm install
+
+# 2. Configure environment
 cp .env.example .env
+# Set AUTH_SECRET (generate with: npx auth secret or openssl rand -base64 32)
+
+# 3. Start PostgreSQL container
+npm run db:up
+
+# 4. Run Prisma database migrations
+npx prisma migrate dev
+
+# 5. Start development server
 npm run dev
+```
+
+## Environment Variables
+
+| Variable            | Description                                                    | Example / Default                                                                   |
+| ------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `DATABASE_URL`      | PostgreSQL connection string for development                   | `postgresql://postgres:postgres_dev_password@127.0.0.1:5432/uni_dev?schema=public`  |
+| `TEST_DATABASE_URL` | PostgreSQL connection string for integration tests             | `postgresql://postgres:postgres_dev_password@127.0.0.1:5432/uni_test?schema=public` |
+| `AUTH_SECRET`       | Secret key used to sign and encrypt Auth.js JWT session tokens | Generated via `npx auth secret` or `openssl rand -base64 32`                        |
+| `POSTGRES_USER`     | PostgreSQL superuser for Docker container                      | `postgres`                                                                          |
+| `POSTGRES_PASSWORD` | PostgreSQL superuser password for Docker container             | `postgres_dev_password`                                                             |
+| `POSTGRES_DB`       | Default database initialized by PostgreSQL                     | `uni_dev`                                                                           |
+
+## Database Management
+
+The development environment includes a containerized PostgreSQL 16 database defined in `docker-compose.dev.yml`:
+
+```bash
+npm run db:up     # Start PostgreSQL on 127.0.0.1:5432
+npm run db:logs   # View PostgreSQL logs
+npm run db:down   # Stop PostgreSQL container
 ```
 
 ## Docker (load balancing demo)

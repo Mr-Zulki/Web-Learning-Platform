@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import type { ClientChallenge } from "@/lib/challenges";
 import { checkSubmission, type CheckResult } from "@/lib/checker";
 import { MarkdownContent } from "@/components/MarkdownContent";
@@ -19,6 +20,8 @@ export function ChallengePanel({
   css,
   nextLesson,
 }: ChallengePanelProps) {
+  const { data: session } = useSession();
+
   const [revealedHints, setRevealedHints] = useState<number>(() => {
     if (typeof window === "undefined") return 0;
     try {
@@ -40,6 +43,36 @@ export function ChallengePanel({
       return null;
     }
   });
+
+  const [saveStatus, setSaveStatus] = useState<
+    "idle" | "saving" | "saved" | "error"
+  >("idle");
+
+  const hasNotifiedStartedRef = useRef(false);
+
+  // Notify server of STARTED status once on lesson open for logged-in users
+  useEffect(() => {
+    if (session?.user && challenge.lessonId && !hasNotifiedStartedRef.current) {
+      hasNotifiedStartedRef.current = true;
+      const storageKey = `uni:progress:started:${challenge.lessonId}`;
+      try {
+        if (!sessionStorage.getItem(storageKey)) {
+          sessionStorage.setItem(storageKey, "1");
+          fetch("/api/progress", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              lessonId: challenge.lessonId,
+              challengeId: challenge.id,
+              status: "STARTED",
+            }),
+          }).catch(() => {});
+        }
+      } catch {
+        // Ignore storage exceptions
+      }
+    }
+  }, [session?.user, challenge.lessonId, challenge.id]);
 
   // Persist revealed hints to sessionStorage
   useEffect(() => {
@@ -66,12 +99,39 @@ export function ChallengePanel({
     }
   }, [challenge.id, lastResult]);
 
-  const handleCheckCode = useCallback(() => {
-    // Note: Verification runs client-side in Phase 3.
-    // Phase 4 will also verify server-side before persisting user progress.
+  const handleCheckCode = useCallback(async () => {
     const result = checkSubmission({ html, css }, challenge);
     setLastResult(result);
-  }, [html, css, challenge]);
+
+    if (result.passed) {
+      if (session?.user) {
+        setSaveStatus("saving");
+        try {
+          const res = await fetch("/api/progress", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              lessonId: challenge.lessonId,
+              challengeId: challenge.id,
+              status: "COMPLETED",
+              submission: { html, css },
+            }),
+          });
+          if (res.ok) {
+            setSaveStatus("saved");
+          } else {
+            setSaveStatus("error");
+          }
+        } catch {
+          setSaveStatus("error");
+        }
+      } else {
+        setSaveStatus("idle");
+      }
+    } else {
+      setSaveStatus("idle");
+    }
+  }, [html, css, challenge, session?.user]);
 
   const handleRevealNextHint = () => {
     if (revealedHints < challenge.hints.length) {
@@ -167,10 +227,51 @@ export function ChallengePanel({
 
           {/* Success Banner */}
           {lastResult.passed && (
-            <div className="mt-4 rounded-md bg-emerald-50 p-4 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200">
+            <div className="mt-4 space-y-3 rounded-md bg-emerald-50 p-4 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200">
               <p className="text-sm font-semibold">
                 🎉 Great job! You successfully completed this challenge.
               </p>
+
+              {/* Progress Save status for logged-in users */}
+              {session?.user && (
+                <div className="text-xs font-medium">
+                  {saveStatus === "saving" && (
+                    <span className="text-blue-700 dark:text-blue-300">
+                      Saving progress...
+                    </span>
+                  )}
+                  {saveStatus === "saved" && (
+                    <span className="text-emerald-700 dark:text-emerald-300">
+                      ✓ Progress saved
+                    </span>
+                  )}
+                  {saveStatus === "error" && (
+                    <span className="text-amber-700 dark:text-amber-300">
+                      Could not save progress to server. Please try again.
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {/* Prompt for anonymous visitors */}
+              {!session?.user && (
+                <div className="rounded-md border border-emerald-300 bg-white/70 p-3 text-xs text-slate-800 dark:border-emerald-800 dark:bg-slate-900/80 dark:text-slate-200">
+                  <span className="font-semibold">
+                    Log in to save your progress
+                  </span>
+                  <p className="mt-1 text-slate-600 dark:text-slate-400">
+                    You solved this challenge!{" "}
+                    <Link
+                      href={`/login?next=/lessons/${challenge.lessonId}`}
+                      className="font-medium text-blue-600 underline dark:text-blue-400"
+                    >
+                      Log in or register
+                    </Link>{" "}
+                    to record this completion on your dashboard.
+                  </p>
+                </div>
+              )}
+
               {nextLesson && (
                 <div className="mt-3">
                   <Link

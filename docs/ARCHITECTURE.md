@@ -75,6 +75,36 @@ Browser → Nginx (load balancer) → app replicas (Next.js) → PostgreSQL
 - **Known limits & mitigations**:
   - Infinite loops (e.g. `while(true){}`) inside user script: The browser tab could hang. Future phases can explore worker execution or challenge-based script timeouts.
 
+## Authentication & Progress Tracking Module (Phase 4)
+
+- **Authentication Flow**:
+  - `src/lib/auth.ts`: Integrated with Auth.js (v5) utilizing the Credentials provider.
+  - **Password Security**: Passwords hashed using `bcryptjs` with cost 12 (salt rounds 12).
+  - **Timing-Attack Resistance**: When an unrecognized email attempts to sign in, a constant-time dummy bcrypt verification (`bcrypt.compare(password, DUMMY_HASH)`) is performed. This guarantees identical latency curves for valid vs. invalid emails and prevents user enumeration via response timing.
+  - **Stateless JWT Sessions**: Sessions are stored in signed and encrypted JWT tokens (7-day lifetime) in an `httpOnly`, `SameSite=Lax` cookie. Replicas in Phase 5 need zero inter-node communication or centralized session store to validate tokens; each instance verifies incoming tokens using `AUTH_SECRET`.
+- **Database & Persistence (`prisma/schema.prisma`)**:
+  - Containerized PostgreSQL 16 Alpine with two isolated databases: `uni_dev` for development and `uni_test` for integration tests.
+  - `User`: Unique email, password hash, relations to progress.
+  - `Progress`: Foreign key to `User`, `lessonId`, non-nullable `challengeId`, `status` enum (`STARTED` | `COMPLETED`), and timestamp. Enforces `@@unique([userId, challengeId])` and indexed on `[userId, status]`.
+- **Stateless DB-Backed Rate Limiting (`src/lib/rate-limit.ts`)**:
+  - Implements atomic fixed-window rate limiting in PostgreSQL using `INSERT INTO "RateLimit" ... ON CONFLICT DO UPDATE`.
+  - Rate limits are stored in the database so multiple Next.js app replicas behind a load balancer share rate limits globally without memory leaks or race conditions.
+  - Includes opportunistic cleanup (`cleanupExpiredRateLimits`) to prune expired window entries.
+  - Fails open on transient database errors so learners are not locked out during maintenance.
+- **Server-Side Submission Re-Check**:
+  - In `POST /api/progress`, when a client submits `COMPLETED`, the server re-runs the Phase 3 pure static analysis checker (`checkSubmission`) against the submitted HTML/CSS.
+  - Only submissions that pass all required challenge rules are marked `COMPLETED` in PostgreSQL; cheating via altered client requests is strictly blocked with `422 Unprocessable Content`.
+  - Status downgrade protection prevents completed challenges from reverting to started.
+- **Security Headers & Defenses**:
+  - `next.config.ts` enforces Helmet-equivalent headers on all routes:
+    - `X-Content-Type-Options: nosniff`
+    - `X-Frame-Options: SAMEORIGIN`
+    - `Referrer-Policy: strict-origin-when-cross-origin`
+    - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+    - `Content-Security-Policy`: application CSP configured with `frame-src 'self' data:`, `connect-src 'self'`, and restrictive defaults.
+  - Open redirect defense via `getSafeRedirect` strictly rejecting absolute URLs, protocol-relative paths (`//`), Windows paths (`/\`), and CRLF injection.
+  - Structured logger (`src/lib/logger.ts`) with automated deep redaction of sensitive credential keys (`password`, `token`, `secret`, `cookie`, `authorization`).
+
 ## Challenges & Static Analysis Checker Module (Phase 3)
 
 - **Challenge Schema (`src/lib/challenge-schema.ts`)**:

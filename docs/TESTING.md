@@ -10,7 +10,54 @@ Run the test suite:
 npm test                 # Run all unit tests
 npm run test:watch       # Interactive watch mode
 npm run test:coverage    # Generate v8 test coverage report
+npm run test:integration # Run integration tests against PostgreSQL uni_test
 ```
+
+---
+
+## Integration Testing & Database Isolation (Phase 4)
+
+Integration tests verify end-to-end authentication, database migrations, rate limiting, and progress APIs against an actual PostgreSQL instance without mocking Prisma or SQL queries.
+
+### Test Environment Setup
+
+- The local development container `docker-compose.dev.yml` provisions PostgreSQL 16 Alpine.
+- An initialization script `docker/init-db.sql` automatically creates two separate databases on startup:
+  1. `uni_dev`: The primary database used during development (`npm run dev`).
+  2. `uni_test`: An isolated database reserved exclusively for integration test execution.
+- Migrations are applied to both databases:
+  ```bash
+  # Start the database container
+  npm run db:up
+
+  # Apply Prisma migrations to the test database
+  TEST_DATABASE_URL="postgresql://postgres:postgres_dev_password@127.0.0.1:5432/uni_test?schema=public" npx prisma migrate deploy
+  ```
+
+### Running Integration Tests
+
+Execute the integration test suite:
+
+```bash
+npm run test:integration
+```
+
+The test configuration in `vitest.integration.config.ts`:
+
+- Sets the `DATABASE_URL` environment variable to target `uni_test`.
+- Uses Node.js test environment with timeout tolerance for database roundtrips (20,000ms).
+- Cleans up modified tables (`User`, `Progress`, `RateLimit`) before each test suite to ensure strict test isolation.
+
+### Integration Test Coverage (`tests/integration/phase4.test.ts`)
+
+1. **User Registration & Password Hashing**: Verifies that new accounts are persisted with cost 12 bcrypt hashes and that passwords are never returned in API responses.
+2. **Duplicate Prevention**: Asserts that registration attempts with existing emails return `409 Conflict`.
+3. **Rate Limiting**: Confirms that rapid registration attempts trigger `429 Too Many Requests`.
+4. **Authentication Protection**: Asserts that unauthenticated calls to `/api/progress` return `401 Unauthorized`.
+5. **Progress Lifecycle**: Confirms saving `STARTED` status, retrieving summary statistics, and updating timestamps.
+6. **Server Re-Check Verification**: Asserts that sending `COMPLETED` with an invalid solution is rejected with `422 Unprocessable Content`.
+7. **Known-Good Solution Verification**: Asserts that submitting a known-good Phase 3 solution successfully marks the challenge `COMPLETED`.
+8. **Cascade Deletion**: Confirms that deleting a `User` cascades to cleanly delete all associated `Progress` records.
 
 ---
 
