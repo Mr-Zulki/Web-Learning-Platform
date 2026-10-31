@@ -29,9 +29,13 @@ docker compose up --build --scale app=2
 ## Scripts
 
 - `npm run dev` — development
-- `npm test` — unit tests
+- `npm test` — unit tests (Vitest)
+- `npm run test:watch` — unit tests in watch mode
+- `npm run test:coverage` — unit test coverage via v8
 - `npm run test:e2e` — Playwright e2e
-- `npm run lint`
+- `npm run lint` — ESLint check
+- `npm run typecheck` — TypeScript typecheck
+- `npm run format:check` — Prettier format check
 
 ## Docs
 

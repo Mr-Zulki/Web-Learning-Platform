@@ -23,3 +23,19 @@ Why: Consistent code formatting and automated linting across the codebase. Uses 
 ## 006 — Strict TypeScript Compiler Options
 
 Why: Enabled `strict: true`, `noUncheckedIndexedAccess: true`, and `noImplicitOverride: true` in tsconfig.json to catch missing properties, undefined array indexing, and inheritance errors at compile time before runtime.
+
+## 007 — Zod-Validated JSON Content
+
+Why: Guarantees strict runtime schema validation of all lesson files at load time, failing loudly on corrupt JSON or missing fields with informative error messages while exporting a single source-of-truth TypeScript type.
+
+## 008 — react-markdown & remark-gfm for Lesson Rendering
+
+Why: Provides lightweight, safe, component-level markdown rendering for lesson instructions without requiring dangerous innerHTML injections. Enables custom semantic components for typography and code blocks.
+
+## 009 — Vitest for Unit and Component Testing
+
+Why: Fast, modern test runner with native Vite/ESM support, jsdom environment for React Testing Library component tests, and integrated v8 coverage reports.
+
+## 010 — Static Site Generation (`generateStaticParams`) for Lessons
+
+Why: All lesson content is static JSON known at build time. Generating static HTML eliminates database or filesystem overhead at request time and ensures instant page transitions.

@@ -32,3 +32,10 @@ Browser → Nginx (load balancer) → app replicas (Next.js) → PostgreSQL
 
 - Stateless app replicas. Session DB mein.
 - Nginx round-robin across app replicas.
+
+## Lessons Module (Phase 1)
+
+- **Schema (`src/lib/lesson-schema.ts`)**: Zod-based schema validating `id` (kebab-case), `title`, `order` (positive int), `summary`, `body` (markdown), `starterCode` ({ html, css }), and `challengeId`. The TypeScript type `Lesson` is strictly inferred from this schema.
+- **Loader (`src/lib/lessons.ts`)**: Server-side filesystem loader that reads JSON lesson files from `src/content/lessons`. Guarantees fail-loud parsing on missing/invalid fields and enforces unique IDs and order numbers.
+- **Server-Only Guard**: Protected by the `"server-only"` boundary package, ensuring filesystem operations and raw content are never bundled into client-side JS bundles.
+- **Static Generation (`generateStaticParams`)**: Lesson detail routes (`/lessons/[id]`) generate static HTML at build time for fast delivery and zero runtime filesystem latency.
