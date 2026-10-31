@@ -4,10 +4,12 @@ import { useState, useEffect, useCallback, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { useDebouncedValue } from "@/lib/use-debounced-value";
 import { MAX_CODE_LENGTH } from "@/lib/preview";
+import type { ClientChallenge } from "@/lib/challenges";
 import { EditorTabs, type EditorTabType } from "./EditorTabs";
 import { EditorToolbar } from "./EditorToolbar";
 import { PreviewFrame } from "./PreviewFrame";
 import { CodeEditorSkeleton } from "./CodeEditorSkeleton";
+import { ChallengePanel } from "@/components/challenge/ChallengePanel";
 
 const CodeEditor = dynamic(
   () => import("./CodeEditor").then((mod) => mod.CodeEditor),
@@ -17,7 +19,7 @@ const CodeEditor = dynamic(
   }
 );
 
-export type MobileTab = "lesson" | "editor" | "preview";
+export type MobileTab = "lesson" | "editor" | "preview" | "challenge";
 
 export interface StarterCode {
   html: string;
@@ -27,6 +29,8 @@ export interface StarterCode {
 export interface LessonWorkspaceProps {
   lessonId: string;
   starterCode: StarterCode;
+  challenge?: ClientChallenge | null;
+  nextLesson?: { id: string; title: string } | null;
   children?: ReactNode;
 }
 
@@ -66,6 +70,8 @@ function getStoredDraft(lessonId: string, starter: StarterCode): StarterCode {
 export function LessonWorkspace({
   lessonId,
   starterCode,
+  challenge,
+  nextLesson,
   children,
 }: LessonWorkspaceProps) {
   const [html, setHtml] = useState(
@@ -147,6 +153,15 @@ export function LessonWorkspace({
     <PreviewFrame html={debouncedHtml} css={debouncedCss} />
   );
 
+  const challengeSection = challenge ? (
+    <ChallengePanel
+      challenge={challenge}
+      html={html}
+      css={css}
+      nextLesson={nextLesson}
+    />
+  ) : null;
+
   return (
     <div className="min-w-0 flex-1">
       {/* Mobile Navigation Tabs (< 1024px) */}
@@ -154,7 +169,7 @@ export function LessonWorkspace({
         <div
           role="tablist"
           aria-label="Lesson workspace navigation"
-          className="grid grid-cols-3 gap-1 rounded-lg bg-slate-100 p-1 dark:bg-slate-800"
+          className="grid grid-cols-4 gap-1 rounded-lg bg-slate-100 p-1 dark:bg-slate-800"
         >
           <button
             type="button"
@@ -195,6 +210,19 @@ export function LessonWorkspace({
           >
             Preview
           </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mobileTab === "challenge"}
+            onClick={() => setMobileTab("challenge")}
+            className={`rounded-md py-2 text-xs font-semibold transition ${
+              mobileTab === "challenge"
+                ? "bg-white text-blue-600 shadow-xs dark:bg-slate-900 dark:text-blue-400"
+                : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+            }`}
+          >
+            Challenge
+          </button>
         </div>
       </div>
 
@@ -207,6 +235,9 @@ export function LessonWorkspace({
         {mobileTab === "preview" && (
           <div className="min-w-0">{previewSection}</div>
         )}
+        {mobileTab === "challenge" && (
+          <div className="min-w-0">{challengeSection}</div>
+        )}
       </div>
 
       {/* Desktop View (>= 1024px): 2-Column Split */}
@@ -214,10 +245,11 @@ export function LessonWorkspace({
         {/* Left Column: Lesson Content & Pager */}
         <div className="min-w-0">{children}</div>
 
-        {/* Right Column: Editor on top, Preview below */}
-        <div className="sticky top-20 min-w-0 space-y-6">
+        {/* Right Column: Editor on top, Preview below, Challenge at bottom */}
+        <div className="min-w-0 space-y-6">
           {editorSection}
           {previewSection}
+          {challengeSection}
         </div>
       </div>
     </div>

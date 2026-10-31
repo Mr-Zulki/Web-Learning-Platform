@@ -5,6 +5,7 @@ import {
   getLessonById,
   getAdjacentLessons,
 } from "@/lib/lessons";
+import { getChallengeForLesson, toClientChallenge } from "@/lib/challenges";
 import { LessonSidebar } from "@/components/LessonSidebar";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { LessonPager } from "@/components/LessonPager";
@@ -49,6 +50,9 @@ export default async function LessonDetailPage({ params }: PageProps) {
 
   const allLessons = getAllLessons();
   const { prev, next } = getAdjacentLessons(id);
+  const challengeRaw = getChallengeForLesson(lesson.id);
+  const clientChallenge = challengeRaw ? toClientChallenge(challengeRaw) : null;
+  const nextLessonSummary = next ? { id: next.id, title: next.title } : null;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -57,7 +61,13 @@ export default async function LessonDetailPage({ params }: PageProps) {
         <LessonSidebar lessons={allLessons} currentLessonId={id} />
 
         {/* Workspace + Content Layout */}
-        <LessonWorkspace lessonId={lesson.id} starterCode={lesson.starterCode}>
+        <LessonWorkspace
+          key={lesson.id}
+          lessonId={lesson.id}
+          starterCode={lesson.starterCode}
+          challenge={clientChallenge}
+          nextLesson={nextLessonSummary}
+        >
           <MarkdownContent content={lesson.body} />
           <LessonPager prev={prev} next={next} />
         </LessonWorkspace>

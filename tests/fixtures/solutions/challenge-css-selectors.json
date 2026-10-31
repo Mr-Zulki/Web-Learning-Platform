@@ -1,0 +1,4 @@
+{
+  "html": "<div id=\"banner\">\n  <h1>Platform Announcement</h1>\n  <p class=\"highlight\">Special interactive lessons are now live!</p>\n</div>",
+  "css": "#banner {\n  color: #2563eb;\n}\n\n.highlight {\n  font-size: 20px;\n}"
+}

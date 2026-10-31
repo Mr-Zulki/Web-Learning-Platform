@@ -1,0 +1,50 @@
+{
+  "id": "challenge-text-tags",
+  "lessonId": "text-tags",
+  "title": "Format Text with Headings, Paragraphs, and Lists",
+  "task": "Structure an article using semantic text formatting tags. Provide exactly one `<h1>` header, at least two `<p>` paragraphs, an unordered list `<ul>` with at least three `<li>` list items, and use `<strong>` to emphasize important text.",
+  "hints": [
+    "Place exactly one `<h1>` heading at the top for the main article title.",
+    "Write two separate `<p>` elements to create two distinct paragraphs of content.",
+    "Create a `<ul>` tag and nest at least three `<li>` items inside it, using `<strong>` on one keyword."
+  ],
+  "rules": [
+    {
+      "type": "element-count",
+      "selector": "h1",
+      "min": 1,
+      "max": 1,
+      "message": "Page must contain exactly one <h1> heading."
+    },
+    {
+      "type": "element-count",
+      "selector": "p",
+      "min": 2,
+      "message": "Page must contain at least two <p> paragraph elements."
+    },
+    {
+      "type": "element-exists",
+      "selector": "ul",
+      "min": 1,
+      "message": "Page must contain an unordered list <ul>."
+    },
+    {
+      "type": "child-of",
+      "selector": "li",
+      "parent": "ul",
+      "message": "List items <li> must be nested inside the <ul> element."
+    },
+    {
+      "type": "element-count",
+      "selector": "li",
+      "min": 3,
+      "message": "The unordered list must have at least three <li> items."
+    },
+    {
+      "type": "element-exists",
+      "selector": "strong",
+      "min": 1,
+      "message": "Emphasize key text using a <strong> element."
+    }
+  ]
+}

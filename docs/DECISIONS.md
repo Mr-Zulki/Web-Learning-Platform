@@ -55,3 +55,19 @@ Why: Prohibits outbound network communication (`connect-src 'none'`), form submi
 ## 014 — LocalStorage for Draft Persistence
 
 Why: Seamless learner experience preserving uncommitted work across page reloads under `uni:draft:<lessonId>`. All accesses are safely wrapped in try/catch to protect against storage quota failures or incognito restrictions.
+
+## 015 — Static AST Parsing over Code Execution
+
+Why: Executing student code or inspecting live preview DOM/styles introduces severe security vulnerabilities, potential infinite loop hangs, race conditions with iframe rendering, and environment mismatches. Parsing HTML and CSS statically as pure data structures ensures zero arbitrary code execution, deterministic evaluation, and identical execution across browser client and server runtime.
+
+## 016 — parse5 and css-tree for Static Parsing
+
+Why: `parse5` is a fast, spec-compliant HTML5 parser that constructs an AST without requiring browser DOM emulation (such as jsdom or DOMParser), allowing universal execution across Node.js server, client components, and Vitest. `css-tree` delivers precise CSS AST parsing, declaration walking, and serialization without running stylesheets.
+
+## 017 — Declarative Rule-Based Challenge Definitions
+
+Why: Expressing challenge criteria as structured, declarative rules (`element-exists`, `element-count`, `text-contains`, `attribute-equals`, `attribute-exists`, `css-property`, `child-of`) provides granular per-requirement feedback to students, clean separation between logic and content, strict schema validation via Zod, and straightforward challenge authoring in JSON.
+
+## 018 — Client-Side Instant Feedback with Planned Phase 4 Server Re-Check
+
+Why: Instant feedback is critical for the learning experience, so the pure static checker runs client-side inside `ChallengePanel` without network round-trip delay. To prevent progress tampering or client spoofing, the same pure checker function will be invoked on the server in Phase 4 prior to writing verified completions to PostgreSQL.

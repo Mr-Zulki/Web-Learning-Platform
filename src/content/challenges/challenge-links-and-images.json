@@ -1,0 +1,43 @@
+{
+  "id": "challenge-links-and-images",
+  "lessonId": "links-and-images",
+  "title": "Embed Hyperlinks and Accessible Images",
+  "task": "Add a clickable hyperlink and an accessible image. Use an `<a>` element with a valid `href` attribute, and an `<img>` element that has both a `src` attribute and a descriptive non-empty `alt` attribute.",
+  "hints": [
+    "Create an `<a>` tag with an `href` attribute, such as `href=\"https://example.com\"`.",
+    "Add an `<img>` tag with both `src=\"https://...\"` and `alt=\"...\"` attributes.",
+    "Make sure the `alt` attribute is not empty so screen readers can announce it."
+  ],
+  "rules": [
+    {
+      "type": "element-exists",
+      "selector": "a",
+      "min": 1,
+      "message": "Page must contain an anchor <a> element."
+    },
+    {
+      "type": "attribute-exists",
+      "selector": "a",
+      "attribute": "href",
+      "message": "The anchor <a> must have an href attribute."
+    },
+    {
+      "type": "element-exists",
+      "selector": "img",
+      "min": 1,
+      "message": "Page must contain an <img> element."
+    },
+    {
+      "type": "attribute-exists",
+      "selector": "img",
+      "attribute": "src",
+      "message": "The <img> must specify a src attribute."
+    },
+    {
+      "type": "attribute-exists",
+      "selector": "img",
+      "attribute": "alt",
+      "message": "The <img> must specify an alt attribute."
+    }
+  ]
+}

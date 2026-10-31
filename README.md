@@ -41,6 +41,17 @@ docker compose up --build --scale app=2
 - `npm run typecheck` — TypeScript typecheck
 - `npm run format:check` — Prettier format check
 
+## Adding a challenge
+
+Challenges are defined as static JSON files and checked statically with zero code execution:
+
+1. **Create the challenge**: Add `src/content/challenges/challenge-<lesson-id>.json` with `id`, `lessonId`, `title`, `task`, `hints` (1-3 strings), and declarative `rules` (`element-exists`, `element-count`, `text-contains`, `attribute-equals`, `attribute-exists`, `css-property`, `child-of`).
+2. **Link the lesson**: In `src/content/lessons/<lesson-id>.json`, set `"challengeId": "challenge-<lesson-id>"`. The server loader performs loud bi-directional cross-validation at startup to guarantee every lesson has a matching challenge.
+3. **Add the solution fixture**: Create `tests/fixtures/solutions/challenge-<lesson-id>.json` containing `{ "html": "...", "css": "..." }`. Solutions are kept strictly in test fixtures and are never sent to the client.
+4. **Verify**: Run `npm test` to verify schema validation and that your solution passes all checks.
+
+See [`docs/TESTING.md`](docs/TESTING.md) for full checker documentation.
+
 ## Docs
 
 Detail ke liye `docs/` folder dekho. LLM ke liye `AGENTS.md` parho.

@@ -1,0 +1,47 @@
+{
+  "id": "challenge-box-model",
+  "lessonId": "box-model",
+  "title": "Apply the CSS Box Model with Border-Box",
+  "task": "Configure a styled box component using the four layers of the box model. In your HTML, add an element with `class=\"card\"`. In your CSS, define `.card` with `padding: 16px`, `border: 2px solid #2563eb`, `margin: 24px`, and `box-sizing: border-box`.",
+  "hints": [
+    "In HTML, create a container element like `<div class=\"card\">...</div>`.",
+    "In CSS, create a `.card` rule set defining `padding`, `border`, `margin`, and `box-sizing`.",
+    "Set `box-sizing: border-box` so the padding and border are contained within the element bounds."
+  ],
+  "rules": [
+    {
+      "type": "element-exists",
+      "selector": ".card",
+      "min": 1,
+      "message": "HTML must contain an element with class='card'."
+    },
+    {
+      "type": "css-property",
+      "selector": ".card",
+      "property": "padding",
+      "value": "16px",
+      "message": "CSS rule '.card' must set 'padding' to '16px'."
+    },
+    {
+      "type": "css-property",
+      "selector": ".card",
+      "property": "border",
+      "value": "2px solid #2563eb",
+      "message": "CSS rule '.card' must set 'border' to '2px solid #2563eb'."
+    },
+    {
+      "type": "css-property",
+      "selector": ".card",
+      "property": "margin",
+      "value": "24px",
+      "message": "CSS rule '.card' must set 'margin' to '24px'."
+    },
+    {
+      "type": "css-property",
+      "selector": ".card",
+      "property": "box-sizing",
+      "value": "border-box",
+      "message": "CSS rule '.card' must set 'box-sizing' to 'border-box'."
+    }
+  ]
+}

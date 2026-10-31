@@ -1,0 +1,4 @@
+{
+  "html": "<main>\n  <h2>Explore Scenic Destinations</h2>\n  <a href=\"https://example.com/destinations\">Browse all tours</a>\n  <img src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb\" alt=\"Lush green valley surrounded by mountain ranges\" width=\"600\" />\n</main>",
+  "css": "img { max-width: 100%; border-radius: 8px; }"
+}

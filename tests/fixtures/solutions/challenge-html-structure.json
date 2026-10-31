@@ -1,0 +1,4 @@
+{
+  "html": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <title>My Profile Page</title>\n  </head>\n  <body>\n    <h1>Welcome to My Website</h1>\n  </body>\n</html>",
+  "css": "body { margin: 10px; }"
+}

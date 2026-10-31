@@ -1,0 +1,46 @@
+{
+  "id": "challenge-css-selectors",
+  "lessonId": "css-selectors",
+  "title": "Target Elements with Class and ID Selectors",
+  "task": "Style HTML elements using CSS class and ID selectors. In your HTML, create an element with `id=\"banner\"` and another element with `class=\"highlight\"`. In your CSS, style `#banner` with `color: #2563eb` and style `.highlight` with `font-size: 20px`.",
+  "hints": [
+    "In your HTML, give one element `id=\"banner\"` and another element `class=\"highlight\"`.",
+    "In your CSS, use `#banner` to select the ID and set `color: #2563eb`.",
+    "Use `.highlight` to select the class and set `font-size: 20px`."
+  ],
+  "rules": [
+    {
+      "type": "element-exists",
+      "selector": "#banner",
+      "min": 1,
+      "message": "HTML must contain an element with id='banner'."
+    },
+    {
+      "type": "attribute-equals",
+      "selector": "#banner",
+      "attribute": "id",
+      "value": "banner",
+      "message": "The banner element must have id='banner'."
+    },
+    {
+      "type": "element-exists",
+      "selector": ".highlight",
+      "min": 1,
+      "message": "HTML must contain an element with class='highlight'."
+    },
+    {
+      "type": "css-property",
+      "selector": "#banner",
+      "property": "color",
+      "value": "#2563eb",
+      "message": "CSS rule '#banner' must set 'color' to '#2563eb'."
+    },
+    {
+      "type": "css-property",
+      "selector": ".highlight",
+      "property": "font-size",
+      "value": "20px",
+      "message": "CSS rule '.highlight' must set 'font-size' to '20px'."
+    }
+  ]
+}

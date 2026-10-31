@@ -1,0 +1,43 @@
+{
+  "id": "challenge-html-structure",
+  "lessonId": "html-structure",
+  "title": "Build a Complete HTML Document Skeleton",
+  "task": "Create a standard HTML document structure. Include the `<!DOCTYPE html>` declaration, the root `<html>` element, a `<head>` section containing a `<title>` with text, and a visible `<body>` containing an `<h1>` heading.",
+  "hints": [
+    "Start your file with `<!DOCTYPE html>` and wrap everything inside `<html lang=\"en\">`.",
+    "Inside `<head>`, add a `<title>` tag with a descriptive title for your page.",
+    "Add a `<body>` element right after `<head>` and put your `<h1>` heading inside it."
+  ],
+  "rules": [
+    {
+      "type": "element-exists",
+      "selector": "html",
+      "min": 1,
+      "message": "Document must contain an <html> root element."
+    },
+    {
+      "type": "element-exists",
+      "selector": "head",
+      "min": 1,
+      "message": "Document must contain a <head> section."
+    },
+    {
+      "type": "child-of",
+      "selector": "title",
+      "parent": "head",
+      "message": "A <title> element must be placed inside <head>."
+    },
+    {
+      "type": "element-exists",
+      "selector": "body",
+      "min": 1,
+      "message": "Document must contain a <body> element."
+    },
+    {
+      "type": "child-of",
+      "selector": "h1",
+      "parent": "body",
+      "message": "An <h1> heading must be placed inside <body>."
+    }
+  ]
+}

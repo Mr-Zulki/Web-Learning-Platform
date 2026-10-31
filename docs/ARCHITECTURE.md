@@ -74,3 +74,28 @@ Browser → Nginx (load balancer) → app replicas (Next.js) → PostgreSQL
   - If `allow-same-origin` were combined with `allow-scripts`, user-submitted JavaScript could access the host document, manipulate the application DOM, read auth tokens/cookies, or steal session state. By omitting `allow-same-origin`, browsers enforce an immutable origin separation.
 - **Known limits & mitigations**:
   - Infinite loops (e.g. `while(true){}`) inside user script: The browser tab could hang. Future phases can explore worker execution or challenge-based script timeouts.
+
+## Challenges & Static Analysis Checker Module (Phase 3)
+
+- **Challenge Schema (`src/lib/challenge-schema.ts`)**:
+  - Validates `id` (`challenge-<lesson-id>`), `lessonId`, `title`, `task` (markdown), `hints` (1 to 3 items), and `rules` (discriminated union on `type`, minimum 2 rules).
+  - Strictly rejects unknown keys or unsupported rule types.
+- **Rules Evaluator (`src/lib/checker/rules.ts`)**:
+  - `element-exists`: Validates minimum occurrences of a selector (`tag`, `.class`, `#id`, or `tag.class`).
+  - `element-count`: Validates exact, min, and/or max occurrences of a selector.
+  - `text-contains`: Asserts matching elements contain expected text (case-sensitive or insensitive).
+  - `attribute-equals`: Asserts target elements have an attribute with an exact value.
+  - `attribute-exists`: Asserts target elements have a specific attribute defined.
+  - `css-property`: Normalizes CSS properties (e.g. hex colors `#FFF` -> `#ffffff`, units `0px` -> `0`, quotes/whitespace) and checks declaration blocks matching the selector.
+  - `child-of`: Checks ancestor-descendant hierarchy using parent traversal.
+- **Pure Static Analysis (`src/lib/checker/index.ts`)**:
+  - No DOM execution, no iframe access, no `eval`, and no network calls. Identical execution across browser client and server runtime.
+  - HTML parsing via `parse5` with a `MAX_DOM_NODES = 5000` complexity guard.
+  - CSS AST parsing via `css-tree`.
+  - Input length guard with `MAX_CODE_LENGTH = 50000` chars.
+  - Non-leaking result reporting: returns pass/fail and human-readable feedback messages without exposing expected solutions.
+- **Client/Server Data Flow**:
+  - Server loader (`src/lib/challenges.ts`) performs loud bi-directional cross-validation at startup between lessons and challenges.
+  - `toClientChallenge` sanitizes challenge structures before serialization into page props.
+  - Solutions remain exclusively on disk in `tests/fixtures/solutions/*.json` and are never loaded or bundled to the client.
+  - `ChallengePanel` evaluates submissions client-side instantly; upon passing, state is cached in `sessionStorage` under `uni:challenge:completed:<challengeId>`.

@@ -1,0 +1,4 @@
+{
+  "html": "<div class=\"card\">\n  <h2>Box Model Demo</h2>\n  <p>Content rendered with padding, border, and margin.</p>\n</div>",
+  "css": ".card {\n  padding: 16px;\n  border: 2px solid #2563eb;\n  margin: 24px;\n  box-sizing: border-box;\n}"
+}
