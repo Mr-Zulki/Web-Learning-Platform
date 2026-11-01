@@ -57,23 +57,21 @@ export default async function LessonDetailPage({ params }: PageProps) {
   const nextLessonSummary = next ? { id: next.id, title: next.title } : null;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <div className="flex flex-col md:flex-row md:gap-8">
-        {/* Left Sidebar */}
-        <LessonSidebar lessons={allLessons} currentLessonId={id} />
+    <div className="w-full space-y-4 px-3 py-4 sm:px-6 lg:px-8">
+      {/* Top Curriculum Nav Strip */}
+      <LessonSidebar lessons={allLessons} currentLessonId={id} />
 
-        {/* Workspace + Content Layout */}
-        <LessonWorkspace
-          key={lesson.id}
-          lessonId={lesson.id}
-          starterCode={lesson.starterCode}
-          challenge={clientChallenge}
-          nextLesson={nextLessonSummary}
-        >
-          <MarkdownContent content={lesson.body} />
-          <LessonPager prev={prev} next={next} />
-        </LessonWorkspace>
-      </div>
+      {/* Interactive 3-Pane Workspace */}
+      <LessonWorkspace
+        key={lesson.id}
+        lessonId={lesson.id}
+        starterCode={lesson.starterCode}
+        challenge={clientChallenge}
+        nextLesson={nextLessonSummary}
+      >
+        <MarkdownContent content={lesson.body} />
+        <LessonPager prev={prev} next={next} />
+      </LessonWorkspace>
     </div>
   );
 }

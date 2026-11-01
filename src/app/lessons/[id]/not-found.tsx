@@ -1,22 +1,30 @@
 import Link from "next/link";
+import { ArrowLeft, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 export default function LessonNotFound() {
   return (
     <main className="flex min-h-[60vh] flex-col items-center justify-center p-8 text-center">
-      <div className="max-w-md space-y-4">
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">
+      <div className="glass-panel-elevated w-full max-w-md space-y-5 rounded-3xl border border-white/10 p-8 shadow-2xl">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-500/20 bg-amber-500/10 text-amber-400">
+          <BookOpen className="h-7 w-7" />
+        </div>
+        <h1 className="font-heading text-2xl font-extrabold text-white sm:text-3xl">
           Lesson Not Found
         </h1>
-        <p className="text-slate-600 dark:text-slate-400">
+        <p className="text-sm text-slate-300">
           The requested lesson could not be found. Please check the URL or
           select a valid lesson from the curriculum.
         </p>
         <div className="pt-2">
-          <Link
-            href="/lessons"
-            className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-500 dark:hover:bg-blue-600"
-          >
-            ← Back to Lessons
+          <Link href="/lessons">
+            <Button
+              variant="primary"
+              size="md"
+              leftIcon={<ArrowLeft className="h-4 w-4" />}
+            >
+              Back to Lessons
+            </Button>
           </Link>
         </div>
       </div>

@@ -4,13 +4,16 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { UserPlus, User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { registerSchema } from "@/lib/auth-schema";
+import { Button } from "@/components/ui/Button";
 
 export default function RegisterPage() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [fieldErrors, setFieldErrors] = useState<{
     name?: string;
@@ -82,13 +85,22 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center px-4 py-12 sm:px-6">
-      <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-        <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+    <main className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center px-4 py-12 sm:px-6">
+      {/* Background ambient glow */}
+      <div
+        className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/15 blur-[100px]"
+        aria-hidden="true"
+      />
+
+      <div className="glass-panel-elevated relative rounded-3xl border border-white/10 p-8 shadow-2xl backdrop-blur-xl sm:p-10">
+        <div className="mb-8 space-y-2 text-center">
+          <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-600/20 text-blue-400 shadow-inner">
+            <UserPlus className="h-6 w-6" />
+          </div>
+          <h1 className="font-heading text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
             Create an Account
           </h1>
-          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+          <p className="text-sm text-slate-400">
             Sign up to track your learning progress and save solutions.
           </p>
         </div>
@@ -97,34 +109,45 @@ export default function RegisterPage() {
           <div
             role="alert"
             aria-live="polite"
-            className="mb-5 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300"
+            className="mb-6 flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-xs text-red-300 sm:text-sm"
           >
-            {submitError}
+            <span aria-hidden="true">⚠</span>
+            <span>{submitError}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} noValidate className="space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="space-y-5">
           <div>
             <label
               htmlFor="register-name"
-              className="block text-sm font-medium text-slate-900 dark:text-slate-200"
+              className="mb-1.5 block text-xs font-semibold tracking-wider text-slate-300 uppercase"
             >
               Full Name
             </label>
-            <input
-              id="register-name"
-              type="text"
-              autoComplete="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              aria-describedby={fieldErrors.name ? "name-error" : undefined}
-              aria-invalid={Boolean(fieldErrors.name)}
-              className="mt-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus-visible:border-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500"
-            />
+            <div className="relative flex items-center">
+              <span className="pointer-events-none absolute left-3.5 text-slate-500">
+                <User className="h-4 w-4" />
+              </span>
+              <input
+                id="register-name"
+                type="text"
+                autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                aria-describedby={fieldErrors.name ? "name-error" : undefined}
+                aria-invalid={Boolean(fieldErrors.name)}
+                placeholder="Alex Dev"
+                className={`w-full rounded-xl border bg-slate-900/80 py-2.5 pr-4 pl-10 text-sm text-white transition-all placeholder:text-slate-500 focus-visible:ring-2 focus-visible:outline-none ${
+                  fieldErrors.name
+                    ? "border-red-500/70 focus-visible:ring-red-500/40"
+                    : "border-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/40"
+                }`}
+              />
+            </div>
             {fieldErrors.name && (
               <p
                 id="name-error"
-                className="mt-1 text-xs text-red-600 dark:text-red-400"
+                className="mt-1.5 text-xs font-medium text-red-400"
               >
                 {fieldErrors.name}
               </p>
@@ -134,24 +157,34 @@ export default function RegisterPage() {
           <div>
             <label
               htmlFor="register-email"
-              className="block text-sm font-medium text-slate-900 dark:text-slate-200"
+              className="mb-1.5 block text-xs font-semibold tracking-wider text-slate-300 uppercase"
             >
               Email Address
             </label>
-            <input
-              id="register-email"
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              aria-describedby={fieldErrors.email ? "email-error" : undefined}
-              aria-invalid={Boolean(fieldErrors.email)}
-              className="mt-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus-visible:border-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500"
-            />
+            <div className="relative flex items-center">
+              <span className="pointer-events-none absolute left-3.5 text-slate-500">
+                <Mail className="h-4 w-4" />
+              </span>
+              <input
+                id="register-email"
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                aria-describedby={fieldErrors.email ? "email-error" : undefined}
+                aria-invalid={Boolean(fieldErrors.email)}
+                placeholder="you@example.com"
+                className={`w-full rounded-xl border bg-slate-900/80 py-2.5 pr-4 pl-10 text-sm text-white transition-all placeholder:text-slate-500 focus-visible:ring-2 focus-visible:outline-none ${
+                  fieldErrors.email
+                    ? "border-red-500/70 focus-visible:ring-red-500/40"
+                    : "border-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/40"
+                }`}
+              />
+            </div>
             {fieldErrors.email && (
               <p
                 id="email-error"
-                className="mt-1 text-xs text-red-600 dark:text-red-400"
+                className="mt-1.5 text-xs font-medium text-red-400"
               >
                 {fieldErrors.email}
               </p>
@@ -161,46 +194,71 @@ export default function RegisterPage() {
           <div>
             <label
               htmlFor="register-password"
-              className="block text-sm font-medium text-slate-900 dark:text-slate-200"
+              className="mb-1.5 block text-xs font-semibold tracking-wider text-slate-300 uppercase"
             >
               Password
             </label>
-            <input
-              id="register-password"
-              type="password"
-              autoComplete="new-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              aria-describedby={
-                fieldErrors.password ? "password-error" : undefined
-              }
-              aria-invalid={Boolean(fieldErrors.password)}
-              className="mt-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus-visible:border-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500"
-            />
+            <div className="relative flex items-center">
+              <span className="pointer-events-none absolute left-3.5 text-slate-500">
+                <Lock className="h-4 w-4" />
+              </span>
+              <input
+                id="register-password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="new-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                aria-describedby={
+                  fieldErrors.password ? "password-error" : undefined
+                }
+                aria-invalid={Boolean(fieldErrors.password)}
+                placeholder="••••••••"
+                className={`w-full rounded-xl border bg-slate-900/80 py-2.5 pr-11 pl-10 text-sm text-white transition-all placeholder:text-slate-500 focus-visible:ring-2 focus-visible:outline-none ${
+                  fieldErrors.password
+                    ? "border-red-500/70 focus-visible:ring-red-500/40"
+                    : "border-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/40"
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label="Toggle visibility"
+                className="absolute right-3 rounded p-1 text-slate-400 transition-colors hover:text-slate-200"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
             {fieldErrors.password && (
               <p
                 id="password-error"
-                className="mt-1 text-xs text-red-600 dark:text-red-400"
+                className="mt-1.5 text-xs font-medium text-red-400"
               >
                 {fieldErrors.password}
               </p>
             )}
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-md bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50"
+            isLoading={isSubmitting}
+            variant="primary"
+            size="lg"
+            className="mt-2 w-full font-semibold shadow-xl shadow-blue-500/25"
           >
             {isSubmitting ? "Creating account..." : "Sign Up"}
-          </button>
+          </Button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
+        <div className="mt-8 border-t border-white/5 pt-4 text-center text-xs text-slate-400 sm:text-sm">
           Already have an account?{" "}
           <Link
             href="/login"
-            className="font-medium text-blue-600 transition hover:underline dark:text-blue-400"
+            className="font-semibold text-blue-400 underline transition hover:text-blue-300"
           >
             Log in here
           </Link>

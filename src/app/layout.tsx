@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import "./globals.css";
 
@@ -69,6 +70,7 @@ export default function RootLayout({
           <div id="main-content" className="flex flex-1 flex-col">
             {children}
           </div>
+          <SiteFooter />
         </AuthProvider>
       </body>
     </html>

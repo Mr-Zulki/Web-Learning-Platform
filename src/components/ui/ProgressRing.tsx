@@ -7,6 +7,7 @@ export interface ProgressRingProps extends React.SVGAttributes<SVGSVGElement> {
   strokeWidth?: number;
   variant?: "primary" | "success" | "warning";
   children?: React.ReactNode;
+  "aria-hidden"?: boolean | "true" | "false";
 }
 
 const colorMap = {
@@ -23,6 +24,7 @@ export function ProgressRing({
   variant = "primary",
   children,
   className = "",
+  "aria-hidden": ariaHidden,
   ...props
 }: ProgressRingProps) {
   const radius = (size - strokeWidth) / 2;
@@ -35,11 +37,12 @@ export function ProgressRing({
 
   return (
     <div
-      role="progressbar"
-      aria-valuenow={value}
-      aria-valuemin={0}
-      aria-valuemax={max}
-      aria-label={`Progress: ${percentage}%`}
+      role={ariaHidden ? undefined : "progressbar"}
+      aria-hidden={ariaHidden}
+      aria-valuenow={ariaHidden ? undefined : value}
+      aria-valuemin={ariaHidden ? undefined : 0}
+      aria-valuemax={ariaHidden ? undefined : max}
+      aria-label={ariaHidden ? undefined : `Progress: ${percentage}%`}
       className={`relative inline-flex items-center justify-center ${className}`}
       style={{ width: size, height: size }}
     >

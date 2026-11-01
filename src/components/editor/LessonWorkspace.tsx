@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback, type ReactNode } from "react";
 import dynamic from "next/dynamic";
+import { Group, Panel, Separator } from "react-resizable-panels";
+import { BookOpen, Code2, Eye, Award } from "lucide-react";
 import { useDebouncedValue } from "@/lib/use-debounced-value";
 import { MAX_CODE_LENGTH } from "@/lib/preview";
 import type { ClientChallenge } from "@/lib/challenges";
@@ -124,7 +126,7 @@ export function LessonWorkspace({
   }, [activeTab, html, css]);
 
   const editorSection = (
-    <div className="flex flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900 shadow-md">
+    <div className="glass-panel flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 shadow-xl">
       <EditorTabs activeTab={activeTab} onTabChange={setActiveTab} />
       <EditorToolbar
         activeTab={activeTab}
@@ -138,6 +140,7 @@ export function LessonWorkspace({
         id={`panel-${activeTab}`}
         role="tabpanel"
         aria-labelledby={`tab-${activeTab}`}
+        className="min-h-[350px] flex-1 bg-slate-950/80"
       >
         <CodeEditor
           language={activeTab}
@@ -163,65 +166,69 @@ export function LessonWorkspace({
   ) : null;
 
   return (
-    <div className="min-w-0 flex-1">
+    <div className="w-full min-w-0 flex-1">
       {/* Mobile Navigation Tabs (< 1024px) */}
       <div className="mb-6 lg:hidden">
         <div
           role="tablist"
           aria-label="Lesson workspace navigation"
-          className="grid grid-cols-4 gap-1 rounded-lg bg-slate-100 p-1 dark:bg-slate-800"
+          className="glass-panel-elevated grid grid-cols-4 gap-1 rounded-xl border border-white/10 p-1"
         >
           <button
             type="button"
             role="tab"
             aria-selected={mobileTab === "lesson"}
             onClick={() => setMobileTab("lesson")}
-            className={`rounded-md py-2 text-xs font-semibold transition ${
+            className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-semibold transition ${
               mobileTab === "lesson"
-                ? "bg-white text-blue-600 shadow-xs dark:bg-slate-900 dark:text-blue-400"
-                : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                : "text-slate-400 hover:bg-white/5 hover:text-white"
             }`}
           >
-            Lesson
+            <BookOpen className="h-3.5 w-3.5" />
+            <span>Lesson</span>
           </button>
           <button
             type="button"
             role="tab"
             aria-selected={mobileTab === "editor"}
             onClick={() => setMobileTab("editor")}
-            className={`rounded-md py-2 text-xs font-semibold transition ${
+            className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-semibold transition ${
               mobileTab === "editor"
-                ? "bg-white text-blue-600 shadow-xs dark:bg-slate-900 dark:text-blue-400"
-                : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                : "text-slate-400 hover:bg-white/5 hover:text-white"
             }`}
           >
-            Editor
+            <Code2 className="h-3.5 w-3.5" />
+            <span>Editor</span>
           </button>
           <button
             type="button"
             role="tab"
             aria-selected={mobileTab === "preview"}
             onClick={() => setMobileTab("preview")}
-            className={`rounded-md py-2 text-xs font-semibold transition ${
+            className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-semibold transition ${
               mobileTab === "preview"
-                ? "bg-white text-blue-600 shadow-xs dark:bg-slate-900 dark:text-blue-400"
-                : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                : "text-slate-400 hover:bg-white/5 hover:text-white"
             }`}
           >
-            Preview
+            <Eye className="h-3.5 w-3.5" />
+            <span>Preview</span>
           </button>
           <button
             type="button"
             role="tab"
             aria-selected={mobileTab === "challenge"}
             onClick={() => setMobileTab("challenge")}
-            className={`rounded-md py-2 text-xs font-semibold transition ${
+            className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-semibold transition ${
               mobileTab === "challenge"
-                ? "bg-white text-blue-600 shadow-xs dark:bg-slate-900 dark:text-blue-400"
-                : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                : "text-slate-400 hover:bg-white/5 hover:text-white"
             }`}
           >
-            Challenge
+            <Award className="h-3.5 w-3.5" />
+            <span>Challenge</span>
           </button>
         </div>
       </div>
@@ -240,17 +247,48 @@ export function LessonWorkspace({
         )}
       </div>
 
-      {/* Desktop View (>= 1024px): 2-Column Split */}
-      <div className="hidden items-start lg:grid lg:grid-cols-2 lg:gap-8">
-        {/* Left Column: Lesson Content & Pager */}
-        <div className="min-w-0">{children}</div>
+      {/* Desktop View (>= 1024px): 3-Pane Resizable Layout */}
+      <div className="hidden h-[calc(100vh-7rem)] w-full lg:block">
+        <Group orientation="horizontal" className="flex h-full w-full">
+          {/* Left Panel: Instructions + Challenge Checklist */}
+          <Panel
+            defaultSize={34}
+            minSize={25}
+            maxSize={45}
+            className="h-full overflow-y-auto pr-2"
+          >
+            <div className="space-y-6 pr-1 pb-12">
+              {children}
+              {challengeSection}
+            </div>
+          </Panel>
 
-        {/* Right Column: Editor on top, Preview below, Challenge at bottom */}
-        <div className="min-w-0 space-y-6">
-          {editorSection}
-          {previewSection}
-          {challengeSection}
-        </div>
+          <Separator className="mx-1 my-2 flex w-2 shrink-0 cursor-col-resize items-center justify-center rounded-full bg-white/5 transition-colors hover:bg-blue-500/30 active:bg-blue-500/50">
+            <div className="h-6 w-0.5 rounded-full bg-white/20" />
+          </Separator>
+
+          {/* Center Panel: Code Editor */}
+          <Panel
+            defaultSize={36}
+            minSize={25}
+            className="flex h-full flex-col px-2"
+          >
+            {editorSection}
+          </Panel>
+
+          <Separator className="mx-1 my-2 flex w-2 shrink-0 cursor-col-resize items-center justify-center rounded-full bg-white/5 transition-colors hover:bg-blue-500/30 active:bg-blue-500/50">
+            <div className="h-6 w-0.5 rounded-full bg-white/20" />
+          </Separator>
+
+          {/* Right Panel: Sandboxed Preview */}
+          <Panel
+            defaultSize={30}
+            minSize={20}
+            className="flex h-full flex-col pl-2"
+          >
+            {previewSection}
+          </Panel>
+        </Group>
       </div>
     </div>
   );
