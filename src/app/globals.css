@@ -1,28 +1,116 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #2563eb;
-  --color-success: #16a34a;
-  --color-error: #dc2626;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
-  --radius-default: 8px;
+  --font-heading: var(--font-heading), system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+  --color-primary: #3b82f6;
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+  --background: #090d16;
+  --background-subtle: #0f172a;
+  --foreground: #f8fafc;
+  --foreground-muted: #94a3b8;
+  --surface-glass-1: rgba(15, 23, 42, 0.65);
+  --surface-glass-2: rgba(30, 41, 59, 0.75);
+  --surface-glass-3: rgba(30, 41, 59, 0.92);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glass-strong: rgba(255, 255, 255, 0.16);
+  --glow-primary: rgba(59, 130, 246, 0.25);
+  --glow-accent: rgba(139, 92, 246, 0.25);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0b0f19;
-    --foreground: #f8fafc;
-  }
+html.light {
+  --background: #f8fafc;
+  --background-subtle: #f1f5f9;
+  --foreground: #0f172a;
+  --foreground-muted: #64748b;
+  --surface-glass-1: rgba(255, 255, 255, 0.75);
+  --surface-glass-2: rgba(255, 255, 255, 0.88);
+  --surface-glass-3: rgba(255, 255, 255, 0.96);
+  --border-glass: rgba(15, 23, 42, 0.08);
+  --border-glass-strong: rgba(15, 23, 42, 0.16);
+  --glow-primary: rgba(37, 99, 235, 0.15);
+  --glow-accent: rgba(124, 58, 237, 0.15);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+/* Glass surface utility classes */
+.glass-panel {
+  background-color: var(--surface-glass-1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+}
+
+.glass-panel-elevated {
+  background-color: var(--surface-glass-2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass-strong);
+}
+
+.glass-modal {
+  background-color: var(--surface-glass-3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass-strong);
+}
+
+/* Non-backdrop-filter fallbacks */
+@supports not (backdrop-filter: blur(12px)) {
+  .glass-panel {
+    background-color: #0f172a;
+  }
+  .glass-panel-elevated {
+    background-color: #1e293b;
+  }
+  .glass-modal {
+    background-color: #1e293b;
+  }
+  html.light .glass-panel {
+    background-color: #ffffff;
+  }
+  html.light .glass-panel-elevated {
+    background-color: #f1f5f9;
+  }
+  html.light .glass-modal {
+    background-color: #ffffff;
+  }
+}
+
+/* Accessible focus styling */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Reduced-motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Forced-colors accessibility */
+@media (forced-colors: active) {
+  .glass-panel,
+  .glass-panel-elevated,
+  .glass-modal {
+    border: 2px solid CanvasText;
+  }
 }

@@ -131,3 +131,11 @@ Why: Under 200–300 VU traffic spikes, uncached Next.js static page rendering o
 ## 033 — Playwright E2E and Multi-Stage CI Pipeline
 
 Why: Validating user journeys across multiple container replicas requires real browser interaction. Playwright tests the full happy path against the containerized stack: user registration, credentials authentication, CodeMirror solution entry, client submission, server-side static rule re-verification, and dashboard reflection. GitHub Actions automates linting, strict typechecks, Prettier format verification, Vitest unit coverage, PostgreSQL integration tests, Docker build, Playwright E2E against the container stack, and npm production security audit on every push.
+
+## 034 — react-resizable-panels & lucide-react for Workspace UI
+
+Why: In Phase 7, the lesson experience requires a 3-pane freeCodeCamp-style layout (Instructions/Tests, Code Editor, Sandboxed Preview). Hand-rolling drag handles introduces browser-specific resize bugs, pointer capture glitches, and layout thrashing. `react-resizable-panels` provides accessible, zero-dependency, keyboard-navigable (`Home`, `End`, `Arrow` keys), and flicker-free flexbox resizing with minimum and maximum constraints and persistent panel layouts. `lucide-react` provides lightweight, consistent, stroke-based SVG icons with tree-shaking support for test checklists, navigation, and theme switches without icon font bloat.
+
+## 035 — @axe-core/playwright for Automated Accessibility Auditing
+
+Why: The Phase 7 redesign adopts glass surfaces and subtle gradient backgrounds. To guarantee strict adherence to WCAG 2.1 AA accessibility guidelines (color contrast, aria roles, accessible labels, semantic landmarks), `@axe-core/playwright` automates comprehensive accessibility audits across all major pages (`/`, `/lessons`, `/lessons/[id]`, `/login`, `/register`, `/dashboard`) across both dark and light modes during the E2E test suite.
