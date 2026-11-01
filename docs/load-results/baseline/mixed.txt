@@ -1,0 +1,346 @@
+﻿
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: -
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 80 max VUs, 1m5s max duration (incl. graceful stop):
+              * default: Up to 80 looping VUs for 35s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+running (0m00.9s), 03/80 VUs, 6 complete and 0 interrupted iterations
+default   [   3% ] 03/80 VUs  00.9s/35.0s
+
+running (0m01.9s), 06/80 VUs, 26 complete and 0 interrupted iterations
+default   [   6% ] 06/80 VUs  01.9s/35.0s
+
+running (0m02.9s), 09/80 VUs, 60 complete and 0 interrupted iterations
+default   [   8% ] 09/80 VUs  02.9s/35.0s
+
+running (0m03.9s), 12/80 VUs, 106 complete and 0 interrupted iterations
+default   [  11% ] 12/80 VUs  03.9s/35.0s
+
+running (0m04.9s), 15/80 VUs, 170 complete and 0 interrupted iterations
+default   [  14% ] 15/80 VUs  04.9s/35.0s
+
+running (0m05.9s), 18/80 VUs, 246 complete and 0 interrupted iterations
+default   [  17% ] 18/80 VUs  05.9s/35.0s
+
+running (0m06.9s), 21/80 VUs, 319 complete and 0 interrupted iterations
+default   [  20% ] 21/80 VUs  06.9s/35.0s
+
+running (0m07.9s), 23/80 VUs, 401 complete and 0 interrupted iterations
+default   [  23% ] 23/80 VUs  07.9s/35.0s
+
+running (0m08.9s), 26/80 VUs, 489 complete and 0 interrupted iterations
+default   [  26% ] 26/80 VUs  08.9s/35.0s
+
+running (0m09.9s), 29/80 VUs, 588 complete and 0 interrupted iterations
+default   [  28% ] 29/80 VUs  09.9s/35.0s
+
+running (0m10.9s), 32/80 VUs, 690 complete and 0 interrupted iterations
+default   [  31% ] 32/80 VUs  10.9s/35.0s
+
+running (0m11.9s), 34/80 VUs, 763 complete and 0 interrupted iterations
+default   [  34% ] 34/80 VUs  11.9s/35.0s
+
+running (0m12.9s), 37/80 VUs, 869 complete and 0 interrupted iterations
+default   [  37% ] 37/80 VUs  12.9s/35.0s
+
+running (0m13.9s), 39/80 VUs, 962 complete and 0 interrupted iterations
+default   [  40% ] 39/80 VUs  13.9s/35.0s
+
+running (0m14.9s), 42/80 VUs, 1076 complete and 0 interrupted iterations
+default   [  43% ] 42/80 VUs  14.9s/35.0s
+
+running (0m15.9s), 44/80 VUs, 1185 complete and 0 interrupted iterations
+default   [  46% ] 44/80 VUs  15.9s/35.0s
+
+running (0m16.9s), 47/80 VUs, 1294 complete and 0 interrupted iterations
+default   [  48% ] 47/80 VUs  16.9s/35.0s
+
+running (0m17.9s), 49/80 VUs, 1386 complete and 0 interrupted iterations
+default   [  51% ] 49/80 VUs  17.9s/35.0s
+
+running (0m18.9s), 52/80 VUs, 1526 complete and 0 interrupted iterations
+default   [  54% ] 52/80 VUs  18.9s/35.0s
+
+running (0m19.9s), 54/80 VUs, 1660 complete and 0 interrupted iterations
+default   [  57% ] 54/80 VUs  19.9s/35.0s
+
+running (0m20.9s), 57/80 VUs, 1826 complete and 0 interrupted iterations
+default   [  60% ] 57/80 VUs  20.9s/35.0s
+
+running (0m21.9s), 59/80 VUs, 1951 complete and 0 interrupted iterations
+default   [  63% ] 59/80 VUs  21.9s/35.0s
+
+running (0m22.9s), 62/80 VUs, 2076 complete and 0 interrupted iterations
+default   [  66% ] 62/80 VUs  22.9s/35.0s
+
+running (0m23.9s), 64/80 VUs, 2163 complete and 0 interrupted iterations
+default   [  68% ] 64/80 VUs  23.9s/35.0s
+
+running (0m24.9s), 67/80 VUs, 2232 complete and 0 interrupted iterations
+default   [  71% ] 67/80 VUs  24.9s/35.0s
+
+running (0m25.9s), 69/80 VUs, 2336 complete and 0 interrupted iterations
+default   [  74% ] 69/80 VUs  25.9s/35.0s
+
+running (0m26.9s), 72/80 VUs, 2452 complete and 0 interrupted iterations
+default   [  77% ] 72/80 VUs  26.9s/35.0s
+
+running (0m27.9s), 74/80 VUs, 2614 complete and 0 interrupted iterations
+default   [  80% ] 74/80 VUs  27.9s/35.0s
+
+running (0m28.9s), 77/80 VUs, 2756 complete and 0 interrupted iterations
+default   [  83% ] 77/80 VUs  28.9s/35.0s
+
+running (0m29.9s), 79/80 VUs, 2885 complete and 0 interrupted iterations
+default   [  86% ] 79/80 VUs  29.9s/35.0s
+
+running (0m30.9s), 70/80 VUs, 3007 complete and 0 interrupted iterations
+default   [  88% ] 70/80 VUs  30.9s/35.0s
+
+running (0m31.9s), 55/80 VUs, 3167 complete and 0 interrupted iterations
+default   [  91% ] 55/80 VUs  31.9s/35.0s
+
+running (0m32.9s), 37/80 VUs, 3316 complete and 0 interrupted iterations
+default   [  94% ] 37/80 VUs  32.9s/35.0s
+
+running (0m33.9s), 20/80 VUs, 3434 complete and 0 interrupted iterations
+default   [  97% ] 20/80 VUs  33.9s/35.0s
+
+running (0m34.9s), 03/80 VUs, 3499 complete and 0 interrupted iterations
+default   [ 100% ] 03/80 VUs  34.9s/35.0s
+
+
+  █ THRESHOLDS 
+
+    http_req_duration
+    ✓ 'p(95)<2500' p(95)=682.83ms
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 2806    79.903176/s
+    checks_succeeded...: 100.00% 2806 out of 2806
+    checks_failed......: 0.00%   0 out of 2806
+
+    ✓ browse 200
+    ✓ progress write finished
+
+    CUSTOM
+    status_2xx.....................: 2475   70.477677/s
+    status_429.....................: 1388   39.524451/s
+
+    HTTP
+    http_req_duration..............: avg=179.28ms min=417.63µs med=24.42ms  max=4.99s p(90)=468.37ms p(95)=682.83ms
+      { expected_response:true }...: avg=251.72ms min=4.61ms   med=159.25ms max=4.99s p(90)=564.52ms p(95)=760.52ms
+    http_req_failed................: 41.04% 1723 out of 4198
+    http_reqs......................: 4198   119.54153/s
+
+    EXECUTION
+    iteration_duration.............: avg=416.2ms  min=202.07ms med=304.6ms  max=5.19s p(90)=709.28ms p(95)=919.57ms
+    iterations.....................: 3502   99.722353/s
+    vus............................: 3      min=3            max=79
+    vus_max........................: 80     min=80           max=80
+
+    NETWORK
+    data_received..................: 92 MB  2.6 MB/s
+    data_sent......................: 551 kB 16 kB/s
+
+
+
+
+running (0m35.1s), 00/80 VUs, 3502 complete and 0 interrupted iterations
+default ✓ [ 100% ] 00/80 VUs  35s
+
+==========================================
+--- Resource Utilization & DB Connections for mixed ---
+
+[2026-11-01 16:23:30] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+intelligent_hermann       39.66%    24.37MiB / 7.423GiB   251kB / 4.59kB
+uni-project-app-1         25.94%    113.5MiB / 512MiB     1.03MB / 66.3MB
+uni-project-app-2         11.71%    74.98MiB / 512MiB     1.06MB / 68.3MB
+uni-project-db-1          0.45%     45.25MiB / 7.423GiB   26.9kB / 14.9kB
+uni-project-nginx-1       3.61%     9.215MiB / 7.423GiB   138MB / 138MB
+chatgpt-browser-runtime   68.32%    732.7MiB / 7.423GiB   8.14MB / 1.73MB
+postiz                    18.28%    1.612GiB / 7.423GiB   475kB / 309kB
+temporal-admin-tools      0.00%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.00%     11.35MiB / 7.423GiB   0B / 0B
+temporal                  7.03%     225.7MiB / 7.423GiB   2.61MB / 3.3MB
+postiz-postgres           0.00%     45.5MiB / 7.423GiB    21.6kB / 249kB
+postiz-redis              0.25%     13.09MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       0.58%     137.5MiB / 7.423GiB   3.08MB / 2.3MB
+temporal-elasticsearch    0.88%     737.9MiB / 7.423GiB   18kB / 10.8kB
+
+[2026-11-01 16:23:30] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[2026-11-01 16:23:35] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+intelligent_hermann       30.56%    30.45MiB / 7.423GiB   9.36MB / 166kB
+uni-project-app-1         50.04%    115.1MiB / 512MiB     1.07MB / 70.6MB
+uni-project-app-2         43.99%    79.67MiB / 512MiB     1.1MB / 72.1MB
+uni-project-db-1          0.04%     44.54MiB / 7.423GiB   27.2kB / 15.1kB
+uni-project-nginx-1       9.74%     9.602MiB / 7.423GiB   146MB / 147MB
+chatgpt-browser-runtime   42.65%    733.4MiB / 7.423GiB   8.14MB / 1.73MB
+postiz                    21.43%    1.612GiB / 7.423GiB   475kB / 310kB
+temporal-admin-tools      0.00%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.01%     11.35MiB / 7.423GiB   0B / 0B
+temporal                  7.67%     226.5MiB / 7.423GiB   2.62MB / 3.31MB
+postiz-postgres           0.05%     45.5MiB / 7.423GiB    21.6kB / 249kB
+postiz-redis              8.74%     13.48MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       0.25%     137.2MiB / 7.423GiB   3.09MB / 2.31MB
+temporal-elasticsearch    1.67%     737.8MiB / 7.423GiB   18kB / 10.8kB
+
+[2026-11-01 16:23:35] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[2026-11-01 16:23:41] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+intelligent_hermann       25.38%    34.32MiB / 7.423GiB   21.8MB / 379kB
+uni-project-app-1         49.13%    127.6MiB / 512MiB     1.16MB / 78MB
+uni-project-app-2         48.95%    97.88MiB / 512MiB     1.19MB / 80.1MB
+uni-project-db-1          9.93%     45.41MiB / 7.423GiB   27.8kB / 15.3kB
+uni-project-nginx-1       11.48%    10.18MiB / 7.423GiB   162MB / 162MB
+chatgpt-browser-runtime   59.12%    743.3MiB / 7.423GiB   8.14MB / 1.73MB
+postiz                    20.13%    1.612GiB / 7.423GiB   475kB / 310kB
+temporal-admin-tools      0.01%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.00%     11.35MiB / 7.423GiB   0B / 0B
+temporal                  4.00%     225.7MiB / 7.423GiB   2.63MB / 3.32MB
+postiz-postgres           0.00%     45.5MiB / 7.423GiB    21.6kB / 249kB
+postiz-redis              0.26%     12.84MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       0.14%     137.2MiB / 7.423GiB   3.1MB / 2.33MB
+temporal-elasticsearch    1.53%     738MiB / 7.423GiB     18kB / 10.8kB
+
+[2026-11-01 16:23:41] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[2026-11-01 16:23:46] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+intelligent_hermann       32.42%    37.41MiB / 7.423GiB   39.5MB / 701kB
+uni-project-app-1         49.90%    121.7MiB / 512MiB     1.25MB / 85MB
+uni-project-app-2         48.43%    87.4MiB / 512MiB      1.27MB / 87.8MB
+uni-project-db-1          9.27%     45.14MiB / 7.423GiB   28.2kB / 15.5kB
+uni-project-nginx-1       11.28%    10.27MiB / 7.423GiB   176MB / 177MB
+chatgpt-browser-runtime   52.32%    732.9MiB / 7.423GiB   8.15MB / 1.74MB
+postiz                    17.91%    1.612GiB / 7.423GiB   475kB / 310kB
+temporal-admin-tools      0.00%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.01%     11.36MiB / 7.423GiB   0B / 0B
+temporal                  9.93%     225.8MiB / 7.423GiB   2.64MB / 3.33MB
+postiz-postgres           8.79%     45.85MiB / 7.423GiB   21.6kB / 249kB
+postiz-redis              0.25%     13.09MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       0.49%     136.9MiB / 7.423GiB   3.11MB / 2.34MB
+temporal-elasticsearch    0.72%     737.7MiB / 7.423GiB   18kB / 10.8kB
+
+[2026-11-01 16:23:46] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[2026-11-01 16:23:52] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+intelligent_hermann       23.78%    38.82MiB / 7.423GiB   61.5MB / 1.12MB
+uni-project-app-1         49.49%    126.7MiB / 512MiB     1.38MB / 97.2MB
+uni-project-app-2         49.12%    101MiB / 512MiB       1.4MB / 97.2MB
+uni-project-db-1          0.07%     44.54MiB / 7.423GiB   28.6kB / 15.8kB
+uni-project-nginx-1       9.22%     10.64MiB / 7.423GiB   198MB / 200MB
+chatgpt-browser-runtime   55.31%    742MiB / 7.423GiB     8.15MB / 1.74MB
+postiz                    18.15%    1.611GiB / 7.423GiB   475kB / 310kB
+temporal-admin-tools      0.01%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.00%     11.36MiB / 7.423GiB   0B / 0B
+temporal                  4.33%     226.3MiB / 7.423GiB   2.69MB / 3.42MB
+postiz-postgres           0.00%     45.5MiB / 7.423GiB    21.6kB / 249kB
+postiz-redis              0.24%     13.09MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       0.43%     137.5MiB / 7.423GiB   3.2MB / 2.39MB
+temporal-elasticsearch    0.83%     738MiB / 7.423GiB     18kB / 10.8kB
+
+[2026-11-01 16:23:52] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[2026-11-01 16:23:58] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+intelligent_hermann       32.38%    40.5MiB / 7.423GiB    79.9MB / 1.48MB
+uni-project-app-1         49.03%    123.9MiB / 512MiB     1.49MB / 105MB
+uni-project-app-2         51.24%    90.09MiB / 512MiB     1.52MB / 107MB
+uni-project-db-1          0.03%     44.54MiB / 7.423GiB   29.2kB / 16kB
+uni-project-nginx-1       13.04%    10.39MiB / 7.423GiB   217MB / 218MB
+chatgpt-browser-runtime   48.01%    744.6MiB / 7.423GiB   8.15MB / 1.74MB
+postiz                    40.50%    1.611GiB / 7.423GiB   510kB / 368kB
+temporal-admin-tools      0.00%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.00%     11.36MiB / 7.423GiB   0B / 0B
+temporal                  10.22%    226.1MiB / 7.423GiB   2.76MB / 3.46MB
+postiz-postgres           0.00%     45.5MiB / 7.423GiB    21.6kB / 249kB
+postiz-redis              0.28%     12.84MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       0.37%     137.6MiB / 7.423GiB   3.21MB / 2.4MB
+temporal-elasticsearch    13.31%    739MiB / 7.423GiB     18kB / 10.8kB
+
+[2026-11-01 16:23:58] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[2026-11-01 16:24:04] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+uni-project-app-1         0.04%     124.8MiB / 512MiB     1.57MB / 113MB
+uni-project-app-2         0.03%     87.57MiB / 512MiB     1.6MB / 113MB
+uni-project-db-1          0.00%     44.54MiB / 7.423GiB   29.5kB / 16.2kB
+uni-project-nginx-1       1.16%     7.777MiB / 7.423GiB   231MB / 232MB
+chatgpt-browser-runtime   60.95%    745.2MiB / 7.423GiB   8.15MB / 1.74MB
+postiz                    21.01%    1.613GiB / 7.423GiB   515kB / 376kB
+temporal-admin-tools      0.01%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.00%     11.37MiB / 7.423GiB   0B / 0B
+temporal                  30.68%    239.9MiB / 7.423GiB   2.96MB / 3.81MB
+postiz-postgres           0.00%     45.5MiB / 7.423GiB    21.6kB / 249kB
+postiz-redis              0.62%     13.34MiB / 7.423GiB   3.4kB / 11.5kB
+temporal-postgresql       0.39%     137.9MiB / 7.423GiB   3.56MB / 2.59MB
+temporal-elasticsearch    2.45%     738.4MiB / 7.423GiB   18kB / 10.8kB
+
+[2026-11-01 16:24:04] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

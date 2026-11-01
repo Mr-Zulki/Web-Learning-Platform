@@ -12,7 +12,7 @@ Stores learner credentials and profile information.
 
 - `id`: String (`@id @default(cuid())`)
 - `email`: String (`@unique`) — normalized to lowercase and trimmed before storage
-- `passwordHash`: String — bcrypt hash with cost 12
+- `passwordHash`: String — asynchronous `crypto.scrypt` versioned hash formatted as `scrypt$N$r$p$saltHex$derivedKeyHex` (N=16384, r=8, p=1, keyLength=64, saltLength=16). Transparently supports backward-compatible legacy bcrypt hashes, upgrading them automatically to scrypt upon successful authentication.
 - `name`: String? — learner display name
 - `createdAt`: DateTime (`@default(now())`)
 - `updatedAt`: DateTime (`@updatedAt`)

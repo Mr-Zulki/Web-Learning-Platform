@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { registerSchema } from "@/lib/auth-schema";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { getRegisterLimitConfig } from "@/lib/rate-limit-config";
 import { logger } from "@/lib/logger";
+import { hashPassword } from "@/lib/password";
 
 export async function POST(req: NextRequest) {
   // 1. Content-Type security check
@@ -20,12 +21,13 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 2. Rate limiting: 5 per hour per IP
+  // 2. Rate limiting based on active profile
   const ip = getClientIp(req.headers);
+  const regRule = getRegisterLimitConfig();
   const limitRes = await rateLimit({
     key: `rate:register:ip:${ip}`,
-    limit: 5,
-    windowSeconds: 3600,
+    limit: regRule.limit,
+    windowSeconds: regRule.windowSeconds,
   });
 
   if (!limitRes.allowed) {
@@ -100,8 +102,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 5. Hash password with bcrypt cost 12
-    const passwordHash = await bcrypt.hash(password, 12);
+    // 5. Hash password asynchronously with crypto.scrypt off the event loop
+    const passwordHash = await hashPassword(password);
 
     // 6. Create user in database
     const user = await db.user.create({
@@ -124,16 +126,48 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ user }, { status: 201 });
-  } catch (error) {
-    logger.error("Failed to register user", { error: String(error) });
+  } catch (error: unknown) {
+    const errObj = error as { code?: string; message?: string };
+
+    // Concurrent registration race condition: Prisma unique constraint failure (P2002)
+    if (errObj?.code === "P2002") {
+      logger.info("Concurrent registration collided on existing email", {
+        email,
+      });
+      return NextResponse.json(
+        {
+          error: {
+            code: "EMAIL_TAKEN",
+            message:
+              "An account with this email already exists. Please log in instead.",
+          },
+        },
+        { status: 409 }
+      );
+    }
+
+    const errStr = String(error);
+    const isDbUnavailable =
+      errStr.includes("Can't reach database") ||
+      errStr.includes("Connection") ||
+      errStr.includes("PrismaClientInitializationError") ||
+      errStr.includes("ECONNREFUSED");
+
+    logger.error("Failed to register user", { error: errStr });
+
     return NextResponse.json(
       {
         error: {
-          code: "INTERNAL_ERROR",
-          message: "An unexpected error occurred. Please try again later.",
+          code: isDbUnavailable ? "SERVICE_UNAVAILABLE" : "INTERNAL_ERROR",
+          message: isDbUnavailable
+            ? "Database service is temporarily unavailable. Please retry in a moment."
+            : "An unexpected error occurred. Please try again later.",
         },
       },
-      { status: 500 }
+      {
+        status: isDbUnavailable ? 503 : 500,
+        headers: isDbUnavailable ? { "Retry-After": "5" } : undefined,
+      }
     );
   }
 }

@@ -139,15 +139,21 @@ flowchart TD
     Client["Browser / Client"] -->|Port 8080| Nginx["Nginx Reverse Proxy & Load Balancer<br/>(round-robin, passive failover, rate-limit)"]
 
     subgraph Internal Docker Network ["Docker internal_net (isolated)"]
-        Nginx -->|app:3000| App1["Next.js Replica 1<br/>(Node 22 standalone, non-root)"]
-        Nginx -->|app:3000| App2["Next.js Replica 2<br/>(Node 22 standalone, non-root)"]
-        Nginx -.->|app:3000 (scaled)| AppN["Next.js Replica N<br/>(Node 22 standalone, non-root)"]
+        subgraph EdgeLayer ["Edge Proxy & Micro-Cache"]
+            Nginx
+            Cache[("Nginx Proxy Cache<br/>(page_cache 60s / 10MB keys / 1GB data)")]
+            Nginx <--> Cache
+        end
 
-        App1 -->|5432| DB[("PostgreSQL 16 Alpine<br/>(uni_prod / named volume)")]
-        App2 -->|5432| DB
-        AppN -.->|5432| DB
+        Nginx -->|Keepalive HTTP/1.1 (64 sockets)| App1["Next.js Replica 1<br/>(scrypt off-thread / libuv pool 16)"]
+        Nginx -->|Keepalive HTTP/1.1 (64 sockets)| App2["Next.js Replica 2<br/>(scrypt off-thread / libuv pool 16)"]
+        Nginx -.->|Keepalive HTTP/1.1| AppN["Next.js Replica N<br/>(scrypt off-thread / libuv pool 16)"]
 
-        Migrate["Prisma Migrate Job<br/>(runs on startup, exits 0)"] -->|5432| DB
+        App1 -->|Connection Pool (max 10)| DB[("PostgreSQL 16 Alpine<br/>(max_connections=150, shared_buffers=128MB)")]
+        App2 -->|Connection Pool (max 10)| DB
+        AppN -.->|Connection Pool (max 10)| DB
+
+        Migrate["Prisma Migrate Job<br/>(runs on startup, exits 0)"] -->|Pool max 5| DB
     end
 ```
 

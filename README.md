@@ -99,11 +99,25 @@ See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for full deployment architecture,
 - `npm run dev` — development
 - `npm test` — unit tests (Vitest)
 - `npm run test:watch` — unit tests in watch mode
-- `npm run test:coverage` — unit test coverage via v8
-- `npm run test:e2e` — Playwright e2e
+- `npm run test:coverage` — unit test coverage via v8 (>83% coverage)
+- `npm run test:integration` — integration tests against PostgreSQL test database
+- `npm run test:e2e` — Playwright browser automation e2e tests
 - `npm run lint` — ESLint check
 - `npm run typecheck` — TypeScript typecheck
 - `npm run format:check` — Prettier format check
+- `npm run docker:strict` — launch full multi-replica stack in production Strict mode
+- `npm run docker:demo` — launch full multi-replica stack in Examiner / Benchmark mode
+- `npm run db:seed:loadtest` — seed 200 pre-hashed accounts for high-volume load tests
+- `npm run lb:check` — verify round-robin traffic distribution
+- `npm run lb:failover` — verify zero-downtime passive failover
+
+## External Examiner & Load Testing
+
+The platform has been hardened and measured under synthetic load testing tools (k6, Locust, Apache Bench):
+
+- **Load Testing Guide**: [`docs/LOAD_TESTING.md`](docs/LOAD_TESTING.md) — ready-to-copy commands and expected metrics.
+- **Chaos Verification**: `powershell -ExecutionPolicy Bypass -File scripts/chaos-check.ps1` — 8 automated tests for payload limits, bad JSON, SQLi/XSS, duplicate races, DB outage recovery, and slow clients.
+- **CI Pipeline**: [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — automated GitHub Actions workflow covering lint, types, format, unit coverage, integration tests, container builds, Playwright E2E, and npm security audit.
 
 ## Adding a challenge
 

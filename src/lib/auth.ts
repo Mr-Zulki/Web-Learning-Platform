@@ -1,13 +1,14 @@
 import "server-only";
 import NextAuth, { type DefaultSession, type Session } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { db } from "./db";
 import { loginSchema } from "./auth-schema";
 import { rateLimit, getClientIp } from "./rate-limit";
+import { getLoginLimitConfig } from "./rate-limit-config";
 import { logger } from "./logger";
+import { verifyPassword, verifyDummyPassword, hashPassword } from "./password";
 
 declare module "next-auth" {
   interface User {
@@ -27,9 +28,6 @@ declare module "@auth/core/jwt" {
     id?: string;
   }
 }
-
-const DUMMY_HASH =
-  "$2b$12$8OJPv08RWCnnMrpB.Q6TmuMS3RaR3NZVM7C.Pl.ZYKmIiyrJV1wc2";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -51,17 +49,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         try {
           const reqHeaders = await headers();
           const ip = getClientIp(reqHeaders);
+          const loginRules = getLoginLimitConfig();
 
           const [ipLimit, emailLimit] = await Promise.all([
             rateLimit({
               key: `rate:login:ip:${ip}`,
-              limit: 10,
-              windowSeconds: 15 * 60,
+              limit: loginRules.ip.limit,
+              windowSeconds: loginRules.ip.windowSeconds,
             }),
             rateLimit({
               key: `rate:login:email:${email}`,
-              limit: 10,
-              windowSeconds: 15 * 60,
+              limit: loginRules.email.limit,
+              windowSeconds: loginRules.email.windowSeconds,
             }),
           ]);
 
@@ -84,14 +83,34 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
 
         if (!user) {
-          // Constant-time execution against dummy hash
-          await bcrypt.compare(password, DUMMY_HASH);
+          // Constant-time execution against dummy hash off the event loop
+          await verifyDummyPassword(password);
           return null;
         }
 
-        const match = await bcrypt.compare(password, user.passwordHash);
-        if (!match) {
+        const { valid, needsUpgrade } = await verifyPassword(
+          password,
+          user.passwordHash
+        );
+        if (!valid) {
           return null;
+        }
+
+        if (needsUpgrade) {
+          try {
+            const upgradedHash = await hashPassword(password);
+            await db.user.update({
+              where: { id: user.id },
+              data: { passwordHash: upgradedHash },
+            });
+            logger.info("Transparently upgraded user password hash to scrypt", {
+              userId: user.id,
+            });
+          } catch (upgradeErr) {
+            logger.warn("Failed to upgrade legacy password hash", {
+              error: String(upgradeErr),
+            });
+          }
         }
 
         return {

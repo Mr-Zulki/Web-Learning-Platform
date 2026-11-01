@@ -7,6 +7,7 @@ import { getChallengeById } from "@/lib/challenges";
 import { checkSubmission } from "@/lib/checker";
 import { MAX_CODE_LENGTH } from "@/lib/preview";
 import { rateLimit } from "@/lib/rate-limit";
+import { getProgressLimitConfig } from "@/lib/rate-limit-config";
 import { logger } from "@/lib/logger";
 
 const progressSchema = z.object({
@@ -47,18 +48,30 @@ export async function GET() {
       },
     });
   } catch (error) {
+    const errStr = String(error);
+    const isDbUnavailable =
+      errStr.includes("Can't reach database") ||
+      errStr.includes("Connection") ||
+      errStr.includes("PrismaClientInitializationError") ||
+      errStr.includes("ECONNREFUSED");
+
     logger.error("Failed to fetch user progress", {
       userId: user.id,
-      error: String(error),
+      error: errStr,
     });
     return NextResponse.json(
       {
         error: {
-          code: "INTERNAL_ERROR",
-          message: "Failed to retrieve progress records.",
+          code: isDbUnavailable ? "SERVICE_UNAVAILABLE" : "INTERNAL_ERROR",
+          message: isDbUnavailable
+            ? "Database service is temporarily unavailable. Please retry in a moment."
+            : "Failed to retrieve progress records.",
         },
       },
-      { status: 500 }
+      {
+        status: isDbUnavailable ? 503 : 500,
+        headers: isDbUnavailable ? { "Retry-After": "5" } : undefined,
+      }
     );
   }
 }
@@ -81,11 +94,12 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 2. Rate limiting: 60 progress writes per minute per user
+  // 2. Rate limiting based on active profile
+  const progRule = getProgressLimitConfig();
   const limitRes = await rateLimit({
     key: `rate:progress:user:${user.id}`,
-    limit: 60,
-    windowSeconds: 60,
+    limit: progRule.limit,
+    windowSeconds: progRule.windowSeconds,
   });
 
   if (!limitRes.allowed) {
@@ -255,19 +269,31 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ progress: updated }, { status: 200 });
   } catch (error) {
+    const errStr = String(error);
+    const isDbUnavailable =
+      errStr.includes("Can't reach database") ||
+      errStr.includes("Connection") ||
+      errStr.includes("PrismaClientInitializationError") ||
+      errStr.includes("ECONNREFUSED");
+
     logger.error("Failed to upsert progress", {
       userId: user.id,
       challengeId,
-      error: String(error),
+      error: errStr,
     });
     return NextResponse.json(
       {
         error: {
-          code: "INTERNAL_ERROR",
-          message: "Failed to persist progress record.",
+          code: isDbUnavailable ? "SERVICE_UNAVAILABLE" : "INTERNAL_ERROR",
+          message: isDbUnavailable
+            ? "Database service is temporarily unavailable. Please retry in a moment."
+            : "Failed to persist progress record.",
         },
       },
-      { status: 500 }
+      {
+        status: isDbUnavailable ? 503 : 500,
+        headers: isDbUnavailable ? { "Retry-After": "5" } : undefined,
+      }
     );
   }
 }

@@ -6,11 +6,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { rateLimit } from "@/lib/rate-limit";
 import { POST as registerHandler } from "@/app/api/auth/register/route";
+import { GET as healthHandler } from "@/app/api/health/route";
 import {
   GET as progressGetHandler,
   POST as progressPostHandler,
 } from "@/app/api/progress/route";
 import * as authModule from "@/lib/auth";
+import { verifyPassword, isScryptHash, hashPassword } from "@/lib/password";
 
 describe("Phase 4 Integration Tests (PostgreSQL uni_test)", () => {
   beforeEach(async () => {
@@ -26,7 +28,7 @@ describe("Phase 4 Integration Tests (PostgreSQL uni_test)", () => {
   });
 
   describe("1. Registration & Authentication Flow", () => {
-    it("registers a new user with cost 12 bcrypt hash and no password leak", async () => {
+    it("registers a new user with scrypt hash and no password leak", async () => {
       const req = new NextRequest("http://localhost:3000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -51,10 +53,75 @@ describe("Phase 4 Integration Tests (PostgreSQL uni_test)", () => {
         where: { email: "learner@example.com" },
       });
       expect(dbUser).not.toBeNull();
-      expect(dbUser?.passwordHash).toMatch(/^\$2[aby]\$12\$/);
-      expect(await bcrypt.compare("password123", dbUser!.passwordHash)).toBe(
-        true
+      expect(isScryptHash(dbUser!.passwordHash)).toBe(true);
+      expect(dbUser?.passwordHash).toMatch(/^scrypt\$16384\$8\$1\$/);
+      const { valid } = await verifyPassword(
+        "password123",
+        dbUser!.passwordHash
       );
+      expect(valid).toBe(true);
+    });
+
+    it("transparently upgrades legacy bcrypt password hash to scrypt on successful login", async () => {
+      // Seed user with legacy bcrypt hash
+      const legacyBcryptHash = await bcrypt.hash("myPassword123!", 10);
+      const legacyUser = await db.user.create({
+        data: {
+          name: "Legacy User",
+          email: "legacy@example.com",
+          passwordHash: legacyBcryptHash,
+        },
+      });
+
+      expect(legacyUser.passwordHash).toMatch(/^\$2[aby]\$/);
+
+      // Verify and upgrade
+      const verification = await verifyPassword(
+        "myPassword123!",
+        legacyUser.passwordHash
+      );
+      expect(verification.valid).toBe(true);
+      expect(verification.needsUpgrade).toBe(true);
+
+      const upgradedHash = await hashPassword("myPassword123!");
+      await db.user.update({
+        where: { id: legacyUser.id },
+        data: { passwordHash: upgradedHash },
+      });
+
+      // Verify updated record in DB
+      const updatedUser = await db.user.findUnique({
+        where: { id: legacyUser.id },
+      });
+      expect(isScryptHash(updatedUser!.passwordHash)).toBe(true);
+      const postUpgrade = await verifyPassword(
+        "myPassword123!",
+        updatedUser!.passwordHash
+      );
+      expect(postUpgrade.valid).toBe(true);
+      expect(postUpgrade.needsUpgrade).toBe(false);
+    });
+
+    it("keeps /api/health fast and non-blocked while concurrent scrypt hashing runs", async () => {
+      // Start 5 concurrent hashing operations
+      const hashingPromises = Promise.all([
+        hashPassword("Pass1!"),
+        hashPassword("Pass2!"),
+        hashPassword("Pass3!"),
+        hashPassword("Pass4!"),
+        hashPassword("Pass5!"),
+      ]);
+
+      // Measure healthcheck latency during active hashing
+      const start = Date.now();
+      const healthRes = await healthHandler();
+      const elapsed = Date.now() - start;
+
+      expect(healthRes.status).toBe(200);
+      // Health check should resolve immediately without waiting for libuv threadpool scrypt tasks
+      expect(elapsed).toBeLessThan(100);
+
+      await hashingPromises;
     });
 
     it("rejects duplicate email with 409 Conflict", async () => {

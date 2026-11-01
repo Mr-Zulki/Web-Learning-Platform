@@ -115,3 +115,19 @@ Why: High-frequency denial-of-service and brute-force attacks on auth endpoints 
 ## 029 — Automated Load Testing via k6
 
 Why: k6 provides scriptable, lightweight JavaScript scenarios capable of running both natively or in ephemeral Docker containers without JVM overhead. It offers granular metrics (avg, med, p95 latencies, throughput, error rates) and automated threshold assertions (`p(95)<800`, `rate<0.01`) ideal for validating cluster performance and multi-replica efficiency.
+
+## 030 — Password Hashing with Asynchronous crypto.scrypt via libuv Threadpool
+
+Why: Synchronous password hashing with `bcryptjs` runs entirely on Node's single-threaded JavaScript event loop. Under concurrent login spikes, CPU starvation from bcrypt caused `/api/health` latencies to skyrocket over 4 seconds. Replacing bcrypt with native `crypto.scrypt` delegates cryptographic computation to libuv worker threads (`UV_THREADPOOL_SIZE=16`), keeping the JavaScript event loop free to serve health probes and I/O in <10ms. Parameters (`N: 16384, r: 8, p: 1, keyLength: 64, saltLength: 16`) are calibrated to ~90ms execution, providing robust offline brute-force resistance while remaining responsive. Legacy bcrypt hashes are transparently verified and upgraded in PostgreSQL upon successful login.
+
+## 031 — Dual Rate Limiting Profiles: Strict vs Demo
+
+Why: Production security requires aggressive per-IP rate limiting (5 registrations/hr/IP, 10 logins/15min) to stop credential stuffing. However, automated stress tools (JMeter, k6, Locust, Apache Bench) used by external examiners originate from a single IP address, triggering 99.7% HTTP 429 rejections in baseline tests. Introducing two explicit profiles (`strict` for production by default, and `demo` for stress benchmarks) decouples capacity evaluation from abuse prevention. Switching requires explicit opt-in via environment variables (`RATE_LIMIT_PROFILE=demo` and `NGINX_CONF=nginx.demo.conf`), preventing security from ever being weakened silently.
+
+## 032 — Nginx Micro-Caching for Static Content and Upstream Connection Pooling
+
+Why: Under 200–300 VU traffic spikes, uncached Next.js static page rendering overwhelmed container CPU limits, producing 502 Bad Gateway and 504 Gateway Timeout errors. Configuring an Nginx edge micro-cache (`proxy_cache page_cache; proxy_cache_valid 200 60s;`) for static routes (`/`, `/lessons`, `/lessons/html-structure`) slashed browse p95 latency from 6.95s to 8.96ms (~775x improvement) and eliminated all 502/504 errors. Configuring upstream `keepalive 64` eliminates TCP socket teardown and handshake overhead during high-concurrency bursts.
+
+## 033 — Playwright E2E and Multi-Stage CI Pipeline
+
+Why: Validating user journeys across multiple container replicas requires real browser interaction. Playwright tests the full happy path against the containerized stack: user registration, credentials authentication, CodeMirror solution entry, client submission, server-side static rule re-verification, and dashboard reflection. GitHub Actions automates linting, strict typechecks, Prettier format verification, Vitest unit coverage, PostgreSQL integration tests, Docker build, Playwright E2E against the container stack, and npm production security audit on every push.

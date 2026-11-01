@@ -1,0 +1,131 @@
+﻿--- Resource Utilization & DB Connections for auth ---
+
+[2026-11-01 16:21:46] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+affectionate_raman        2.38%     18.16MiB / 7.423GiB   1.39kB / 2.38kB
+uni-project-app-1         50.76%    101.6MiB / 512MiB     689kB / 65.4MB
+uni-project-app-2         48.88%    65.45MiB / 512MiB     724kB / 67.3MB
+uni-project-db-1          0.00%     33.55MiB / 7.423GiB   2.41kB / 126B
+uni-project-nginx-1       0.34%     8.902MiB / 7.423GiB   134MB / 134MB
+chatgpt-browser-runtime   59.16%    734MiB / 7.423GiB     8.13MB / 1.72MB
+postiz                    19.88%    1.608GiB / 7.423GiB   403kB / 195kB
+temporal-admin-tools      0.00%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.00%     10.93MiB / 7.423GiB   0B / 0B
+temporal                  8.08%     220.5MiB / 7.423GiB   1.91MB / 2.35MB
+postiz-postgres           6.95%     46.46MiB / 7.423GiB   21.6kB / 249kB
+postiz-redis              0.26%     12.82MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       16.61%    137MiB / 7.423GiB     2.21MB / 1.72MB
+temporal-elasticsearch    10.68%    738MiB / 7.423GiB     18kB / 10.8kB
+
+[2026-11-01 16:21:46] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[2026-11-01 16:21:52] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+affectionate_raman        16.40%    21.8MiB / 7.423GiB    119kB / 87.4kB
+uni-project-app-1         51.16%    114.1MiB / 512MiB     690kB / 65.4MB
+uni-project-app-2         0.11%     67.41MiB / 512MiB     732kB / 67.3MB
+uni-project-db-1          0.41%     45.18MiB / 7.423GiB   19.2kB / 11.2kB
+uni-project-nginx-1       4.82%     9.262MiB / 7.423GiB   134MB / 134MB
+chatgpt-browser-runtime   48.90%    733.3MiB / 7.423GiB   8.13MB / 1.72MB
+postiz                    18.19%    1.608GiB / 7.423GiB   403kB / 195kB
+temporal-admin-tools      0.01%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.00%     10.97MiB / 7.423GiB   0B / 0B
+temporal                  6.04%     220.9MiB / 7.423GiB   1.95MB / 2.43MB
+postiz-postgres           0.00%     45.49MiB / 7.423GiB   21.6kB / 249kB
+postiz-redis              0.25%     12.82MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       0.37%     137.4MiB / 7.423GiB   2.28MB / 1.76MB
+temporal-elasticsearch    0.68%     737.2MiB / 7.423GiB   18kB / 10.8kB
+
+[2026-11-01 16:21:52] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[2026-11-01 16:21:58] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+affectionate_raman        26.75%    24.34MiB / 7.423GiB   437kB / 327kB
+uni-project-app-1         0.15%     101.9MiB / 512MiB     692kB / 65.4MB
+uni-project-app-2         0.00%     67.37MiB / 512MiB     733kB / 67.3MB
+uni-project-db-1          0.00%     44.71MiB / 7.423GiB   19.5kB / 11.4kB
+uni-project-nginx-1       5.81%     9.934MiB / 7.423GiB   134MB / 135MB
+chatgpt-browser-runtime   40.41%    745.3MiB / 7.423GiB   8.13MB / 1.72MB
+postiz                    53.58%    1.608GiB / 7.423GiB   428kB / 236kB
+temporal-admin-tools      0.01%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.00%     10.97MiB / 7.423GiB   0B / 0B
+temporal                  53.64%    221.1MiB / 7.423GiB   2MB / 2.46MB
+postiz-postgres           0.00%     45.5MiB / 7.423GiB    21.6kB / 249kB
+postiz-redis              0.33%     13.32MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       0.47%     137.5MiB / 7.423GiB   2.29MB / 1.77MB
+temporal-elasticsearch    0.69%     737.5MiB / 7.423GiB   18kB / 10.8kB
+
+[2026-11-01 16:21:58] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[2026-11-01 16:22:03] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+affectionate_raman        30.20%    27.49MiB / 7.423GiB   758kB / 573kB
+uni-project-app-1         0.01%     102.7MiB / 512MiB     692kB / 65.4MB
+uni-project-app-2         0.01%     67.21MiB / 512MiB     733kB / 67.3MB
+uni-project-db-1          9.54%     45.16MiB / 7.423GiB   19.5kB / 11.4kB
+uni-project-nginx-1       7.59%     9.43MiB / 7.423GiB    135MB / 135MB
+chatgpt-browser-runtime   38.95%    744.9MiB / 7.423GiB   8.13MB / 1.72MB
+postiz                    18.78%    1.609GiB / 7.423GiB   438kB / 252kB
+temporal-admin-tools      0.00%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.01%     10.98MiB / 7.423GiB   0B / 0B
+temporal                  5.45%     221.2MiB / 7.423GiB   2.19MB / 2.77MB
+postiz-postgres           0.00%     45.49MiB / 7.423GiB   21.6kB / 249kB
+postiz-redis              9.27%     14.11MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       0.38%     137.7MiB / 7.423GiB   2.59MB / 1.94MB
+temporal-elasticsearch    0.77%     737.3MiB / 7.423GiB   18kB / 10.8kB
+
+[2026-11-01 16:22:03] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[2026-11-01 16:22:09] Docker Container Stats:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+affectionate_raman        11.69%    28.52MiB / 7.423GiB   1.05MB / 794kB
+uni-project-app-1         0.00%     102.2MiB / 512MiB     693kB / 65.4MB
+uni-project-app-2         0.00%     67.76MiB / 512MiB     734kB / 67.3MB
+uni-project-db-1          8.57%     45.21MiB / 7.423GiB   20.4kB / 11.9kB
+uni-project-nginx-1       0.00%     9.008MiB / 7.423GiB   135MB / 135MB
+chatgpt-browser-runtime   36.42%    744.8MiB / 7.423GiB   8.13MB / 1.72MB
+postiz                    17.33%    1.608GiB / 7.423GiB   438kB / 252kB
+temporal-admin-tools      0.00%     1.34MiB / 7.423GiB    2.15kB / 126B
+temporal-ui               0.00%     11.01MiB / 7.423GiB   0B / 0B
+temporal                  16.64%    221.1MiB / 7.423GiB   2.2MB / 2.78MB
+postiz-postgres           0.00%     45.49MiB / 7.423GiB   21.6kB / 249kB
+postiz-redis              0.24%     13.33MiB / 7.423GiB   3.33kB / 11.4kB
+temporal-postgresql       0.79%     138.6MiB / 7.423GiB   2.6MB / 1.96MB
+temporal-elasticsearch    0.76%     737.9MiB / 7.423GiB   18kB / 10.8kB
+
+[2026-11-01 16:22:09] PostgreSQL Active Connections:
+docker : couldn't find env file: C:\Users\HP\Documents\.env.docker
+At line:11 char:9
++         docker compose --env-file .env.docker exec -T db psql -U post ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (couldn't find e...nts\.env.docker:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

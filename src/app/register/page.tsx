@@ -59,17 +59,21 @@ export default function RegisterPage() {
       }
 
       // Auto-login after successful registration
-      const loginRes = await signIn("credentials", {
-        email: parsed.data.email,
-        password: parsed.data.password,
-        redirect: false,
-      });
+      try {
+        const loginRes = await signIn("credentials", {
+          email: parsed.data.email,
+          password: parsed.data.password,
+          redirect: false,
+        });
 
-      if (loginRes?.error) {
+        if (loginRes?.error) {
+          router.push("/login?registered=1");
+        } else {
+          router.push("/dashboard");
+          router.refresh();
+        }
+      } catch {
         router.push("/login?registered=1");
-      } else {
-        router.push("/dashboard");
-        router.refresh();
       }
     } catch {
       setSubmitError("Network error. Please check your connection.");

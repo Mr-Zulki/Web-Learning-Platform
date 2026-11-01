@@ -183,3 +183,57 @@ Run the test suite to automatically validate the schema, execute bi-directional 
 ```bash
 npm test
 ```
+
+---
+
+## Playwright End-to-End Testing (Phase 6)
+
+The platform includes full-system browser automation testing via `@playwright/test` (`tests/e2e/happy-path.spec.ts`) targeting `http://localhost:8080`:
+
+1. **User Journey Tested**:
+   - Navigates to `/register` and creates a new learner account.
+   - Handles auto-login or manual credentials authentication.
+   - Redirects to `/dashboard` and confirms user profile presence.
+   - Navigates to `/lessons/html-structure`.
+   - Interacts with CodeMirror 6 editor, clears starter code, types known-good solution.
+   - Clicks "Check my code" and asserts client-side success feedback (`All checks passed!`).
+   - Asserts server persistence confirmation (`✓ Progress saved`).
+   - Returns to `/dashboard` and asserts updated progress (`1 of 5 completed (20%)`) and `Completed` badge.
+2. **Execution**:
+   ```bash
+   npm run test:e2e
+   ```
+
+---
+
+## Load & Stress Testing (Phase 6)
+
+Containerized k6 test suites located in `tests/load/` simulate real-world traffic profiles:
+
+- `browse.js`: 200 Virtual Users navigating static pages and curriculum details.
+- `auth.js`: 50 Virtual Users executing full registration and credentials sign-in workflows.
+- `progress.js`: 30 Virtual Users performing continuous progress writes.
+- `mixed.js`: 80 Virtual Users (70% browsing, 20% login, 10% progress updates).
+- `spike.js`: 300 Virtual Users sudden traffic surge within 5 seconds.
+
+See [LOAD_TESTING.md](file:///C:/Users/HP/Videos/uni-project/docs/LOAD_TESTING.md) for full execution options and baseline vs after comparison tables.
+
+---
+
+## Chaos, Abuse, & Resilience Verification (Phase 6)
+
+An automated suite in `scripts/chaos-check.ps1` verifies the system's fault-tolerance boundaries:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/chaos-check.ps1
+```
+
+- **Checks Executed**:
+  1. _Oversized Payload_: Rejects 300KB requests with structured `413 Payload Too Large` JSON.
+  2. _Malformed JSON_: Rejects invalid syntax with `400 Bad Request`.
+  3. _Unsupported Media Type_: Rejects non-JSON payloads with `415 Unsupported Media Type`.
+  4. _Missing Fields Validation_: Zod schema catches missing keys with `400 Bad Request`.
+  5. _SQL Injection & XSS_: Parameterized queries prevent SQL tampering; script tags stored safely as text without evaluation.
+  6. _Concurrent Registration Race_: 50 simultaneous registrations with identical email produce exactly 1 `201 Created` and 49 `409 Conflict` (0 server errors).
+  7. _Database Outage Simulation_: Pauses PostgreSQL; cached pages return 200, `/api/ready` returns 503, cluster recovers automatically upon unpause.
+  8. _Slow Client (Slowloris)_: Holds TCP connection beyond `client_header_timeout` (5s); server terminates hung sockets without starving healthy clients.

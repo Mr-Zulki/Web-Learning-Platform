@@ -228,3 +228,64 @@ Get-Content tests/load/smoke.js -Raw | docker run --rm -i --network uni-project_
 
 - **Cause**: Another service or test server is bound to port 8080.
 - **Fix**: Identify the process using `Get-NetTCPConnection -LocalPort 8080` and stop it, or customize the port binding in `docker-compose.yml`.
+
+---
+
+## 8. Rate Limiting Profiles: Strict vs Demo
+
+The platform provides two traffic governance profiles configured via `RATE_LIMIT_PROFILE` and `NGINX_CONF`:
+
+- **Strict Profile (Default / Production)**:
+  - Nginx Ingress: `10 req/s` (burst=20)
+  - Registration: `5 / hour / IP`
+  - Login: `10 / 15 min / IP & Email`
+  - Progress Writes: `60 / min / user`
+  - Activation: `npm run docker:strict`
+- **Demo Profile (Examiner Mode / Benchmark Testing)**:
+  - Nginx Ingress: `200 req/s` (burst=300)
+  - Registration: `1,000 / hour / IP`
+  - Login: `3,000 / 15 min / IP & Email`
+  - Progress Writes: `600 / min / user`
+  - Activation: `npm run docker:demo`
+
+---
+
+## 9. Running External Load Tests
+
+External examiners can evaluate cluster performance using their preferred tool:
+
+```powershell
+# 1. Switch to demo profile for unrestricted benchmarking
+npm run docker:demo
+
+# 2. Seed 200 pre-hashed test accounts (Password123!)
+npm run db:seed:loadtest
+
+# 3. Apache Bench (ab) static cache check (1,000 reqs, 50 concurrency)
+ab -n 1000 -c 50 http://localhost:8080/
+
+# 4. Containerized k6 scenarios (no local k6 installation required)
+docker run --rm -i --network=host grafana/k6 run - < tests/load/browse.js
+docker run --rm -i --network=host grafana/k6 run - < tests/load/auth.js
+docker run --rm -i --network=host grafana/k6 run - < tests/load/mixed.js
+docker run --rm -i --network=host grafana/k6 run - < tests/load/spike.js
+
+# 5. Automated Chaos and Resilience Suite
+powershell -ExecutionPolicy Bypass -File scripts/chaos-check.ps1
+```
+
+See [LOAD_TESTING.md](file:///C:/Users/HP/Videos/uni-project/docs/LOAD_TESTING.md) for full instructions and metric analysis.
+
+---
+
+## 10. Sizing and Capacity Recommendations
+
+Based on empirical load testing and hardware profile measurements:
+
+| Component                | Default Allocation                        | Measured Peak Load (2 Replicas)             | Recommended Production                           |
+| ------------------------ | ----------------------------------------- | ------------------------------------------- | ------------------------------------------------ |
+| **Next.js App Replicas** | 2 replicas, 1.5 CPUs, 768MB RAM           | 477MB RAM per replica, CPU 45% under 80 VUs | 2–4 replicas behind Nginx round-robin            |
+| **PostgreSQL 16**        | 150 max_connections, 128MB shared_buffers | 36 active connections under peak load       | 150 max_connections, 256MB shared_buffers        |
+| **Connection Pooling**   | `connection_limit=10&pool_timeout=10`     | 20 app connections + 5 migration = 25 conns | `connection_limit=10` per replica (100 headroom) |
+| **Nginx Reverse Proxy**  | 2,048 worker_connections, keepalive 64    | 17.6MB RAM, 1,380 req/s static throughput   | 4,096 connections, multi_accept enabled          |
+| **Micro-Cache**          | 60s TTL, 10MB keys, 1GB data              | 100% cache hit on static pages, p95 8.96ms  | 60s–300s TTL for static curriculum               |

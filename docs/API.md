@@ -1,13 +1,13 @@
 # API Reference
 
-| Method | Route                      | Auth | Body                                                            | Response / Status                                    | Rate Limit                |
-| ------ | -------------------------- | ---- | --------------------------------------------------------------- | ---------------------------------------------------- | ------------------------- |
-| POST   | `/api/auth/register`       | no   | `{ email, password, name? }`                                    | `201 Created` (`{ user: { id, email, name, ... } }`) | 5 per hour per IP         |
-| POST   | `/api/auth/[...nextauth]`  | no   | NextAuth Credentials / Session form                             | `302 Redirect` (Sets httpOnly JWT cookie)            | 10 per 15 min per IP/user |
-| GET    | `/api/progress`            | yes  | —                                                               | `200 OK` (`{ progress: [...], summary: {...} }`)     | —                         |
-| POST   | `/api/progress`            | yes  | `{ lessonId, challengeId, status, submission?: { html, css } }` | `200 OK` (`{ progress: {...} }`)                     | 60 per min per user       |
-| GET    | `/api/lessons` (Deferred)  | no   | —                                                               | Statically prerendered in RSC                        | —                         |
-| GET    | `/api/lessons/[id]` (Def.) | no   | —                                                               | Statically prerendered in RSC                        | —                         |
+| Method | Route                      | Auth | Body                                                            | Response / Status                                    | Strict Rate Limit         | Demo Rate Limit              |
+| ------ | -------------------------- | ---- | --------------------------------------------------------------- | ---------------------------------------------------- | ------------------------- | ---------------------------- |
+| POST   | `/api/auth/register`       | no   | `{ email, password, name? }`                                    | `201 Created` (`{ user: { id, email, name, ... } }`) | 5 per hour per IP         | 1,000 per hour per IP        |
+| POST   | `/api/auth/[...nextauth]`  | no   | NextAuth Credentials / Session form                             | `302 Redirect` (Sets httpOnly JWT cookie)            | 10 per 15 min per IP/user | 3,000 per 15 min per IP/user |
+| GET    | `/api/progress`            | yes  | —                                                               | `200 OK` (`{ progress: [...], summary: {...} }`)     | —                         | —                            |
+| POST   | `/api/progress`            | yes  | `{ lessonId, challengeId, status, submission?: { html, css } }` | `200 OK` (`{ progress: {...} }`)                     | 60 per min per user       | 600 per min per user         |
+| GET    | `/api/lessons` (Deferred)  | no   | —                                                               | Statically prerendered in RSC                        | —                         | —                            |
+| GET    | `/api/lessons/[id]` (Def.) | no   | —                                                               | Statically prerendered in RSC                        | —                         | —                            |
 
 ---
 
@@ -137,6 +137,31 @@ Deep dependency probe verifying database connectivity before routing user traffi
       "status": "not ready"
     }
     ```
+
+### 7. Rate Limit Error Responses (HTTP 429)
+
+When rate limits are exceeded (at Nginx edge or inside Next.js application layer), the server returns a structured `429 Too Many Requests` JSON response:
+
+- **Headers**: `Retry-After: <seconds>`, `Content-Type: application/json`
+- **Application Layer JSON Schema**:
+  ```json
+  {
+    "error": {
+      "code": "RATE_LIMITED",
+      "message": "Too many requests. Please try again later.",
+      "retryAfter": 3600
+    }
+  }
+  ```
+- **Edge Nginx JSON Schema** (when blocked at reverse proxy perimeter):
+  ```json
+  {
+    "error": {
+      "code": "RATE_LIMITED",
+      "message": "Too many requests. Please slow down and try again later."
+    }
+  }
+  ```
 
 ---
 
