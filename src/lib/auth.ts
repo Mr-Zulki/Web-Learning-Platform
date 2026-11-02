@@ -78,46 +78,68 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           // headers() may not be available in synthetic test runners
         }
 
-        const user = await db.user.findUnique({
-          where: { email },
-        });
+        // Wrap DB lookup and password verification so errors are logged
+        // instead of silently becoming "Invalid email or password" via NextAuth.
+        try {
+          const user = await db.user.findUnique({
+            where: { email },
+          });
 
-        if (!user) {
-          // Constant-time execution against dummy hash off the event loop
-          await verifyDummyPassword(password);
-          return null;
-        }
-
-        const { valid, needsUpgrade } = await verifyPassword(
-          password,
-          user.passwordHash
-        );
-        if (!valid) {
-          return null;
-        }
-
-        if (needsUpgrade) {
-          try {
-            const upgradedHash = await hashPassword(password);
-            await db.user.update({
-              where: { id: user.id },
-              data: { passwordHash: upgradedHash },
-            });
-            logger.info("Transparently upgraded user password hash to scrypt", {
-              userId: user.id,
-            });
-          } catch (upgradeErr) {
-            logger.warn("Failed to upgrade legacy password hash", {
-              error: String(upgradeErr),
-            });
+          if (!user) {
+            logger.info("login_user_not_found", { email });
+            // Constant-time execution against dummy hash off the event loop
+            await verifyDummyPassword(password);
+            return null;
           }
-        }
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-        };
+          const { valid, needsUpgrade } = await verifyPassword(
+            password,
+            user.passwordHash
+          );
+          if (!valid) {
+            logger.info("login_password_mismatch", { email });
+            return null;
+          }
+
+          if (needsUpgrade) {
+            try {
+              const upgradedHash = await hashPassword(password);
+              await db.user.update({
+                where: { id: user.id },
+                data: { passwordHash: upgradedHash },
+              });
+              logger.info(
+                "Transparently upgraded user password hash to scrypt",
+                { userId: user.id }
+              );
+            } catch (upgradeErr) {
+              logger.warn("Failed to upgrade legacy password hash", {
+                error: String(upgradeErr),
+              });
+            }
+          }
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+          };
+        } catch (err: unknown) {
+          // Log the error so DB/connection failures are visible in production
+          // logs instead of silently returning null ("Invalid email or password").
+          const errObj = err as { name?: string; code?: string; message?: string };
+          const safeMessage = (errObj?.message ?? String(err)).replace(
+            /\/\/[^@]+@/g,
+            "//[REDACTED]@"
+          );
+          logger.error("login_authorize_error", {
+            event: "login_authorize_error",
+            errorName: errObj?.name ?? "UnknownError",
+            errorCode: errObj?.code ?? "NONE",
+            message: safeMessage,
+          });
+          return null;
+        }
       },
     }),
   ],

@@ -19,3 +19,7 @@
 ## Blockers
 
 - none
+
+## Fixed Issues
+
+- Login fails after registration on Vercel+Neon: authorize() had no try/catch around DB lookup and password verify; any DB error (e.g. PgBouncer prepared statement failure without `pgbouncer=true`) was thrown to NextAuth and displayed as "Invalid email or password". Fixed with error logging and documented the required `pgbouncer=true` connection parameter.

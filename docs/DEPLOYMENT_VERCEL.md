@@ -46,7 +46,7 @@ In your Vercel Project Settings under **Settings > Environment Variables**, conf
 
 | Variable Name | Description / Recommended Value |
 | :--- | :--- |
-| `DATABASE_URL` | Neon pooled connection string with pool tuning parameters appended: `postgresql://<user>:<password>@<endpoint>-pooler.c-4.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&connection_limit=1&pool_timeout=10` |
+| `DATABASE_URL` | Neon pooled connection string with `pgbouncer=true` (required for Prisma prepared statements through PgBouncer) and pool tuning: `postgresql://<user>:<password>@<endpoint>-pooler.c-4.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connection_limit=1&pool_timeout=10` |
 | `DIRECT_URL` | Neon unpooled / direct connection string: `postgresql://<user>:<password>@<endpoint>.c-4.ap-southeast-1.aws.neon.tech/neondb?sslmode=require` |
 | `AUTH_SECRET` | 32+ character random string (generated via `openssl rand -base64 32`) |
 | `AUTH_TRUST_HOST` | `true` |
