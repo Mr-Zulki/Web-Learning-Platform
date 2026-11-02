@@ -23,22 +23,37 @@ const IP_V6_REGEX =
 
 /**
  * Extracts and validates the client IP from request headers.
- * In Phase 5, Nginx must configure:
- *   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
- *   proxy_set_header X-Real-IP $remote_addr;
+ *
+ * Trust priority (most → least verified):
+ *  1. x-real-ip   — On Vercel, this is set by the edge network to the verified
+ *                   remote TCP address and cannot be overridden by the client.
+ *                   Source: https://vercel.com/docs/edge-network/headers#x-real-ip
+ *  2. x-forwarded-for (first entry) — Used in local dev and Docker (nginx sets
+ *                   this to $remote_addr / $proxy_add_x_forwarded_for, making
+ *                   the first entry the real client IP). On Vercel this header
+ *                   CAN be prepended by an upstream proxy, so it is checked only
+ *                   as a fallback when x-real-ip is absent.
+ *  3. 127.0.0.1   — Final fallback for test runners and localhost.
+ *
+ * NEVER trust the first entry of x-forwarded-for as the primary source on
+ * Vercel — a client can inject a fake leading IP to bypass rate limits.
  */
 export function getClientIp(headers: Headers): string {
+  // 1. Vercel-verified single-IP header (cannot be spoofed by clients).
+  const realIp = headers.get("x-real-ip")?.trim();
+  if (realIp && (IP_V4_REGEX.test(realIp) || IP_V6_REGEX.test(realIp))) {
+    return realIp;
+  }
+
+  // 2. Fallback: first entry of x-forwarded-for.
+  //    Safe for local dev (nginx sets $remote_addr as the first entry) but
+  //    only used on Vercel when x-real-ip is missing (e.g. health-check calls).
   const forwardedFor = headers.get("x-forwarded-for");
   if (forwardedFor) {
     const firstIp = forwardedFor.split(",")[0]?.trim();
     if (firstIp && (IP_V4_REGEX.test(firstIp) || IP_V6_REGEX.test(firstIp))) {
       return firstIp;
     }
-  }
-
-  const realIp = headers.get("x-real-ip")?.trim();
-  if (realIp && (IP_V4_REGEX.test(realIp) || IP_V6_REGEX.test(realIp))) {
-    return realIp;
   }
 
   return "127.0.0.1";

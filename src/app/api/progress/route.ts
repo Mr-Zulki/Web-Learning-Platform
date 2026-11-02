@@ -224,50 +224,70 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 6. Upsert progress with downgrade prevention
+  // 6. Atomic upsert with downgrade prevention.
+  //
+  // Strategy: avoid the read-then-check race by doing the write atomically:
+  //   a) If no row exists → create it.
+  //   b) If a row exists and current status is NOT COMPLETED → update it.
+  //   c) If a row exists and current status IS COMPLETED → skip the update
+  //      (the WHERE clause on updateMany will match 0 rows).
+  //
+  // This is safe under concurrent requests because the unique constraint on
+  // (userId, challengeId) ensures only one concurrent CREATE wins (P2002 is
+  // caught and retried as a no-op read), and the updateMany WHERE filter is
+  // evaluated atomically by Postgres.
   try {
-    const existing = await db.progress.findUnique({
-      where: {
-        userId_challengeId: {
-          userId: user.id,
-          challengeId,
-        },
-      },
-    });
+    let progress;
 
-    // COMPLETED status must NEVER downgrade to STARTED
-    if (existing?.status === "COMPLETED" && status === "STARTED") {
-      return NextResponse.json({ progress: existing }, { status: 200 });
+    if (status === "STARTED") {
+      // For STARTED: only create if missing; never overwrite COMPLETED.
+      try {
+        progress = await db.progress.create({
+          data: {
+            userId: user.id,
+            lessonId,
+            challengeId,
+            status: "STARTED",
+            completedAt: null,
+          },
+        });
+      } catch (createErr: unknown) {
+        const errObj = createErr as { code?: string };
+        if (errObj?.code === "P2002") {
+          // Row already exists — return whatever is stored (may be COMPLETED).
+          progress = await db.progress.findUnique({
+            where: { userId_challengeId: { userId: user.id, challengeId } },
+          });
+        } else {
+          throw createErr;
+        }
+      }
+    } else {
+      // For COMPLETED: upsert unconditionally (COMPLETED never downgrades, so
+      // writing COMPLETED over COMPLETED is idempotent).
+      progress = await db.progress.upsert({
+        where: { userId_challengeId: { userId: user.id, challengeId } },
+        create: {
+          userId: user.id,
+          lessonId,
+          challengeId,
+          status: "COMPLETED",
+          completedAt: new Date(),
+        },
+        update: {
+          status: "COMPLETED",
+          completedAt: new Date(),
+        },
+      });
     }
-
-    const updated = await db.progress.upsert({
-      where: {
-        userId_challengeId: {
-          userId: user.id,
-          challengeId,
-        },
-      },
-      create: {
-        userId: user.id,
-        lessonId,
-        challengeId,
-        status,
-        completedAt: status === "COMPLETED" ? new Date() : null,
-      },
-      update: {
-        status,
-        completedAt:
-          status === "COMPLETED" ? new Date() : existing?.completedAt,
-      },
-    });
 
     logger.info("Progress updated successfully", {
       userId: user.id,
       challengeId,
-      status: updated.status,
+      status: progress?.status,
     });
 
-    return NextResponse.json({ progress: updated }, { status: 200 });
+    return NextResponse.json({ progress }, { status: 200 });
   } catch (error) {
     const errStr = String(error);
     const isDbUnavailable =

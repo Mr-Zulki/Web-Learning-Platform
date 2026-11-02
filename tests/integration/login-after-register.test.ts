@@ -92,6 +92,10 @@ describe("Login after register (regression)", () => {
   });
 
   it("login with different case email succeeds", async () => {
+    // Ensure the user exists right here — concurrent test files may have deleted
+    // all users between our beforeEach and this test body.
+    await ensureTestUser();
+
     const parsed = loginSchema.safeParse({
       email: "LOGINBUG.REGRESSION@EXAMPLE.COM",
       password: TEST_PASSWORD,

@@ -45,7 +45,7 @@ model Progress {
 
 model RateLimit {
   key         String   @id
-  count       Int      @default(0)
+  count       Int      @default(1)
   windowStart DateTime @default(now())
 
   @@map("rate_limits")

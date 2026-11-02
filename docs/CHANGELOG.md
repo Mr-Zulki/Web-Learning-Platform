@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Fix: trusted client IP — `getClientIp` now prefers Vercel-verified `x-real-ip` over spoofable `x-forwarded-for`; local dev/Docker fallback preserved. Atomic progress downgrade prevention replaces read-then-check-then-upsert with a create-on-conflict + unconditional COMPLETED upsert. Proxy middleware guards `/dashboard` and all sub-paths, redirecting unauthenticated users to `/login?next=<path>`. RateLimit schema `@default(0)` corrected to `@default(1)`. Added `RATE_LIMIT_PROFILE` to `.env.example`.
+
 - Fix: login fails after registration on Vercel+Neon — authorize() DB/password errors were unhandled (thrown to NextAuth, shown as "Invalid email or password"). Added try/catch with diagnostic logging. Documented `pgbouncer=true` requirement for pooled Neon connections.
 
 - Phase 6: Load resilience and external-test readiness implemented (non-blocking `crypto.scrypt` password hashing delegated to libuv worker pool with transparent bcrypt hash upgrades on login, dual rate-limit profiles `strict` vs `demo` with dedicated Nginx ingress configurations, edge proxy micro-caching on static curriculum reducing p95 latency by ~775x to 8.96ms, keepalive 64 upstream connection pooling, PostgreSQL connection budget capping active connections at 36, comprehensive k6 load scenarios in `tests/load/` with before-and-after benchmark records in `docs/load-results/`, Playwright E2E browser automation happy path in `tests/e2e/happy-path.spec.ts`, automated chaos and abuse verification suite in `scripts/chaos-check.ps1` passing 8/8 tests, examiner guide in `docs/LOAD_TESTING.md`, and multi-stage GitHub Actions CI workflow with 5 automated quality jobs).
