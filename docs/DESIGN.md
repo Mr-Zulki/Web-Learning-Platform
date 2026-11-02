@@ -227,3 +227,74 @@ These existing app routes are kept and styled consistently with the Metallic Chi
 ### 6.6 Text Exceptions
 - Dynamic User Personalization: Hero greetings on `/dashboard` adapt to the user's profile (`Welcome back, Alice!` or actual registered name) rather than hardcoded mock student names.
 - Active Lesson Titles: On `/lessons/[id]`, breadcrumbs and objective titles reflect the specific active lesson and challenge from the curriculum JSON data.
+
+---
+
+## 7. Home Page Reference Measurements & Specifications
+
+### 7.1 Measured Values Table
+
+| Element / Dimension | Measured Value | Tailwind Utility / CSS | Role / Purpose |
+| :--- | :--- | :--- | :--- |
+| **Header Height** | 64px | `h-16` | Fixed sticky navigation header |
+| **Container Max Width** | 1280px | `max-w-7xl mx-auto` | Max desktop viewport content container |
+| **Container Side Padding** | 16px / 32px | `px-margin md:px-margin-desktop` | Horizontal gutter |
+| **Hero Padding** | 48px top, 96px bottom (desktop 64px / 128px) | `pt-12 pb-24 md:pt-16 md:pb-32` | Hero vertical breathing room |
+| **Section Vertical Padding** | 80px | `py-20` | Standard section vertical rhythm |
+| **Hero Title Typography** | 48px / 56px, 800 wt, tracking -0.03em | `font-display-lg text-display-lg` | Primary H1 display heading |
+| **Hero Title Mobile** | 36px / 44px, 800 wt, tracking -0.02em | `text-display-lg-mobile` | Mobile H1 display heading |
+| **Eyebrow Badge** | 11px / 16px, 700 wt, 16px x 6px padding | `font-label-pill px-space-md py-1.5 rounded-full` | Section tag chip |
+| **Primary Button CTA** | 40px x 14px padding, 12px radius | `px-space-xl py-3.5 rounded-xl` | High-emphasis gradient action button |
+| **Secondary Button CTA** | 24px x 14px padding, 12px radius | `px-space-lg py-3.5 rounded-xl` | Outlined/surface secondary action button |
+| **Header Button CTA** | 24px x 8px padding, 12px radius | `px-space-lg py-2 rounded-xl` | Compact navbar button |
+| **Mockup Window Radius** | 16px | `rounded-2xl overflow-hidden` | Window bezel corner curve |
+| **Mockup Window Shadow** | 0 24px 64px -12px rgba(28,26,35,0.35) | `shadow-[0_24px_64px_-12px_rgba(28,26,35,0.35)]` | Elevated floating perspective shadow |
+| **Mockup Chrome Bar** | 48px height, 16px x 12px padding | `px-space-md py-3 bg-[#131722]` | Window metadata header bar |
+| **Mockup IDE Height** | 460px minimum | `min-h-[460px] bg-[#1a1f30]` | 3-panel split height |
+| **Mockup Left Panel** | 3 of 12 columns | `lg:col-span-3 bg-[#131722] p-space-lg` | Task checklist panel |
+| **Mockup Editor Panel** | 5 of 12 columns | `lg:col-span-5 bg-[#171c2c] p-space-md` | Code syntax representation |
+| **Mockup Preview Panel** | 4 of 12 columns | `lg:col-span-4 bg-surface p-space-md` | Live component simulation |
+| **Feature Cards Grid** | 3 columns desktop, 1 column mobile | `grid-cols-1 md:grid-cols-3 gap-space-lg` | 3 value-proposition pillars |
+| **Feature Card Padding** | 40px | `p-space-xl rounded-2xl` | Elevated card interior spacing |
+| **Curriculum Grid** | 3 columns desktop, 1 column mobile | `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg` | 5 lesson cards + 1 spotlight |
+| **Curriculum Card Padding**| 24px | `p-space-lg rounded-2xl` | Module overview card |
+| **Spotlight Card Padding** | 40px | `p-space-xl rounded-2xl` | Fast start interactive card |
+| **Testimonial Grid** | 3 columns desktop, 1 column mobile | `grid-cols-1 md:grid-cols-3 gap-space-lg` | Social proof card layout |
+| **Final CTA Banner** | 24px radius, 40px/64px padding | `rounded-3xl p-space-xl md:p-16` | Full-width gradient card |
+| **Feature Icon Container**| 56px x 56px, 12px radius, 28px icon | `w-14 h-14 rounded-xl text-[28px]` | Icon badge accent |
+| **Footer Height** | ~104px (40px padding top/bottom) | `py-space-xl px-margin-desktop` | Clean grounding footer |
+
+### 7.2 Measured Hex Colors
+
+- **Page Background Canvas**: `#fcf8ff` (`surface`)
+- **Card Background**: `#ffffff` (`surface-container-lowest`)
+- **Section Alternate Background**: `#f7f1fe` (`surface-container-low`)
+- **Primary Blue Button**: `#233a87` (`primary`, gradient `#385bac` to `#233a87`)
+- **Accent Blue Heading**: `#7091e6` / `#385bac` / `#233a87` (gradient `from-primary via-secondary to-primary-container`)
+- **Primary Body Text**: `#1c1a23` (`on-surface`)
+- **Muted Text**: `#444651` (`on-surface-variant`), `#757682` (`outline`)
+- **Border / Hairlines**: `#c5c5d3` (`outline-variant`), `#e5e0ed` (`surface-variant`)
+- **Dark Mockup Chrome & Left**: `#131722`
+- **Dark Mockup Editor Center**: `#171c2c`
+- **Dark Mockup Split Ground**: `#1a1f30`
+- **Dark Mockup Pills & Tags**: `#252D4A`
+
+### 7.3 Home Page Text Substitutions (Truth in Project)
+
+| Original Image Text | New Replaced Text | Reason for Replacement |
+| :--- | :--- | :--- |
+| `12,500+` (Developers & Engineers) | `5 lessons` (Curriculum Modules) | Replaced with real lesson count from content loader. |
+| `98% Team completion rate` | `Live browser preview` | Replaced unverified stat with real feature statement. |
+| `4.9/5 Engineer rating` | `5 Core lessons` | Replaced unverified rating with genuine curriculum structure. |
+| `Trusted by 12,000+ Developers & Modern Teams` | `Trusted by Learners Building Real Pages` | Replaced unverified user count with true learner statement. |
+| Elena Rostova & quote | Learner (`Frontend Student`) & AST assertion quote | Do not invent people or use fake corporate titles. |
+| Marcus Chen & quote | Learner (`CSS Practitioner`) & interactive loop quote | Real split-screen keyboard shortcut feature description. |
+| Tariq Al-Mansoor & quote | Learner (`Web Engineering Learner`) & module quote | Real 5-module curriculum structure benefit. |
+| `Join 12,500+ engineers writing...` | `Join learners writing clean, modern HTML...` | Replaced unverified count in final CTA banner. |
+| Footer links Documentation, API Reference, System Status | Same text with `aria-disabled="true"` spans | No separate routes exist yet in the application. |
+
+### 7.4 Home Known Differences
+
+- **Statically Generated Navigation**: The navigation header renders accessible links to `/`, `/lessons`, `/lessons/html-structure`, and `/dashboard`, while dynamically detecting session state via NextAuth (`useSession()`) without breaking static prerendering.
+- **Real Lesson Starter Code in Mockup**: The 8 lines in the decorative mockup editor display actual valid HTML starter code from `src/content/lessons/html-structure.json` (`<!DOCTYPE html>`, `<html lang="en">`, `<head>`, `<meta charset="UTF-8">`, `<title>`, `<body>`, `<h1>`) rendered with clean individual line numbers 1 to 8 rather than the overlapping text bug present in the screenshot.
+- **Client Form Submission**: The final CTA email form uses standard `action="/register" method="GET"` to navigate to `/register?email=...` with zero external API calls or storage.

@@ -22,7 +22,10 @@ export function SiteHeader() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_4px_20px_-2px_rgba(61,82,160,0.08)]">
       <div className="h-16 w-full max-w-7xl mx-auto px-margin md:px-margin-desktop flex items-center justify-between gap-space-md">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-space-sm group">
+        <Link
+          href="/"
+          className="flex items-center gap-space-sm group rounded-lg focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+        >
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105">
             <span className="material-symbols-outlined text-[20px]">terminal</span>
           </div>
@@ -43,7 +46,7 @@ export function SiteHeader() {
                 key={link.href}
                 href={link.href}
                 aria-current={isActive ? "page" : undefined}
-                className={`px-space-md py-1.5 rounded-lg font-title-md text-title-md transition-colors ${
+                className={`px-space-md py-1.5 rounded-lg font-title-md text-title-md transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
                   isActive
                     ? "bg-surface-container-high text-primary font-semibold"
                     : "text-on-surface-variant hover:text-on-surface"
@@ -63,7 +66,7 @@ export function SiteHeader() {
             <div className="flex items-center gap-space-sm">
               <Link
                 href="/dashboard"
-                className="flex items-center gap-space-xs px-space-sm py-1 rounded-full hover:bg-surface-container cursor-pointer transition-colors border border-outline-variant/30"
+                className="flex items-center gap-space-xs px-space-sm py-1 rounded-full hover:bg-surface-container cursor-pointer transition-colors border border-outline-variant/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
               >
                 <div className="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-bold text-body-sm ring-1 ring-primary/20">
                   {session.user.name?.[0]?.toUpperCase() ||
@@ -77,7 +80,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className="font-body-sm text-body-sm text-on-surface-variant hover:text-error transition-colors px-2 py-1"
+                className="font-body-sm text-body-sm text-on-surface-variant hover:text-error transition-colors px-2 py-1 rounded-lg focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
               >
                 Sign Out
               </button>
@@ -86,13 +89,13 @@ export function SiteHeader() {
             <>
               <Link
                 href="/login"
-                className="font-title-md text-title-md text-on-surface-variant hover:text-on-surface transition-colors"
+                className="font-title-md text-title-md text-on-surface-variant hover:text-on-surface transition-colors px-2 py-1 rounded-lg focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
               >
                 Sign In
               </Link>
               <Link
                 href="/register"
-                className="px-space-lg py-2 rounded-xl bg-primary text-on-primary font-title-md text-title-md hover:bg-primary-container shadow-sm hover:shadow transition-all"
+                className="px-space-lg py-2 rounded-xl bg-primary text-on-primary font-title-md text-title-md hover:bg-primary-container shadow-sm hover:shadow transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
               >
                 Start Free
               </Link>
@@ -105,7 +108,7 @@ export function SiteHeader() {
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="rounded-lg p-2 text-on-surface-variant hover:bg-surface-container md:hidden"
+            className="rounded-lg p-2 text-on-surface-variant hover:bg-surface-container md:hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
