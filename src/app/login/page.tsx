@@ -4,10 +4,9 @@ import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { LogIn, Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { loginSchema } from "@/lib/auth-schema";
 import { getSafeRedirect } from "@/lib/redirect";
-import { Button } from "@/components/ui/Button";
 
 function LoginForm() {
   const router = useRouter();
@@ -74,15 +73,15 @@ function LoginForm() {
   }
 
   return (
-    <div className="glass-panel-elevated metallic-top-edge relative rounded-3xl p-8 shadow-2xl sm:p-10">
-      <div className="mb-8 space-y-2 text-center">
-        <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#3D52A0]/20 text-[#7091E6] shadow-inner">
-          <LogIn className="h-6 w-6" />
+    <div className="rounded-2xl bg-surface-container-lowest p-space-xl shadow-lg border border-surface-variant/50 max-w-md w-full mx-auto">
+      <div className="mb-space-lg space-y-1 text-center">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-white shadow-sm mx-auto mb-space-md">
+          <span className="material-symbols-outlined text-[24px]">terminal</span>
         </div>
-        <h1 className="font-heading text-2xl font-black tracking-tight text-[var(--canvas-text)] sm:text-3xl">
+        <h1 className="font-headline-md text-headline-md text-primary font-bold tracking-tight">
           Welcome Back
         </h1>
-        <p className="text-sm text-[var(--canvas-text-secondary)]">
+        <p className="font-body-md text-body-md text-on-surface-variant">
           Log in to resume your lessons and challenges.
         </p>
       </div>
@@ -90,97 +89,87 @@ function LoginForm() {
       {registeredParam && (
         <div
           role="status"
-          className="mb-6 flex items-center gap-2.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-xs font-medium text-emerald-600 sm:text-sm dark:text-emerald-300"
+          className="mb-space-md flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-50 p-3 text-body-sm font-medium text-emerald-800"
         >
-          <span aria-hidden="true">✓</span>
-          <span>
-            Registration successful! Please log in with your credentials.
-          </span>
+          <span className="material-symbols-outlined text-[18px]">check_circle</span>
+          <span>Registration successful! Please log in with your credentials.</span>
         </div>
       )}
 
       {submitError && (
         <div
           role="alert"
-          aria-live="polite"
-          className="mb-6 flex items-center gap-2.5 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-xs font-semibold text-red-600 sm:text-sm dark:text-red-300"
+          className="mb-space-md flex items-center gap-2 rounded-lg border border-error/30 bg-error-container/20 p-3 text-body-sm font-medium text-error"
         >
-          <span aria-hidden="true">⚠</span>
+          <span className="material-symbols-outlined text-[18px]">error</span>
           <span>{submitError}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} noValidate className="space-y-5">
+      <form onSubmit={handleSubmit} noValidate className="space-y-space-md">
+        {/* Email Field */}
         <div>
           <label
-            htmlFor="login-email"
-            className="mb-1.5 block text-xs font-bold tracking-wider text-[var(--canvas-text-secondary)] uppercase"
+            htmlFor="email"
+            className="block font-title-md text-body-sm font-semibold text-on-surface mb-1"
           >
             Email Address
           </label>
-          <div className="relative flex items-center">
-            <span className="pointer-events-none absolute left-3.5 text-[var(--canvas-text-muted)]">
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-outline">
               <Mail className="h-4 w-4" />
-            </span>
+            </div>
             <input
-              id="login-email"
+              id="email"
               type="email"
               autoComplete="email"
+              required
+              aria-invalid={Boolean(fieldErrors.email)}
+              aria-describedby={fieldErrors.email ? "email-error" : undefined}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              aria-describedby={fieldErrors.email ? "email-error" : undefined}
-              aria-invalid={Boolean(fieldErrors.email)}
               placeholder="you@example.com"
-              className={`w-full rounded-xl border bg-white/15 py-2.5 pr-4 pl-10 text-sm text-[var(--canvas-text)] backdrop-blur-md transition-all placeholder:text-[var(--canvas-text-muted)] focus-visible:ring-2 focus-visible:outline-none dark:bg-black/30 ${
-                fieldErrors.email
-                  ? "border-red-500/70 focus-visible:ring-red-500/40"
-                  : "border-[var(--border-glass)] hover:border-[var(--border-glass-strong)] focus-visible:border-[#7091E6] focus-visible:ring-[#7091E6]/40"
-              }`}
+              className="w-full rounded-lg border border-outline-variant/60 bg-surface-container-lowest pl-10 pr-3.5 py-2.5 text-body-md text-on-surface placeholder:text-outline focus:border-secondary focus:ring-2 focus:ring-secondary/20 focus:outline-none transition-all"
             />
           </div>
           {fieldErrors.email && (
-            <p
-              id="email-error"
-              className="mt-1.5 text-xs font-semibold text-red-500 dark:text-red-400"
-            >
+            <p id="email-error" className="mt-1 text-xs text-error font-medium">
               {fieldErrors.email}
             </p>
           )}
         </div>
 
+        {/* Password Field */}
         <div>
           <label
-            htmlFor="login-password"
-            className="mb-1.5 block text-xs font-bold tracking-wider text-[var(--canvas-text-secondary)] uppercase"
+            htmlFor="password"
+            className="block font-title-md text-body-sm font-semibold text-on-surface mb-1"
           >
             Password
           </label>
-          <div className="relative flex items-center">
-            <span className="pointer-events-none absolute left-3.5 text-[var(--canvas-text-muted)]">
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-outline">
               <Lock className="h-4 w-4" />
-            </span>
+            </div>
             <input
-              id="login-password"
+              id="password"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              required
+              aria-invalid={Boolean(fieldErrors.password)}
               aria-describedby={
                 fieldErrors.password ? "password-error" : undefined
               }
-              aria-invalid={Boolean(fieldErrors.password)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className={`w-full rounded-xl border bg-white/15 py-2.5 pr-11 pl-10 text-sm text-[var(--canvas-text)] backdrop-blur-md transition-all placeholder:text-[var(--canvas-text-muted)] focus-visible:ring-2 focus-visible:outline-none dark:bg-black/30 ${
-                fieldErrors.password
-                  ? "border-red-500/70 focus-visible:ring-red-500/40"
-                  : "border-[var(--border-glass)] hover:border-[var(--border-glass-strong)] focus-visible:border-[#7091E6] focus-visible:ring-[#7091E6]/40"
-              }`}
+              className="w-full rounded-lg border border-outline-variant/60 bg-surface-container-lowest pl-10 pr-10 py-2.5 text-body-md text-on-surface placeholder:text-outline focus:border-secondary focus:ring-2 focus:ring-secondary/20 focus:outline-none transition-all"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               aria-label="Toggle visibility"
-              className="absolute right-3 rounded-lg p-1 text-[var(--canvas-text-secondary)] transition-colors hover:text-[var(--canvas-text)]"
+              className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-outline hover:text-on-surface focus:outline-none"
             >
               {showPassword ? (
                 <EyeOff className="h-4 w-4" />
@@ -192,32 +181,30 @@ function LoginForm() {
           {fieldErrors.password && (
             <p
               id="password-error"
-              className="mt-1.5 text-xs font-semibold text-red-500 dark:text-red-400"
+              className="mt-1 text-xs text-error font-medium"
             >
               {fieldErrors.password}
             </p>
           )}
         </div>
 
-        <Button
+        {/* Submit Button */}
+        <button
           type="submit"
           disabled={isSubmitting}
-          isLoading={isSubmitting}
-          variant="primary"
-          size="lg"
-          className="mt-2 w-full font-bold shadow-xl shadow-[#3D52A0]/25"
+          className="w-full py-3 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-title-md text-body-sm shadow-sm transition-all font-semibold flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
         >
-          {isSubmitting ? "Signing in..." : "Log In"}
-        </Button>
+          {isSubmitting ? "Logging in..." : "Log In"}
+        </button>
       </form>
 
-      <div className="mt-8 border-t border-white/10 pt-4 text-center text-xs text-[var(--canvas-text-secondary)] sm:text-sm">
-        Don&apos;t have an account yet?{" "}
+      <div className="mt-space-lg text-center font-body-sm text-body-sm text-on-surface-variant">
+        Don&apos;t have an account?{" "}
         <Link
           href="/register"
-          className="font-bold text-[#7091E6] underline transition hover:text-[#ADBBDA]"
+          className="font-semibold text-primary underline hover:text-secondary"
         >
-          Sign up here
+          Create an account
         </Link>
       </div>
     </div>
@@ -226,15 +213,10 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <main className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center px-4 py-12 sm:px-6">
-      {/* Background ambient glow */}
-      <div
-        className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--orb-1)] blur-[100px]"
-        aria-hidden="true"
-      />
+    <main className="w-full flex-1 flex items-center justify-center p-space-md py-space-xl bg-surface-container-low">
       <Suspense
         fallback={
-          <div className="glass-panel-elevated h-80 animate-pulse rounded-3xl p-8" />
+          <div className="h-80 w-full max-w-md animate-pulse rounded-2xl bg-surface-container-high" />
         }
       >
         <LoginForm />

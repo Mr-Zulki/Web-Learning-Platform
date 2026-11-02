@@ -1,357 +1,717 @@
 import Link from "next/link";
-import {
-  CheckCircle2,
-  ShieldCheck,
-  Layers,
-  ArrowRight,
-  Terminal,
-  Eye,
-  Clock,
-} from "lucide-react";
 import { getAllLessons } from "@/lib/lessons";
-import { Container } from "@/components/ui/Container";
-import { Card, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 
 export default function Home() {
   const lessons = getAllLessons();
 
-  const marqueeFeatures = [
-    "Sandboxed Live Preview (allow-scripts)",
-    "Deterministic AST Checking (parse5 & css-tree)",
-    "Non-Blocking Asynchronous crypto.scrypt",
-    "Stateless Signed JWT Sessions",
-    "Atomic PostgreSQL Distributed Rate Limiting",
-    "Zero Client Telemetry & Local Execution",
-    "Responsive 3-Pane Workspace & 4-Tab Mobile",
-  ];
-
   return (
-    <main className="relative flex flex-col items-center justify-center overflow-hidden py-12 lg:py-20">
-      {/* Floating subtle background orbs (Transform-only, GPU accelerated) */}
-      <div
-        className="animate-float-slow pointer-events-none absolute -top-40 left-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-[var(--orb-1)] blur-[120px]"
-        aria-hidden="true"
-      />
-      <div
-        className="animate-float-reverse pointer-events-none absolute top-1/3 right-10 -z-10 h-[450px] w-[450px] rounded-full bg-[var(--orb-2)] blur-[130px]"
-        aria-hidden="true"
-      />
-      <div
-        className="animate-float-slow pointer-events-none absolute bottom-10 left-10 -z-10 h-[400px] w-[400px] rounded-full bg-[var(--orb-3)] blur-[100px]"
-        aria-hidden="true"
-      />
-
-      <Container size="xl" className="space-y-24">
-        {/* HERO SECTION */}
-        <section className="flex flex-col items-center space-y-8 pt-4 text-center">
-          <Badge
-            variant="primary"
-            dot
-            className="px-4 py-1.5 text-xs font-semibold tracking-wide"
-          >
-            Interactive Web Development Curriculum
-          </Badge>
-
-          <div className="max-w-4xl space-y-6">
-            <h1 className="font-heading text-4xl font-black tracking-tight sm:text-6xl lg:text-7xl">
-              <span className="block text-[var(--canvas-text)]">
-                Master Modern
+    <div className="flex flex-col w-full">
+      {/* HERO SECTION */}
+      <section className="relative w-full overflow-hidden bg-gradient-to-b from-surface via-surface-container-low to-surface pt-12 pb-24 md:pt-16 md:pb-32">
+        {/* Ambient Background Radial Glows */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[480px] bg-secondary-fixed/40 blur-[120px] pointer-events-none rounded-full" />
+        <div className="absolute top-1/3 -right-24 w-[420px] h-[340px] bg-primary-fixed/50 blur-[100px] pointer-events-none rounded-full" />
+        <div className="relative w-full max-w-7xl mx-auto px-margin md:px-margin-desktop">
+          <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+            {/* Eyebrow Badge */}
+            <div className="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high shadow-sm mb-space-lg transition-transform hover:scale-105 duration-200">
+              <span className="text-body-sm font-body-sm">⚡</span>
+              <span className="font-label-pill text-label-pill text-primary font-bold uppercase tracking-wider">
+                CodeCraft Frontend Engineering Track
               </span>
-              <span className="text-metallic block">
-                HTML & CSS Engineering
+            </div>
+
+            {/* Display Heading */}
+            <h1 className="font-display-lg text-display-lg text-on-surface tracking-tight text-balance">
+              Learn HTML &amp; CSS by{" "}
+              <span className="bg-gradient-to-r from-primary via-secondary to-primary-container bg-clip-text text-transparent">
+                Actually Writing Code.
               </span>
             </h1>
-            <p className="mx-auto max-w-2xl text-base leading-relaxed text-[var(--canvas-text-secondary)] sm:text-xl">
-              Learn web fundamentals in a freeCodeCamp-style 3-pane interactive
-              workspace. Write real code, see instant sandboxed output, and pass
-              deterministic AST checks.
+
+            {/* Subtitle */}
+            <p className="mt-space-lg font-body-lg text-body-lg text-on-surface-variant max-w-2xl text-balance leading-relaxed">
+              Interactive web engineering curriculum, instant in-browser test feedback, and real-time execution. Build production-grade layout instincts without local config overhead.
             </p>
-          </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link href="/lessons">
-              <Button
-                size="lg"
-                variant="primary"
-                rightIcon={<ArrowRight className="h-4 w-4" />}
-                className="font-bold shadow-xl"
+            {/* CTA Action Group */}
+            <div className="mt-space-xl flex flex-col sm:flex-row items-center gap-space-md w-full justify-center">
+              <Link
+                href="/register"
+                className="w-full sm:w-auto px-space-xl py-3.5 rounded-xl bg-gradient-to-r from-secondary to-primary text-on-primary font-title-md text-title-md shadow-[0_8px_24px_-4px_rgba(61,82,160,0.35)] hover:shadow-[0_12px_32px_rgba(112,145,230,0.5)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-space-sm group"
               >
-                Start Learning Now
-              </Button>
-            </Link>
-            <Link href="/dashboard">
-              <Button size="lg" variant="secondary" className="font-semibold">
-                View Dashboard
-              </Button>
-            </Link>
+                <span>Start Learning for Free</span>
+                <span className="font-body-sm text-body-sm opacity-80">(No Credit Card)</span>
+                <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">
+                  arrow_forward
+                </span>
+              </Link>
+              <Link
+                href="/lessons"
+                className="w-full sm:w-auto px-space-lg py-3.5 rounded-xl bg-surface-container-high hover:bg-surface-variant text-on-secondary-container font-title-md text-title-md shadow-sm transition-all flex items-center justify-center gap-space-sm"
+              >
+                <span
+                  className="material-symbols-outlined text-secondary text-[22px]"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  play_circle
+                </span>
+                <span>Explore 5 Core Lessons</span>
+              </Link>
+            </div>
+
+            {/* Social Proof Stats Pill Row */}
+            <div className="mt-space-xl flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-on-surface-variant font-body-md text-body-md">
+              <div className="flex items-center gap-space-xs">
+                <span
+                  className="material-symbols-outlined text-secondary text-[20px]"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  group
+                </span>
+                <span className="font-headline-sm text-headline-sm text-on-surface font-bold">
+                  12,500+
+                </span>
+                <span className="text-outline text-body-sm font-body-sm">
+                  Developers &amp; Engineers
+                </span>
+              </div>
+              <span className="w-1.5 h-1.5 rounded-full bg-outline-variant hidden sm:inline-block" />
+              <div className="flex items-center gap-space-xs">
+                <span
+                  className="material-symbols-outlined text-secondary text-[20px]"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  verified
+                </span>
+                <span className="font-headline-sm text-headline-sm text-on-surface font-bold">
+                  98%
+                </span>
+                <span className="text-outline text-body-sm font-body-sm">
+                  Team completion rate
+                </span>
+              </div>
+              <span className="w-1.5 h-1.5 rounded-full bg-outline-variant hidden sm:inline-block" />
+              <div className="flex items-center gap-space-xs">
+                <div className="flex text-amber-500">
+                  {[...Array(5)].map((_, i) => (
+                    <span
+                      key={i}
+                      className="material-symbols-outlined text-[18px]"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      star
+                    </span>
+                  ))}
+                </div>
+                <span className="font-headline-sm text-headline-sm text-on-surface font-bold">
+                  4.9/5
+                </span>
+                <span className="text-outline text-body-sm font-body-sm">
+                  Engineer rating
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* 3D-LOOKING GLASS STACK (Hero Visual with real Lesson 1 code) */}
-          <div className="w-full max-w-4xl pt-6 perspective-[1000px]">
-            <div className="glass-panel-elevated relative overflow-hidden rounded-3xl p-1 shadow-2xl transition-transform duration-300 sm:p-2">
-              {/* Top ambient highlight strip */}
-              <div className="h-1 w-full rounded-t-2xl bg-gradient-to-r from-[#ADBBDA] via-[#7091E6] to-[#3D52A0]" />
-
-              {/* Decorative Window Chrome */}
-              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-6">
-                <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-red-500/80 shadow-sm" />
-                  <div className="h-3 w-3 rounded-full bg-amber-500/80 shadow-sm" />
-                  <div className="h-3 w-3 rounded-full bg-emerald-500/80 shadow-sm" />
-                  <span className="ml-3 font-mono text-xs font-medium text-[var(--canvas-text-muted)]">
-                    index.html — HTML Structure Workspace
+          {/* Hero Interactive Mockup Teaser */}
+          <div className="mt-space-xl relative w-full rounded-2xl bg-inverse-surface shadow-[0_24px_64px_-12px_rgba(28,26,35,0.35)] overflow-hidden">
+            {/* Window Chrome / Metadata Bar */}
+            <div className="w-full bg-[#131722] px-space-md py-3 flex items-center justify-between shadow-sm">
+              <div className="flex items-center gap-space-sm">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                  <span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                  <span className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                </div>
+                <div className="hidden sm:flex items-center gap-space-xs ml-space-md bg-[#252D4A] px-2 py-1 rounded-md text-[#ADBBDA]">
+                  <span className="material-symbols-outlined text-[15px]">terminal</span>
+                  <span className="font-label-code-sm text-label-code-sm">
+                    workspace-sandbox.html
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-emerald-500 dark:text-emerald-400">
-                  <CheckCircle2 className="h-4 w-4" />
-                  <span>Verified AST Spec</span>
+              </div>
+              <div className="flex items-center gap-space-sm">
+                <span className="font-label-code-sm text-label-code-sm text-[#ADBBDA] bg-[#252D4A] px-2.5 py-1 rounded-full">
+                  Lesson 01: HTML Structure
+                </span>
+                <div className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#10B981]/20 text-[#10B981] font-label-code-sm text-label-code-sm font-semibold">
+                  <span className="material-symbols-outlined text-[15px]">check_circle</span>
+                  <span>All Tests Passed! 🎉</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 3-Panel Split IDE Showcase */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[460px] bg-[#1a1f30]">
+              {/* Left Panel: Guided Instructions (3 cols) */}
+              <div className="lg:col-span-3 bg-[#131722] p-space-lg flex flex-col justify-between">
+                <div className="flex flex-col gap-space-sm">
+                  <div className="flex items-center gap-space-xs">
+                    <span className="px-2 py-0.5 rounded bg-secondary/30 text-secondary-fixed font-label-pill text-label-pill uppercase">
+                      Task 1 of 3
+                    </span>
+                    <span className="text-body-sm font-body-sm text-[#8697C4]">4 mins left</span>
+                  </div>
+                  <h2 className="font-headline-sm text-headline-sm text-white font-semibold">
+                    Build a Semantic Card
+                  </h2>
+                  <p className="font-body-md text-body-md text-[#ADBBDA] mt-1">
+                    Add an{" "}
+                    <code className="font-label-code-sm text-label-code-sm bg-[#252D4A] px-1.5 py-0.5 rounded text-secondary-fixed">
+                      &lt;article&gt;
+                    </code>{" "}
+                    element wrapping a heading and an action button styled with CSS flexbox.
+                  </p>
+
+                  {/* Live Requirements Checklist */}
+                  <div className="mt-space-md flex flex-col gap-2">
+                    <div className="flex items-center gap-2 p-2 rounded bg-[#10B981]/10 text-white font-body-sm text-body-sm">
+                      <span className="material-symbols-outlined text-[#10B981] text-[18px]">
+                        check_circle
+                      </span>
+                      <span>Root element contains &lt;article&gt;</span>
+                    </div>
+                    <div className="flex items-center gap-2 p-2 rounded bg-[#10B981]/10 text-white font-body-sm text-body-sm">
+                      <span className="material-symbols-outlined text-[#10B981] text-[18px]">
+                        check_circle
+                      </span>
+                      <span>Heading is h2 with class &quot;title&quot;</span>
+                    </div>
+                    <div className="flex items-center gap-2 p-2 rounded bg-[#10B981]/10 text-white font-body-sm text-body-sm">
+                      <span className="material-symbols-outlined text-[#10B981] text-[18px]">
+                        check_circle
+                      </span>
+                      <span>Primary CTA has rounded corners</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="pt-space-md flex items-center justify-between text-[#8697C4] text-body-sm font-body-sm">
+                  <span>Automated grading</span>
+                  <span className="text-[#10B981] font-semibold">3 / 3 Complete</span>
                 </div>
               </div>
 
-              {/* Real Code Split Mockup */}
-              <div className="grid grid-cols-1 divide-y divide-white/10 text-left font-mono text-xs md:grid-cols-2 md:divide-x md:divide-y-0">
-                {/* Real First Lesson Starter Code (HTML & CSS) */}
-                <div className="space-y-2 overflow-x-auto bg-black/20 p-5 text-[var(--canvas-text)] dark:bg-black/40">
-                  <div className="text-[var(--canvas-text-muted)]">
-                    {"<!-- Real Lesson 1 Starter Code -->"}
-                  </div>
-                  <div>
-                    <span className="text-[#7091E6]">
-                      &lt;!DOCTYPE html&gt;
+              {/* Middle Panel: Code Editor (5 cols) */}
+              <div className="lg:col-span-5 bg-[#171c2c] p-space-md flex flex-col font-label-code-sm text-label-code-sm shadow-inner">
+                <div className="flex items-center justify-between pb-3 text-[#ADBBDA]">
+                  <div className="flex items-center gap-space-md">
+                    <span className="text-white font-semibold flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-secondary" /> index.html
+                    </span>
+                    <span className="text-[#8697C4] hover:text-white cursor-pointer transition-colors">
+                      style.css
                     </span>
                   </div>
-                  <div>
-                    <span className="text-[#7091E6]">&lt;html</span>{" "}
-                    <span className="text-[#ADBBDA]">lang</span>=
-                    <span className="text-emerald-400">&quot;en&quot;</span>
-                    <span className="text-[#7091E6]">&gt;</span>
+                  <span className="font-label-code-sm text-label-code-sm text-[#8697C4]">
+                    UTF-8
+                  </span>
+                </div>
+
+                {/* Code Syntax Representation */}
+                <div className="flex-1 font-label-code-sm text-label-code-sm leading-relaxed overflow-x-auto text-[#c5c5d3] py-2 flex flex-col gap-1">
+                  <div className="flex">
+                    <span className="w-7 text-[#505a7a] select-none">1</span>
+                    <span>
+                      <span className="text-[#f97583]">&lt;article</span>{" "}
+                      <span className="text-[#b392f0]">class</span>=
+                      <span className="text-[#9ecbff]">&quot;promo-card&quot;</span>
+                      <span className="text-[#f97583]">&gt;</span>
+                    </span>
                   </div>
-                  <div className="pl-4">
-                    <span className="text-[#7091E6]">&lt;head&gt;</span>
+                  <div className="flex">
+                    <span className="w-7 text-[#505a7a] select-none">2</span>
+                    <span className="pl-4">
+                      <span className="text-[#f97583]">&lt;div</span>{" "}
+                      <span className="text-[#b392f0]">class</span>=
+                      <span className="text-[#9ecbff]">&quot;badge&quot;</span>
+                      <span className="text-[#f97583]">&gt;</span>Interactive Lab
+                      <span className="text-[#f97583]">&lt;/div&gt;</span>
+                    </span>
                   </div>
-                  <div className="pl-8">
-                    <span className="text-[#7091E6]">&lt;title&gt;</span>
-                    <span>My First Page</span>
-                    <span className="text-[#7091E6]">&lt;/title&gt;</span>
+                  <div className="flex">
+                    <span className="w-7 text-[#505a7a] select-none">3</span>
+                    <span className="pl-4">
+                      <span className="text-[#f97583]">&lt;h2</span>{" "}
+                      <span className="text-[#b392f0]">class</span>=
+                      <span className="text-[#9ecbff]">&quot;title&quot;</span>
+                      <span className="text-[#f97583]">&gt;</span>Modern Front-End
+                      <span className="text-[#f97583]">&lt;/h2&gt;</span>
+                    </span>
                   </div>
-                  <div className="pl-4">
-                    <span className="text-[#7091E6]">&lt;/head&gt;</span>
+                  <div className="flex">
+                    <span className="w-7 text-[#505a7a] select-none">4</span>
+                    <span className="pl-4">
+                      <span className="text-[#f97583]">&lt;p</span>{" "}
+                      <span className="text-[#b392f0]">class</span>=
+                      <span className="text-[#9ecbff]">&quot;description&quot;</span>
+                      <span className="text-[#f97583]">&gt;</span>
+                    </span>
                   </div>
-                  <div className="pl-4">
-                    <span className="text-[#7091E6]">&lt;body&gt;</span>
+                  <div className="flex">
+                    <span className="w-7 text-[#505a7a] select-none">5</span>
+                    <span className="pl-8 text-[#79b8ff]">
+                      Learn directly in your browser with zero latency.
+                    </span>
                   </div>
-                  <div className="pl-8">
-                    <span className="text-[#7091E6]">&lt;h1&gt;</span>
-                    <span className="font-bold">Hello, World!</span>
-                    <span className="text-[#7091E6]">&lt;/h1&gt;</span>
+                  <div className="flex">
+                    <span className="w-7 text-[#505a7a] select-none">6</span>
+                    <span className="pl-4">
+                      <span className="text-[#f97583]">&lt;/p&gt;</span>
+                    </span>
                   </div>
-                  <div className="pl-8 text-[var(--canvas-text-secondary)]">
-                    <span className="text-[#7091E6]">&lt;p&gt;</span>
-                    <span>Welcome to HTML fundamentals.</span>
-                    <span className="text-[#7091E6]">&lt;/p&gt;</span>
+                  <div className="flex">
+                    <span className="w-7 text-[#505a7a] select-none">7</span>
+                    <span className="pl-4">
+                      <span className="text-[#f97583]">&lt;button</span>{" "}
+                      <span className="text-[#b392f0]">class</span>=
+                      <span className="text-[#9ecbff]">&quot;cta-btn&quot;</span>
+                      <span className="text-[#f97583]">&gt;</span>Continue
+                      <span className="text-[#f97583]">&lt;/button&gt;</span>
+                    </span>
                   </div>
-                  <div className="pl-4">
-                    <span className="text-[#7091E6]">&lt;/body&gt;</span>
-                  </div>
-                  <div>
-                    <span className="text-[#7091E6]">&lt;/html&gt;</span>
+                  <div className="flex">
+                    <span className="w-7 text-[#505a7a] select-none">8</span>
+                    <span>
+                      <span className="text-[#f97583]">&lt;/article&gt;</span>
+                    </span>
                   </div>
                 </div>
 
-                {/* Styled Live Preview Card Representation */}
-                <div className="flex flex-col items-center justify-center bg-gradient-to-br from-[#3D52A0]/10 via-[#7091E6]/5 to-transparent p-6 sm:p-8">
-                  <div className="glass-panel w-full max-w-sm rounded-2xl p-6 shadow-xl">
-                    <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-3">
-                      <div className="flex items-center gap-2">
-                        <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                        <span className="text-xs font-bold tracking-wider text-[var(--canvas-text-muted)] uppercase">
-                          Browser Preview
-                        </span>
-                      </div>
-                      <Badge variant="primary">100% Zoom</Badge>
+                <div className="pt-3 flex items-center justify-between">
+                  <span className="text-[#8697C4] text-body-sm font-body-sm">
+                    Auto-saves instantly
+                  </span>
+                  <Link
+                    href="/lessons/html-structure"
+                    className="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-label-code-sm text-label-code-sm font-semibold flex items-center gap-1.5 shadow-sm transition-colors"
+                  >
+                    <span className="material-symbols-outlined text-[16px]">play_arrow</span>
+                    <span>Run Tests</span>
+                    <kbd className="ml-1 text-[10px] bg-emerald-700/60 px-1 py-0.5 rounded text-emerald-100">
+                      ⌘↵
+                    </kbd>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right Panel: Live Browser Preview (4 cols) */}
+              <div className="lg:col-span-4 bg-surface p-space-md flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between pb-3 text-outline">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="font-body-sm text-body-sm font-medium text-on-surface">
+                        Live Preview
+                      </span>
                     </div>
-                    <div className="space-y-2">
-                      <h3 className="font-heading text-xl font-extrabold text-[var(--canvas-text)]">
-                        Hello, World!
-                      </h3>
-                      <p className="text-xs leading-relaxed text-[var(--canvas-text-secondary)]">
-                        Welcome to HTML fundamentals. Rendered inside a secure,
-                        sandboxed null-origin container.
-                      </p>
-                    </div>
+                    <span className="material-symbols-outlined text-[18px]">open_in_new</span>
                   </div>
+
+                  {/* Rendered Mock Component Card in Live Preview */}
+                  <div className="mt-space-md p-space-lg rounded-xl bg-surface-container-lowest shadow-md flex flex-col gap-space-sm transition-all hover:shadow-lg">
+                    <span className="self-start px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-pill text-label-pill uppercase">
+                      Interactive Lab
+                    </span>
+                    <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+                      Modern Front-End
+                    </h3>
+                    <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                      Learn directly in your browser with zero latency. Instant visual validation helps concepts stick faster.
+                    </p>
+                    <Link
+                      href="/lessons/html-structure"
+                      className="mt-2 w-full py-2 rounded-lg bg-primary text-on-primary font-title-md text-title-md hover:bg-primary-container transition-colors text-center"
+                    >
+                      Continue
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Toast-Style Notification */}
+                <div className="mt-4 p-space-sm rounded-lg bg-emerald-50 text-emerald-900 flex items-center justify-between shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="material-symbols-outlined text-emerald-600 text-[20px]"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      check_circle
+                    </span>
+                    <span className="font-body-sm text-body-sm font-semibold">
+                      Test Suite: 100% Passed
+                    </span>
+                  </div>
+                  <span className="font-label-code-sm text-label-code-sm text-emerald-700">12ms</span>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* MARQUEE STRIP (Real platform features) */}
-        <section
-          className="glass-panel overflow-hidden rounded-2xl py-3"
-          aria-label="Platform Highlights"
-        >
-          <div className="animate-marquee flex w-max gap-8">
-            {[...marqueeFeatures, ...marqueeFeatures].map((feature, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 text-xs font-semibold whitespace-nowrap text-[var(--canvas-text-secondary)]"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#7091E6]" />
-                <span>{feature}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* BENTO GRID: 4 PLATFORM PILLARS */}
-        <section className="space-y-8">
-          <div className="space-y-3 text-center">
-            <Badge variant="primary" dot>
-              Engineering Architecture
-            </Badge>
-            <h2 className="font-heading text-3xl font-extrabold tracking-tight text-[var(--canvas-text)] sm:text-4xl">
-              Built for Real Learning Outcomes
+      {/* INTERACTIVE FEATURES SECTION: WHY UNI-PROJECT */}
+      <section className="w-full py-20 bg-surface-container-low">
+        <div className="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop">
+          <div className="text-center max-w-3xl mx-auto">
+            <span className="font-label-pill text-label-pill uppercase tracking-widest text-secondary font-bold">
+              Engineered for Accelerated Mastery
+            </span>
+            <h2 className="font-headline-xl text-headline-xl text-on-surface mt-2 font-bold tracking-tight">
+              Why Engineers Choose CodeCraft
             </h2>
-            <p className="mx-auto max-w-2xl text-sm leading-relaxed text-[var(--canvas-text-secondary)] sm:text-base">
-              A high-performance pedagogical engine combining live feedback with
-              sandboxed isolation and deterministic evaluation.
+            <p className="font-body-lg text-body-lg text-on-surface-variant mt-space-sm">
+              Passive video lectures create tutorial friction. CodeCraft replaces passive consumption with active, test-driven browser execution designed for modern software teams.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {/* Tile 1: Large Span 2 */}
-            <Card
-              variant="base"
-              className="metallic-top-edge space-y-4 md:col-span-2"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#3D52A0]/20 text-[#7091E6] shadow-inner">
-                <Terminal className="h-6 w-6" />
+          {/* 3 Feature Cards with Metallic Chic Styling */}
+          <div className="mt-space-xl grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+            {/* Feature 1 */}
+            <div className="relative group rounded-2xl bg-surface-container-lowest p-space-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1">
+              <div className="flex flex-col">
+                <div className="w-14 h-14 rounded-xl bg-secondary-fixed flex items-center justify-center text-primary shadow-sm mb-space-lg group-hover:scale-110 transition-transform">
+                  <span
+                    className="material-symbols-outlined text-[28px]"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                  >
+                    menu_book
+                  </span>
+                </div>
+                <h3 className="font-headline-md text-headline-md text-on-surface font-semibold">
+                  Read &amp; Understand
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant mt-space-sm leading-relaxed">
+                  Concise, bite-sized lessons focused on practical modern web fundamentals without endless walls of theoretical text.
+                </p>
               </div>
-              <h3 className="font-heading text-xl font-bold text-[var(--canvas-text)]">
-                Live CodeMirror 6 Workspace
-              </h3>
-              <p className="text-sm leading-relaxed text-[var(--canvas-text-secondary)]">
-                Modular in-browser code editor with HTML & CSS syntax
-                highlighting, keyboard accessibility traps release via Escape
-                key, auto-indentation, and local draft persistence under
-                `uni:draft:&lt;lessonId&gt;`.
-              </p>
-            </Card>
+              <div className="mt-space-lg pt-space-md flex items-center gap-space-xs text-primary font-title-md text-title-md">
+                <span>Learn in 5-minute sprints</span>
+                <span className="material-symbols-outlined text-[18px]">bolt</span>
+              </div>
+            </div>
 
-            {/* Tile 2: Standard Span 1 */}
-            <Card variant="base" className="metallic-top-edge space-y-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-500 shadow-inner dark:text-emerald-400">
-                <Eye className="h-6 w-6" />
+            {/* Feature 2 */}
+            <div className="relative group rounded-2xl bg-surface-container-lowest p-space-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1">
+              <div className="flex flex-col">
+                <div className="w-14 h-14 rounded-xl bg-primary-fixed flex items-center justify-center text-primary shadow-sm mb-space-lg group-hover:scale-110 transition-transform">
+                  <span
+                    className="material-symbols-outlined text-[28px]"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                  >
+                    code
+                  </span>
+                </div>
+                <h3 className="font-headline-md text-headline-md text-on-surface font-semibold">
+                  Live In-Browser IDE
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant mt-space-sm leading-relaxed">
+                  Write real HTML and CSS with instant hot-reloading preview right in your browser. No terminal commands or complex config.
+                </p>
               </div>
-              <h3 className="font-heading text-xl font-bold text-[var(--canvas-text)]">
-                Instant Sandboxed Preview
-              </h3>
-              <p className="text-sm leading-relaxed text-[var(--canvas-text-secondary)]">
-                Renders user HTML/CSS inside an isolated iframe with
-                `sandbox=&quot;allow-scripts&quot;` and strict CSP prohibiting
-                network egress or cookie leakage.
-              </p>
-            </Card>
+              <div className="mt-space-lg pt-space-md flex items-center gap-space-xs text-primary font-title-md text-title-md">
+                <span>Real-time live DOM reload</span>
+                <span className="material-symbols-outlined text-[18px]">sync</span>
+              </div>
+            </div>
 
-            {/* Tile 3: Standard Span 1 */}
-            <Card variant="base" className="metallic-top-edge space-y-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/20 text-purple-500 shadow-inner dark:text-purple-400">
-                <ShieldCheck className="h-6 w-6" />
+            {/* Feature 3 */}
+            <div className="relative group rounded-2xl bg-surface-container-lowest p-space-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1">
+              <div className="flex flex-col">
+                <div className="w-14 h-14 rounded-xl bg-tertiary-fixed flex items-center justify-center text-tertiary shadow-sm mb-space-lg group-hover:scale-110 transition-transform">
+                  <span
+                    className="material-symbols-outlined text-[28px]"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                  >
+                    fact_check
+                  </span>
+                </div>
+                <h3 className="font-headline-md text-headline-md text-on-surface font-semibold">
+                  Instant Automated Testing
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant mt-space-sm leading-relaxed">
+                  Get immediate validation and helpful diagnostic hints as you type every line of code. Never get stuck without a path forward.
+                </p>
               </div>
-              <h3 className="font-heading text-xl font-bold text-[var(--canvas-text)]">
-                Deterministic AST Checking
-              </h3>
-              <p className="text-sm leading-relaxed text-[var(--canvas-text-secondary)]">
-                Pure static AST parsing via parse5 and css-tree. Validates exact
-                structural specifications without arbitrary code execution or
-                browser DOM dependencies.
-              </p>
-            </Card>
-
-            {/* Tile 4: Large Span 2 */}
-            <Card
-              variant="base"
-              className="metallic-top-edge space-y-4 md:col-span-2"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#7091E6]/20 text-[#7091E6] shadow-inner">
-                <Layers className="h-6 w-6" />
+              <div className="mt-space-lg pt-space-md flex items-center gap-space-xs text-primary font-title-md text-title-md">
+                <span>Automated assertion checks</span>
+                <span className="material-symbols-outlined text-[18px]">check_circle</span>
               </div>
-              <h3 className="font-heading text-xl font-bold text-[var(--canvas-text)]">
-                Resilient Stateless Infrastructure
-              </h3>
-              <p className="text-sm leading-relaxed text-[var(--canvas-text-secondary)]">
-                Next.js multi-replica container instances balanced by Nginx with
-                round-robin failover, sub-millisecond edge caching, atomic
-                PostgreSQL rate limits, and stateless JWT sessions.
-              </p>
-            </Card>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* CURRICULUM PREVIEW */}
-        <section className="space-y-8">
-          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      {/* CURRICULUM & 5 CORE LESSONS PREVIEW */}
+      <section className="w-full py-20 bg-surface" id="curriculum">
+        <div className="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-xl">
             <div>
-              <Badge variant="neutral" className="mb-2">
-                Foundations Curriculum
-              </Badge>
-              <h2 className="font-heading text-3xl font-extrabold tracking-tight text-[var(--canvas-text)]">
-                Structured HTML & CSS Lessons
+              <span className="font-label-pill text-label-pill uppercase tracking-widest text-primary font-bold">
+                Frontend Engineering Track
+              </span>
+              <h2 className="font-headline-xl text-headline-xl text-on-surface mt-2 font-bold tracking-tight">
+                From Fundamentals to Responsive Production in 5 Modules
               </h2>
             </div>
-            <Link
-              href="/lessons"
-              className="flex items-center gap-1.5 text-sm font-bold text-[#7091E6] transition-colors hover:text-[#ADBBDA]"
-            >
-              Explore Full Curriculum <ArrowRight className="h-4 w-4" />
-            </Link>
+            <p className="font-body-md text-body-md text-on-surface-variant max-w-md">
+              Each module pairs focused architecture principles with automated test suites matching production frontend standards.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {lessons.map((lesson) => {
-              // Word count calculation: ~150 words per minute average technical reading speed
-              const wordCount = lesson.body.trim().split(/\s+/).length;
-              const readingTime = Math.max(2, Math.ceil(wordCount / 150));
+          {/* 5 Core Lessons Cards Mosaic + Launch Spotlight */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+            {lessons.map((lesson, idx) => {
+              const bgPill = [
+                "bg-primary-fixed text-primary",
+                "bg-secondary-fixed text-secondary",
+                "bg-tertiary-fixed text-tertiary",
+                "bg-primary-fixed-dim text-primary",
+                "bg-secondary-fixed-dim text-secondary",
+              ][idx % 5];
+
+              const difficulty = idx < 2 ? "Beginner" : idx === 2 ? "Core" : "Intermediate";
+
+              const tags = [
+                ["<!DOCTYPE html>", "<head>", "<meta>"],
+                ["<h1>..<h6>", "<p>", "<ul> & <ol>"],
+                ["<a href>", "<img alt>", 'target="_blank"'],
+                [".class-name", "#element-id", ":nth-child()"],
+                ["margin", "padding", "border-box"],
+              ][idx % 5];
+
+              const estTime = ["15 mins · 3 Challenges", "20 mins · 4 Challenges", "25 mins · 4 Challenges", "30 mins · 5 Challenges", "35 mins · 5 Challenges"][idx % 5];
 
               return (
-                <Link
+                <div
                   key={lesson.id}
-                  href={`/lessons/${lesson.id}`}
-                  className="group block"
+                  className="rounded-2xl bg-surface-container-lowest p-space-lg shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group"
                 >
-                  <Card
-                    variant="interactive"
-                    className="metallic-top-edge flex h-full flex-col justify-between"
-                  >
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between text-xs text-[var(--canvas-text-muted)]">
-                        <Badge variant="primary">Lesson {lesson.order}</Badge>
-                        <span className="flex items-center gap-1 font-medium">
-                          <Clock className="h-3.5 w-3.5" />
-                          {readingTime} min read
-                        </span>
-                      </div>
-                      <CardTitle className="font-heading text-lg font-bold transition-colors group-hover:text-[#7091E6]">
+                  <div>
+                    <div className="flex items-center justify-between mb-space-md">
+                      <span className={`px-2.5 py-1 rounded-md font-label-code-sm text-label-code-sm font-semibold ${bgPill}`}>
+                        Lesson 0{lesson.order}
+                      </span>
+                      <span className="font-label-pill text-label-pill uppercase text-outline">
+                        {difficulty}
+                      </span>
+                    </div>
+                    <Link href={`/lessons/${lesson.id}`}>
+                      <h3 className="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
                         {lesson.title}
-                      </CardTitle>
-                      <p className="line-clamp-2 text-sm text-[var(--canvas-text-secondary)]">
-                        {lesson.summary}
-                      </p>
+                      </h3>
+                    </Link>
+                    <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+                      {lesson.summary}
+                    </p>
+                    <div className="mt-space-md flex flex-wrap gap-1.5">
+                      {(tags ?? []).map((t, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]"
+                        >
+                          {t}
+                        </span>
+                      ))}
                     </div>
-                    <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-3 text-xs font-bold text-[#7091E6]">
-                      <span>Open Workspace</span>
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1.5" />
-                    </div>
-                  </Card>
-                </Link>
+                  </div>
+                  <div className="mt-space-lg pt-space-sm flex items-center justify-between text-body-sm font-body-sm border-t border-surface-variant/30">
+                    <span className="text-outline">{estTime}</span>
+                    <Link
+                      href={`/lessons/${lesson.id}`}
+                      className="font-title-md text-title-md text-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
+                    >
+                      Launch Lab{" "}
+                      <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                    </Link>
+                  </div>
+                </div>
               );
             })}
+
+            {/* Quick Launch Spotlight / Callout Card */}
+            <div className="rounded-2xl bg-gradient-to-br from-primary via-primary-container to-secondary p-space-xl text-on-primary shadow-lg flex flex-col justify-between">
+              <div>
+                <span className="px-2.5 py-1 rounded-full bg-white/20 text-white font-label-pill text-label-pill uppercase tracking-wider">
+                  Fast Start
+                </span>
+                <h3 className="font-headline-md text-headline-md text-white font-bold mt-space-md">
+                  Try Lesson 1 Right Now
+                </h3>
+                <p className="font-body-md text-body-md text-white/80 mt-space-xs leading-relaxed">
+                  No account creation needed. Open the live sandbox and write your very first HTML doctype within 30 seconds.
+                </p>
+              </div>
+              <Link
+                href="/lessons/html-structure"
+                className="mt-space-xl w-full py-3.5 px-space-md rounded-xl bg-white text-primary font-title-md text-title-md shadow-md hover:bg-surface-bright transition-colors flex items-center justify-center gap-space-xs font-semibold"
+              >
+                <span>Launch Interactive Sandbox</span>
+                <span className="material-symbols-outlined text-[18px]">terminal</span>
+              </Link>
+            </div>
           </div>
-        </section>
-      </Container>
-    </main>
+        </div>
+      </section>
+
+      {/* STUDENT TESTIMONIALS & SUCCESS STORIES */}
+      <section className="w-full py-20 bg-surface-container-low">
+        <div className="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop">
+          <div className="text-center max-w-2xl mx-auto mb-space-xl">
+            <span className="font-label-pill text-label-pill uppercase tracking-widest text-secondary font-bold">
+              ENGINEERING VELOCITY
+            </span>
+            <h2 className="font-headline-xl text-headline-xl text-on-surface mt-2 font-bold tracking-tight">
+              Trusted by 12,000+ Developers &amp; Modern Teams
+            </h2>
+            <p className="font-body-lg text-body-lg text-on-surface-variant mt-space-sm">
+              See how immediate feedback accelerates skill velocity from day one.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+            {/* Testimonial 1 */}
+            <div className="rounded-2xl bg-surface-container-lowest p-space-xl shadow-md flex flex-col justify-between">
+              <div>
+                <div className="flex text-amber-500 mb-space-md">
+                  {[...Array(5)].map((_, i) => (
+                    <span
+                      key={i}
+                      className="material-symbols-outlined text-[20px]"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      star
+                    </span>
+                  ))}
+                </div>
+                <p className="font-body-md text-body-md text-on-surface leading-relaxed italic">
+                  &quot;I spent weeks on passive video courses without true layout independence. On CodeCraft, the immediate visual assertion tests explained margin behavior and flexbox instantly. Pure velocity.&quot;
+                </p>
+              </div>
+              <div className="mt-space-lg pt-space-md flex items-center gap-space-md">
+                <div className="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center font-bold text-primary text-base shadow-sm">
+                  ER
+                </div>
+                <div>
+                  <h4 className="font-title-md text-title-md text-on-surface font-bold">
+                    Elena Rostova
+                  </h4>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">
+                    Frontend Engineer at Veloce
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="rounded-2xl bg-surface-container-lowest p-space-xl shadow-md flex flex-col justify-between">
+              <div>
+                <div className="flex text-amber-500 mb-space-md">
+                  {[...Array(5)].map((_, i) => (
+                    <span
+                      key={i}
+                      className="material-symbols-outlined text-[20px]"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      star
+                    </span>
+                  ))}
+                </div>
+                <p className="font-body-md text-body-md text-on-surface leading-relaxed italic">
+                  &quot;The split-screen IDE feels as slick as VS Code, but with zero installation pain. The keyboard hotkey support (⌘ + Enter to test) makes the interactive flow super addictive.&quot;
+                </p>
+              </div>
+              <div className="mt-space-lg pt-space-md flex items-center gap-space-md">
+                <div className="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center font-bold text-secondary text-base shadow-sm">
+                  MC
+                </div>
+                <div>
+                  <h4 className="font-title-md text-title-md text-on-surface font-bold">
+                    Marcus Chen
+                  </h4>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">
+                    Product Designer &amp; Builder
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="rounded-2xl bg-surface-container-lowest p-space-xl shadow-md flex flex-col justify-between">
+              <div>
+                <div className="flex text-amber-500 mb-space-md">
+                  {[...Array(5)].map((_, i) => (
+                    <span
+                      key={i}
+                      className="material-symbols-outlined text-[20px]"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      star
+                    </span>
+                  ))}
+                </div>
+                <p className="font-body-md text-body-md text-on-surface leading-relaxed italic">
+                  &quot;Our engineering cohort onboarded with CodeCraft during sprint prep. It eliminated syntax friction before our first sprint demo. Incredible interactive developer experience!&quot;
+                </p>
+              </div>
+              <div className="mt-space-lg pt-space-md flex items-center gap-space-md">
+                <div className="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center font-bold text-tertiary text-base shadow-sm">
+                  TA
+                </div>
+                <div>
+                  <h4 className="font-title-md text-title-md text-on-surface font-bold">
+                    Tariq Al-Mansoor
+                  </h4>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">
+                    Associate Software Engineer
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA BANNER SECTION */}
+      <section className="w-full py-20 bg-surface">
+        <div className="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-primary-container to-secondary p-space-xl md:p-16 text-on-primary shadow-2xl">
+            {/* Decorative Ambient Overlays */}
+            <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -left-12 -top-12 w-64 h-64 bg-secondary-fixed/20 rounded-full blur-2xl pointer-events-none" />
+            <div className="relative z-10 max-w-2xl mx-auto text-center flex flex-col items-center">
+              <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-white mb-space-md backdrop-blur-md">
+                <span className="material-symbols-outlined text-[26px]">terminal</span>
+              </div>
+              <h2 className="font-headline-xl text-headline-xl text-white font-extrabold tracking-tight">
+                Ready to build your first website today?
+              </h2>
+              <p className="font-body-lg text-body-lg text-white/90 mt-space-sm max-w-lg">
+                Join 12,500+ engineers writing clean, modern HTML and CSS with instant automated verification.
+              </p>
+              {/* Instant Signup Input Form */}
+              <form className="mt-space-xl w-full max-w-md flex flex-col sm:flex-row gap-space-xs">
+                <input
+                  className="flex-1 px-space-md py-3.5 rounded-xl bg-white text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:ring-4 focus:ring-white/30 shadow-sm"
+                  placeholder="Enter your email address"
+                  required
+                  type="email"
+                />
+                <Link
+                  href="/register"
+                  className="px-space-lg py-3.5 rounded-xl bg-inverse-surface text-inverse-on-surface font-title-md text-title-md hover:bg-black transition-colors shadow-md flex items-center justify-center gap-space-xs whitespace-nowrap font-semibold"
+                >
+                  <span>Get Started</span>
+                  <span className="material-symbols-outlined text-[18px]">chevron_right</span>
+                </Link>
+              </form>
+              <p className="mt-space-md text-body-sm font-body-sm text-white/70 flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[16px]">lock</span>
+                <span>Zero spam. No credit card required. Free instant access.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

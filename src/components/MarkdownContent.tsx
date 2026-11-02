@@ -7,53 +7,49 @@ interface MarkdownContentProps {
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
   return (
-    <article className="max-w-none text-[var(--canvas-text)]">
+    <article className="max-w-none text-on-surface">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ children }) => (
-            <h1 className="font-heading mb-4 text-2xl font-extrabold tracking-tight text-[var(--canvas-text)] sm:text-3xl">
+            <h1 className="font-headline-sm text-headline-sm text-primary font-bold tracking-tight mb-space-sm">
               {children}
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="font-heading mt-6 mb-3 border-b border-[var(--border-glass)] pb-2 text-xl font-bold tracking-tight text-[var(--canvas-text)]">
+            <h2 className="font-title-md text-title-md text-on-surface font-semibold mt-space-md mb-space-xs border-b border-surface-variant/40 pb-1">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="mt-5 mb-2 text-lg font-semibold text-[var(--canvas-text)]">
+            <h3 className="font-title-md text-body-md text-on-surface font-semibold mt-space-sm mb-space-xs">
               {children}
             </h3>
           ),
           p: ({ children }) => (
-            <p className="my-3 text-sm leading-relaxed text-[var(--canvas-text)] sm:text-base">
+            <p className="my-2.5 text-body-md font-body-md text-on-surface-variant leading-relaxed">
               {children}
             </p>
           ),
           ul: ({ children }) => (
-            <ul className="my-3 list-disc space-y-1.5 pl-5 text-sm text-[var(--canvas-text)] sm:text-base">
+            <ul className="my-2.5 list-disc space-y-1 pl-5 text-body-md font-body-md text-on-surface-variant">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="my-3 list-decimal space-y-1.5 pl-5 text-sm text-[var(--canvas-text)] sm:text-base">
+            <ol className="my-2.5 list-decimal space-y-1 pl-5 text-body-md font-body-md text-on-surface-variant">
               {children}
             </ol>
           ),
           li: ({ children }) => <li className="leading-relaxed">{children}</li>,
           strong: ({ children }) => (
-            <strong className="font-semibold text-[var(--canvas-text)]">
-              {children}
-            </strong>
+            <strong className="font-semibold text-on-surface">{children}</strong>
           ),
           em: ({ children }) => (
-            <em className="text-[var(--canvas-text-secondary)] italic">
-              {children}
-            </em>
+            <em className="text-on-surface-variant italic">{children}</em>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="glass-panel my-4 rounded-r-lg border-l-4 border-[#3D52A0] py-2 pr-3 pl-4 text-sm text-[var(--canvas-text)] italic dark:border-[#7091E6]">
+            <blockquote className="my-3 rounded-r-lg border-l-4 border-primary bg-surface-container-low py-2 pr-3 pl-4 text-body-md italic text-on-surface-variant">
               {children}
             </blockquote>
           ),
@@ -62,7 +58,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             if (isCodeBlock) {
               return (
                 <code
-                  className="font-mono text-xs text-[var(--canvas-text)] sm:text-sm"
+                  className="font-label-code-sm text-xs sm:text-sm text-on-tertiary"
                   {...props}
                 >
                   {children}
@@ -71,7 +67,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             }
             return (
               <code
-                className="rounded-md border border-[var(--border-glass)] bg-black/5 px-1.5 py-0.5 font-mono text-xs text-[#3D52A0] dark:bg-black/30 dark:text-[#ADBBDA]"
+                className="rounded bg-surface-variant px-1.5 py-0.5 font-label-code-sm text-[12px] font-semibold text-primary"
                 {...props}
               >
                 {children}
@@ -79,7 +75,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             );
           },
           pre: ({ children }) => (
-            <pre className="my-4 overflow-x-auto rounded-xl border border-[var(--border-glass)] bg-[var(--code-bg)] p-4 font-mono text-xs text-[var(--canvas-text)] shadow-inner sm:text-sm">
+            <pre className="my-3 overflow-x-auto rounded-xl bg-tertiary p-space-md font-label-code-sm text-xs text-on-tertiary shadow-inner sm:text-sm leading-relaxed">
               {children}
             </pre>
           ),
@@ -88,7 +84,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-[#3D52A0] underline decoration-[#7091E6]/50 underline-offset-2 transition hover:text-[#7091E6] dark:text-[#7091E6] dark:hover:text-[#ADBBDA]"
+              className="font-medium text-primary underline transition hover:text-secondary"
             >
               {children}
             </a>

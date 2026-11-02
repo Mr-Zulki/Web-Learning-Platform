@@ -24,25 +24,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DevCraft | HTML/CSS Interactive Learning Platform",
+  title: "CodeCraft | Professional Interactive Learning Platform",
   description:
-    "Learn HTML and CSS interactively with live coding and auto-checked challenges in a modern browser workspace.",
+    "Interactive web engineering curriculum, instant in-browser test feedback, and real-time execution. Build production-grade layout instincts without local config overhead.",
 };
-
-const themeScript = `
-  (function() {
-    try {
-      var storedTheme = localStorage.getItem('uni:theme');
-      if (storedTheme === 'light') {
-        document.documentElement.classList.add('light');
-        document.documentElement.classList.remove('dark');
-      } else {
-        document.documentElement.classList.add('dark');
-        document.documentElement.classList.remove('light');
-      }
-    } catch (e) {}
-  })();
-`;
 
 export default function RootLayout({
   children,
@@ -52,22 +37,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning
-      className={`${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
+      className={`${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable} h-full`}
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
-      <body className="flex min-h-full flex-col font-sans transition-colors duration-200 selection:bg-[#7091E6]/30 selection:text-[#EDE8F5]">
+      <body className="bg-surface font-body-md text-on-surface antialiased flex min-h-full flex-col">
         <AuthProvider>
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-xl focus:border focus:border-white/30 focus:bg-[#3D52A0] focus:px-4 focus:py-2.5 focus:text-[#EDE8F5] focus:shadow-2xl focus:outline-none"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-xl focus:border focus:border-outline-variant focus:bg-primary focus:px-4 focus:py-2.5 focus:text-on-primary focus:shadow-2xl focus:outline-none"
           >
             Skip to main content
           </a>
           <SiteHeader />
-          <div id="main-content" className="flex flex-1 flex-col">
+          <div id="main-content" className="flex flex-1 flex-col pt-16">
             {children}
           </div>
           <SiteFooter />

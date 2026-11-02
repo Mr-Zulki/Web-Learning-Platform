@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { RotateCcw, Copy, Check } from "lucide-react";
 import type { EditorTabType } from "./EditorTabs";
 
 interface EditorToolbarProps {
@@ -9,7 +8,7 @@ interface EditorToolbarProps {
   currentLength: number;
   maxLength: number;
   isModified: boolean;
-  onReset: () => void;
+  onReset?: () => void;
   onCopy: () => void;
 }
 
@@ -38,56 +37,56 @@ export function EditorToolbar({
       );
       if (!confirmed) return;
     }
-    onReset();
+    if (onReset) onReset();
   };
 
   const isOverLimit = currentLength > maxLength;
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-glass)] bg-black/5 px-3.5 py-1.5 text-xs text-[var(--canvas-text-secondary)] dark:bg-black/20">
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={handleReset}
-          className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 font-semibold text-[var(--canvas-text-secondary)] transition hover:bg-white/10 hover:text-[var(--canvas-text)] focus-visible:ring-1 focus-visible:ring-[#7091E6] focus-visible:outline-none"
-          title="Reset to starter code"
-        >
-          <RotateCcw className="h-3 w-3" />
-          <span>Reset</span>
-        </button>
+    <div className="bg-[#0B0E19] px-space-md py-space-xs flex items-center justify-between text-[#7E8B9F] font-label-code-sm text-[11px] select-none border-t border-[#252D4A]">
+      <div className="flex items-center gap-space-md">
+        <span className="flex items-center gap-1 text-[#34D399]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-pulse" />
+          Live Sync
+        </span>
+        <span className="hidden sm:inline">Spaces: 2</span>
+        <span className="hidden sm:inline">UTF-8</span>
+        {onReset && isModified && (
+          <button
+            type="button"
+            onClick={handleReset}
+            className="text-amber-400 hover:underline cursor-pointer"
+            title="Reset code to original"
+          >
+            Reset
+          </button>
+        )}
+      </div>
 
+      <div className="flex items-center gap-space-sm">
         <button
           type="button"
           onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 font-semibold text-[var(--canvas-text-secondary)] transition hover:bg-white/10 hover:text-[var(--canvas-text)] focus-visible:ring-1 focus-visible:ring-[#7091E6] focus-visible:outline-none"
-          title={`Copy ${activeTab.toUpperCase()} code to clipboard`}
+          aria-label="Copy code"
+          className="text-[#7E8B9F] hover:text-[#EDE8F5] transition-colors cursor-pointer flex items-center gap-1"
+          title="Copy code"
         >
           {copied ? (
-            <>
-              <Check className="h-3 w-3 text-emerald-500 dark:text-emerald-400" />
-              <span className="font-bold text-emerald-600 dark:text-emerald-400">
-                Copied!
-              </span>
-            </>
+            <span className="text-[#34D399] font-bold">Copied!</span>
           ) : (
-            <>
-              <Copy className="h-3 w-3" />
-              <span>Copy code</span>
-            </>
+            <span className="material-symbols-outlined text-[14px]">content_copy</span>
           )}
         </button>
-      </div>
-
-      <div
-        className={`font-mono text-[11px] ${
-          isOverLimit
-            ? "font-bold text-red-500 dark:text-red-400"
-            : "text-[var(--canvas-text-muted)]"
-        }`}
-        aria-live="polite"
-      >
-        <span>{currentLength.toLocaleString()}</span> /{" "}
-        <span>{maxLength.toLocaleString()}</span> chars
+        <div
+          className={`font-label-code-sm text-[11px] ${
+            isOverLimit ? "font-bold text-red-400" : "text-[#7E8B9F]"
+          }`}
+          aria-live="polite"
+        >
+          <span>{currentLength.toLocaleString()}</span> /{" "}
+          <span>{maxLength.toLocaleString()}</span>
+        </div>
+        <span className="text-secondary font-semibold uppercase">{activeTab}</span>
       </div>
     </div>
   );

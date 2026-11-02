@@ -1,18 +1,27 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Monitor, Tablet, Smartphone, RotateCw } from "lucide-react";
 import { buildPreviewDocument } from "@/lib/preview";
 
 interface PreviewFrameProps {
   html: string;
   css: string;
   className?: string;
+  lastResult?: {
+    passed: boolean;
+    score: { passed: number; total: number };
+    results: Array<{ message: string; passed: boolean }>;
+  } | null;
 }
 
 type ViewportMode = "desktop" | "tablet" | "mobile";
 
-export function PreviewFrame({ html, css, className = "" }: PreviewFrameProps) {
+export function PreviewFrame({
+  html,
+  css,
+  className = "",
+  lastResult,
+}: PreviewFrameProps) {
   const [viewport, setViewport] = useState<ViewportMode>("desktop");
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -28,83 +37,85 @@ export function PreviewFrame({ html, css, className = "" }: PreviewFrameProps) {
   };
 
   return (
-    <div
-      className={`glass-panel metallic-top-edge flex h-full flex-col overflow-hidden rounded-2xl shadow-xl transition-all duration-200 ${className}`}
+    <section
+      aria-label="Live Preview Panel"
+      className={`bg-surface-container-lowest rounded-xl shadow-sm flex flex-col overflow-hidden h-full border border-surface-variant/40 ${className}`}
     >
-      {/* Liquid Glass browser chrome */}
-      <div className="flex items-center justify-between border-b border-[var(--border-glass)] bg-black/10 px-4 py-2.5 text-xs font-semibold text-[var(--canvas-text-secondary)] dark:bg-black/30">
-        <div className="flex items-center gap-2.5">
-          <div className="flex items-center gap-1.5" aria-hidden="true">
-            <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-            <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
-          </div>
-          <span className="font-heading font-bold text-[var(--canvas-text)]">
-            Live Preview
-          </span>
-        </div>
-
-        {/* Viewport switcher */}
-        <div className="flex items-center gap-1 rounded-xl border border-[var(--border-glass)] bg-white/10 p-0.5 dark:bg-black/30">
-          <button
-            type="button"
-            aria-label="Desktop viewport"
-            onClick={() => setViewport("desktop")}
-            className={`rounded-lg p-1.5 transition-colors ${
-              viewport === "desktop"
-                ? "bg-[#3D52A0] text-[#EDE8F5] shadow-sm"
-                : "text-[var(--canvas-text-muted)] hover:bg-white/10 hover:text-[var(--canvas-text)]"
-            }`}
-          >
-            <Monitor className="h-3.5 w-3.5" />
-          </button>
-          <button
-            type="button"
-            aria-label="Tablet viewport (768px)"
-            onClick={() => setViewport("tablet")}
-            className={`rounded-lg p-1.5 transition-colors ${
-              viewport === "tablet"
-                ? "bg-[#3D52A0] text-[#EDE8F5] shadow-sm"
-                : "text-[var(--canvas-text-muted)] hover:bg-white/10 hover:text-[var(--canvas-text)]"
-            }`}
-          >
-            <Tablet className="h-3.5 w-3.5" />
-          </button>
-          <button
-            type="button"
-            aria-label="Mobile viewport (375px)"
-            onClick={() => setViewport("mobile")}
-            className={`rounded-lg p-1.5 transition-colors ${
-              viewport === "mobile"
-                ? "bg-[#3D52A0] text-[#EDE8F5] shadow-sm"
-                : "text-[var(--canvas-text-muted)] hover:bg-white/10 hover:text-[var(--canvas-text)]"
-            }`}
-          >
-            <Smartphone className="h-3.5 w-3.5" />
-          </button>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {truncated && (
-            <span className="text-[11px] font-bold text-amber-500 dark:text-amber-400">
-              Truncated
-            </span>
-          )}
+      {/* Top Preview Chrome Bar */}
+      <div className="px-space-md py-space-sm bg-surface-container-low flex items-center justify-between gap-space-sm border-b border-surface-variant/40">
+        <div className="flex items-center gap-space-xs">
           <button
             type="button"
             aria-label="Reload preview"
             onClick={() => setRefreshKey((k) => k + 1)}
-            className="rounded-lg p-1.5 text-[var(--canvas-text-secondary)] transition-colors hover:bg-white/10 hover:text-[var(--canvas-text)]"
+            className="p-1 rounded hover:bg-surface-variant text-on-surface-variant transition-colors"
+            title="Reload preview"
           >
-            <RotateCw className="h-3.5 w-3.5" />
+            <span className="material-symbols-outlined text-[16px]">refresh</span>
+          </button>
+          {truncated && (
+            <span className="text-[11px] font-bold text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded">
+              Truncated
+            </span>
+          )}
+        </div>
+
+        <div className="flex-1 max-w-xs flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest shadow-sm text-outline font-label-code-sm text-[11px]">
+          <span className="material-symbols-outlined text-[14px] text-primary">lock</span>
+          <span className="truncate">localhost:3000/preview</span>
+        </div>
+
+        {/* Viewport switch controls */}
+        <div className="flex items-center rounded-lg bg-surface-container p-0.5">
+          <button
+            type="button"
+            id="view-desktop"
+            aria-label="Desktop viewport"
+            onClick={() => setViewport("desktop")}
+            className={`p-1 rounded transition-colors ${
+              viewport === "desktop"
+                ? "bg-surface-container-lowest text-primary shadow-sm"
+                : "text-outline hover:text-on-surface"
+            }`}
+            title="Desktop view"
+          >
+            <span className="material-symbols-outlined text-[16px]">desktop_windows</span>
+          </button>
+          <button
+            type="button"
+            id="view-tablet"
+            aria-label="Tablet viewport (768px)"
+            onClick={() => setViewport("tablet")}
+            className={`p-1 rounded transition-colors ${
+              viewport === "tablet"
+                ? "bg-surface-container-lowest text-primary shadow-sm"
+                : "text-outline hover:text-on-surface"
+            }`}
+            title="Tablet view"
+          >
+            <span className="material-symbols-outlined text-[16px]">tablet</span>
+          </button>
+          <button
+            type="button"
+            id="view-mobile"
+            aria-label="Mobile viewport (375px)"
+            onClick={() => setViewport("mobile")}
+            className={`p-1 rounded transition-colors ${
+              viewport === "mobile"
+                ? "bg-surface-container-lowest text-primary shadow-sm"
+                : "text-outline hover:text-on-surface"
+            }`}
+            title="Mobile view"
+          >
+            <span className="material-symbols-outlined text-[16px]">smartphone</span>
           </button>
         </div>
       </div>
 
       {/* Frame canvas */}
-      <div className="relative flex min-h-[320px] flex-1 items-center justify-center overflow-auto bg-black/10 p-2 sm:p-4 dark:bg-black/35">
+      <div className="flex-1 bg-surface-container-low/40 p-space-md overflow-y-auto flex flex-col items-center justify-center relative min-h-[300px]">
         <div
-          className={`h-full overflow-hidden rounded-xl border border-white/20 bg-white shadow-2xl transition-all duration-200 ${viewportWidths[viewport]}`}
+          className={`h-full min-h-[300px] overflow-hidden rounded-xl border border-surface-variant/40 bg-white shadow-md transition-all duration-200 ${viewportWidths[viewport]}`}
         >
           <iframe
             key={refreshKey}
@@ -113,10 +124,38 @@ export function PreviewFrame({ html, css, className = "" }: PreviewFrameProps) {
             referrerPolicy="no-referrer"
             title="Live preview"
             loading="lazy"
-            className="h-full min-h-[320px] w-full border-0 bg-white"
+            className="h-full min-h-[300px] w-full border-0 bg-white"
           />
         </div>
       </div>
-    </div>
+
+      {/* Bottom Test Output Console matching reference */}
+      <div className="bg-surface-container-high p-space-sm flex flex-col gap-1 border-t border-surface-variant/40">
+        <div className="flex items-center justify-between text-on-surface font-label-code-sm text-label-code-sm">
+          <div className="flex items-center gap-space-xs">
+            <span className="material-symbols-outlined text-[16px] text-secondary">terminal</span>
+            <span className="font-semibold text-primary">Test Output Console</span>
+          </div>
+          <span className="text-outline text-[11px]">Runner: Jest CSS Test Engine</span>
+        </div>
+        <div className="px-space-sm py-1.5 rounded bg-surface-container-lowest text-on-surface-variant font-label-code-sm text-[12px] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span
+              className={`w-2 h-2 rounded-full ${
+                lastResult?.passed ? "bg-emerald-500" : "bg-secondary"
+              }`}
+            />
+            <span>
+              {lastResult
+                ? lastResult.passed
+                  ? `[PASS] All ${lastResult.score.total} specifications validated successfully.`
+                  : `[FAIL] ${lastResult.score.passed}/${lastResult.score.total} checks passed. Keep going!`
+                : "Live sandbox attached. Ready to execute verification tests."}
+            </span>
+          </div>
+          <span className="text-outline text-[11px]">12ms</span>
+        </div>
+      </div>
+    </section>
   );
 }

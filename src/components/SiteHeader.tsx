@@ -1,208 +1,154 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
-import { Moon, Sun, Menu, X, Code2 } from "lucide-react";
-import { Button } from "./ui/Button";
-import { IconButton } from "./ui/IconButton";
+import { Menu, X } from "lucide-react";
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const { data: session, status } = useSession();
-  const [theme, setTheme] = useState<"dark" | "light">(() => {
-    if (typeof window === "undefined") return "dark";
-    try {
-      return localStorage.getItem("uni:theme") === "light" ? "light" : "dark";
-    } catch {
-      return "dark";
-    }
-  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === "dark" ? "light" : "dark";
-    setTheme(nextTheme);
-    try {
-      localStorage.setItem("uni:theme", nextTheme);
-      if (nextTheme === "light") {
-        document.documentElement.classList.add("light");
-        document.documentElement.classList.remove("dark");
-      } else {
-        document.documentElement.classList.add("dark");
-        document.documentElement.classList.remove("light");
-      }
-    } catch {
-      // ignore
-    }
-  };
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/lessons", label: "Roadmap" },
+    { href: "/lessons/html-structure", label: "Workspace" },
+    { href: "/dashboard", label: "Dashboard" },
+  ];
 
   return (
-    <header className="glass-panel-elevated sticky top-0 z-40 w-full transition-colors duration-200">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="group flex items-center gap-3 text-lg font-bold tracking-tight focus-visible:rounded-xl focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none"
-        >
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-[#3D52A0] via-[#7091E6] to-[#ADBBDA] shadow-md shadow-[#3D52A0]/25 transition-transform group-hover:scale-105">
-            <Code2 className="h-5 w-5 text-[#EDE8F5]" aria-hidden="true" />
+    <header className="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_4px_20px_-2px_rgba(61,82,160,0.08)]">
+      <div className="h-16 w-full max-w-7xl mx-auto px-margin md:px-margin-desktop flex items-center justify-between gap-space-md">
+        {/* Brand Logo */}
+        <Link href="/" className="flex items-center gap-space-sm group">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105">
+            <span className="material-symbols-outlined text-[20px]">terminal</span>
           </div>
-          <span className="font-heading font-extrabold tracking-tight text-[var(--canvas-text)]">
-            DevCraft
-          </span>
-          <span className="hidden text-xs font-semibold tracking-wider text-[var(--canvas-text-muted)] uppercase sm:inline">
-            HTML/CSS
+          <span className="font-title-md text-title-md text-primary tracking-tight font-bold text-[18px]">
+            CodeCraft
           </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav
-          aria-label="Main Navigation"
-          className="hidden items-center gap-2 md:flex"
-        >
-          <Link
-            href="/lessons"
-            className="rounded-xl px-3.5 py-2 text-sm font-medium text-[var(--canvas-text-secondary)] transition hover:bg-white/10 hover:text-[var(--canvas-text)] focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none"
-          >
-            Lessons
-          </Link>
-
-          {status === "loading" ? (
-            <div className="h-8 w-20 animate-pulse rounded-xl bg-white/10" />
-          ) : session?.user ? (
-            <div className="flex items-center gap-3">
+        <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-space-xs">
+          {navLinks.map((link) => {
+            const isActive =
+              link.href === "/"
+                ? pathname === "/"
+                : pathname?.startsWith(link.href);
+            return (
               <Link
-                href="/dashboard"
-                className="rounded-xl px-3.5 py-2 text-sm font-medium text-[var(--canvas-text-secondary)] transition hover:bg-white/10 hover:text-[var(--canvas-text)] focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none"
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                className={`px-space-md py-1.5 rounded-lg font-title-md text-title-md transition-colors ${
+                  isActive
+                    ? "bg-surface-container-high text-primary font-semibold"
+                    : "text-on-surface-variant hover:text-on-surface"
+                }`}
               >
-                Dashboard
+                {link.label}
               </Link>
-              <span className="text-sm font-medium text-[var(--canvas-text-muted)]">
-                {session.user.name || session.user.email}
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => signOut({ callbackUrl: "/" })}
-              >
-                Logout
-              </Button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <Link
-                href="/login"
-                className="rounded-xl px-3.5 py-2 text-sm font-medium text-[var(--canvas-text-secondary)] transition hover:bg-white/10 hover:text-[var(--canvas-text)] focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none"
-              >
-                Login
-              </Link>
-              <Link href="/register">
-                <Button size="sm" variant="primary">
-                  Register
-                </Button>
-              </Link>
-            </div>
-          )}
-
-          <div className="mx-2 h-5 w-px bg-white/15" />
-
-          {/* Theme Toggle Button */}
-          <IconButton
-            variant="ghost"
-            size="sm"
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-            onClick={toggleTheme}
-            className="text-[var(--canvas-text-secondary)] hover:text-[var(--canvas-text)]"
-          >
-            {theme === "dark" ? (
-              <Sun className="h-4 w-4 text-[#ADBBDA]" />
-            ) : (
-              <Moon className="h-4 w-4 text-[#3D52A0]" />
-            )}
-          </IconButton>
+            );
+          })}
         </nav>
 
-        {/* Mobile menu trigger */}
-        <div className="flex items-center gap-2 md:hidden">
-          <IconButton
-            variant="ghost"
-            size="sm"
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-            onClick={toggleTheme}
-            className="text-[var(--canvas-text-secondary)] hover:text-[var(--canvas-text)]"
-          >
-            {theme === "dark" ? (
-              <Sun className="h-4 w-4 text-[#ADBBDA]" />
-            ) : (
-              <Moon className="h-4 w-4 text-[#3D52A0]" />
-            )}
-          </IconButton>
-          <IconButton
-            variant="ghost"
-            size="sm"
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+        {/* Right CTA / Session Area */}
+        <div className="flex items-center gap-space-md">
+          {status === "loading" ? (
+            <div className="h-8 w-24 animate-pulse rounded-xl bg-surface-container-high" />
+          ) : session?.user ? (
+            <div className="flex items-center gap-space-sm">
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-space-xs px-space-sm py-1 rounded-full hover:bg-surface-container cursor-pointer transition-colors border border-outline-variant/30"
+              >
+                <div className="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-bold text-body-sm ring-1 ring-primary/20">
+                  {session.user.name?.[0]?.toUpperCase() ||
+                    session.user.email?.[0]?.toUpperCase() ||
+                    "U"}
+                </div>
+                <span className="font-title-md text-title-md text-on-surface font-medium hidden sm:inline-block ml-1">
+                  {session.user.name || session.user.email?.split("@")[0]}
+                </span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="font-body-sm text-body-sm text-on-surface-variant hover:text-error transition-colors px-2 py-1"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="font-title-md text-title-md text-on-surface-variant hover:text-on-surface transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/register"
+                className="px-space-lg py-2 rounded-xl bg-primary text-on-primary font-title-md text-title-md hover:bg-primary-container shadow-sm hover:shadow transition-all"
+              >
+                Start Free
+              </Link>
+            </>
+          )}
+
+          {/* Mobile hamburger button */}
+          <button
+            type="button"
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-[var(--canvas-text-secondary)] hover:text-[var(--canvas-text)]"
+            className="rounded-lg p-2 text-on-surface-variant hover:bg-surface-container md:hidden"
           >
-            {mobileMenuOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
-          </IconButton>
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile menu dropdown */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="glass-modal space-y-3 border-t border-white/10 px-4 py-4 md:hidden">
-          <Link
-            href="/lessons"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block rounded-xl px-3 py-2 text-base font-medium text-[var(--canvas-text)] hover:bg-white/10"
-          >
-            Lessons
-          </Link>
-
-          {session?.user ? (
-            <>
+        <div className="border-t border-outline-variant/30 bg-surface/95 px-4 pt-3 pb-6 backdrop-blur-xl md:hidden">
+          <nav className="flex flex-col gap-2">
+            {navLinks.map((link) => (
               <Link
-                href="/dashboard"
+                key={link.href}
+                href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block rounded-xl px-3 py-2 text-base font-medium text-[var(--canvas-text)] hover:bg-white/10"
+                className={`rounded-lg px-4 py-2.5 text-base font-semibold ${
+                  pathname === link.href
+                    ? "bg-surface-container-high text-primary"
+                    : "text-on-surface-variant hover:bg-surface-container hover:text-on-surface"
+                }`}
               >
-                Dashboard
+                {link.label}
               </Link>
-              <div className="px-3 py-1 text-xs text-[var(--canvas-text-muted)]">
-                Signed in as {session.user.name || session.user.email}
+            ))}
+            {!session?.user && (
+              <div className="mt-4 flex flex-col gap-2 border-t border-outline-variant/30 pt-4">
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-lg px-4 py-2.5 text-center font-semibold text-on-surface-variant hover:bg-surface-container"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-xl bg-primary py-3 text-center font-semibold text-on-primary shadow-sm hover:bg-primary-container"
+                >
+                  Start Free
+                </Link>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full justify-center"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  signOut({ callbackUrl: "/" });
-                }}
-              >
-                Logout
-              </Button>
-            </>
-          ) : (
-            <div className="flex flex-col gap-2 border-t border-white/10 pt-2">
-              <Link
-                href="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block rounded-xl px-3 py-2 text-center text-base font-medium text-[var(--canvas-text)] hover:bg-white/10"
-              >
-                Login
-              </Link>
-              <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
-                <Button size="md" variant="primary" className="w-full">
-                  Register
-                </Button>
-              </Link>
-            </div>
-          )}
+            )}
+          </nav>
         </div>
       )}
     </header>

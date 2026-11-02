@@ -6,7 +6,6 @@ import {
   getAdjacentLessons,
 } from "@/lib/lessons";
 import { getChallengeForLesson, toClientChallenge } from "@/lib/challenges";
-import { LessonSidebar } from "@/components/LessonSidebar";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { LessonPager } from "@/components/LessonPager";
 import { LessonWorkspace } from "@/components/editor/LessonWorkspace";
@@ -32,12 +31,12 @@ export async function generateMetadata({
 
   if (!lesson) {
     return {
-      title: "Lesson Not Found | HTML/CSS Interactive Learning Platform",
+      title: "Lesson Not Found | CodeCraft",
     };
   }
 
   return {
-    title: `${lesson.title} | HTML/CSS Interactive Learning Platform`,
+    title: `${lesson.title} | CodeCraft Interactive Workspace`,
     description: lesson.summary,
   };
 }
@@ -50,18 +49,13 @@ export default async function LessonDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const allLessons = getAllLessons();
   const { prev, next } = getAdjacentLessons(id);
   const challengeRaw = getChallengeForLesson(lesson.id);
   const clientChallenge = challengeRaw ? toClientChallenge(challengeRaw) : null;
   const nextLessonSummary = next ? { id: next.id, title: next.title } : null;
 
   return (
-    <div className="w-full space-y-4 px-3 py-4 sm:px-6 lg:px-8">
-      {/* Top Curriculum Nav Strip */}
-      <LessonSidebar lessons={allLessons} currentLessonId={id} />
-
-      {/* Interactive 3-Pane Workspace */}
+    <div className="w-full flex-1 flex flex-col">
       <LessonWorkspace
         key={lesson.id}
         lessonId={lesson.id}
@@ -69,8 +63,10 @@ export default async function LessonDetailPage({ params }: PageProps) {
         challenge={clientChallenge}
         nextLesson={nextLessonSummary}
       >
-        <MarkdownContent content={lesson.body} />
-        <LessonPager prev={prev} next={next} />
+        <div className="space-y-4">
+          <MarkdownContent content={lesson.body} />
+          <LessonPager prev={prev} next={next} />
+        </div>
       </LessonWorkspace>
     </div>
   );

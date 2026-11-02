@@ -1,0 +1,435 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-secondary-container":"#0e3a8b","on-background":"#1c1a23","surface-variant":"#e5e0ed","secondary-fixed":"#dae2ff","on-primary-fixed-variant":"#2b418e","surface-tint":"#4459a8","on-secondary":"#ffffff","inverse-surface":"#312f39","outline":"#757682","surface-bright":"#fcf8ff","surface-dim":"#ddd8e5","on-primary":"#ffffff","tertiary":"#2e3f66","on-tertiary-container":"#bbccfc","on-secondary-fixed":"#001847","primary-container":"#3d52a0","surface-container-high":"#ebe6f3","on-surface":"#1c1a23","inverse-on-surface":"#f4effc","on-secondary-fixed-variant":"#1a4293","outline-variant":"#c5c5d3","inverse-primary":"#b7c4ff","primary":"#233a87","secondary":"#385bac","surface-container-low":"#f7f1fe","surface-container":"#f1ecf9","primary-fixed-dim":"#b7c4ff","tertiary-container":"#45567f","on-tertiary-fixed":"#051a40","tertiary-fixed":"#d9e2ff","error-container":"#ffdad6","surface-container-highest":"#e5e0ed","background":"#fcf8ff","surface-container-lowest":"#ffffff","on-tertiary":"#ffffff","on-surface-variant":"#444651","tertiary-fixed-dim":"#b5c6f5","error":"#ba1a1a","secondary-fixed-dim":"#b2c5ff","surface":"#fcf8ff","secondary-container":"#88a9ff","on-tertiary-fixed-variant":"#35466e","on-primary-fixed":"#001552","on-primary-container":"#c0cbff","on-error-container":"#93000a","primary-fixed":"#dce1ff","on-error":"#ffffff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","margin-desktop":"2rem","space-md":"1rem","margin":"1rem","gutter-desktop":"1.5rem","space-xl":"2.5rem","gutter":"1rem","space-xs":"0.25rem","space-lg":"1.5rem"},"fontFamily":{"headline-sm":["Plus Jakarta Sans"],"body-sm":["Inter"],"display-lg-mobile":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"label-code-lg":["JetBrains Mono"],"body-md":["Inter"],"headline-xl-mobile":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"label-pill":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"label-code-sm":["JetBrains Mono"],"body-lg":["Inter"]},"fontSize":{"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"display-lg-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-code-lg":["14px",{"lineHeight":"22px","fontWeight":"500"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"headline-xl-mobile":["26px",{"lineHeight":"34px","letterSpacing":"-0.015em","fontWeight":"700"}],"title-md":["16px",{"lineHeight":"24px","fontWeight":"600"}],"label-pill":["11px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"700"}],"display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"800"}],"label-code-sm":["12px",{"lineHeight":"18px","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_4px_20px_-2px_rgba(61,82,160,0.08)]"><div class="h-16 w-full px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-white shadow-sm"><span class="material-symbols-outlined text-[20px]">terminal</span></div><span class="font-title-md text-title-md text-primary tracking-tight font-bold text-[18px]">CodeCraft</span></div><nav class="hidden md:flex items-center gap-space-xs"><a aria-current="page" class="px-space-md py-1.5 rounded-lg bg-surface-container-high text-primary font-title-md text-title-md" href="#">Home</a><a class="px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-title-md text-title-md transition-colors" href="#curriculum">Roadmap</a><a class="px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-title-md text-title-md transition-colors" href="#">Workspace</a><a class="px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-title-md text-title-md transition-colors" href="#">Dashboard</a></nav><div class="flex items-center gap-space-md"><a class="font-title-md text-title-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Sign In</a><button class="px-space-lg py-2 rounded-xl bg-primary text-on-primary font-title-md text-title-md hover:bg-primary-container shadow-sm hover:shadow transition-all" type="button">Start Free</button></div></div></header><main class="w-full pt-16 bg-surface min-h-[calc(100vh-64px)]"><div class="flex flex-col w-full">
+<!-- HERO SECTION -->
+<section class="relative w-full overflow-hidden bg-gradient-to-b from-surface via-surface-container-low to-surface pt-12 pb-24 md:pt-16 md:pb-32">
+<!-- Ambient Background Radial Glows -->
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[480px] bg-secondary-fixed/40 blur-[120px] pointer-events-none rounded-full"></div>
+<div class="absolute top-1/3 -right-24 w-[420px] h-[340px] bg-primary-fixed/50 blur-[100px] pointer-events-none rounded-full"></div>
+<div class="relative w-full max-w-7xl mx-auto px-margin-desktop">
+<div class="flex flex-col items-center text-center max-w-4xl mx-auto">
+<!-- Eyebrow Badge -->
+<div class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high shadow-sm mb-space-lg transition-transform hover:scale-105 duration-200"><span class="text-body-sm font-body-sm">⚡</span><span class="font-label-pill text-label-pill text-primary font-bold uppercase tracking-wider">CodeCraft Frontend Engineering Track</span></div>
+<!-- Display Heading -->
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight text-balance">
+          Learn HTML &amp; CSS by <span class="bg-gradient-to-r from-primary via-secondary to-primary-container bg-clip-text text-transparent">Actually Writing Code.</span>
+</h1>
+<!-- Subtitle -->
+<p class="mt-space-lg font-body-lg text-body-lg text-on-surface-variant max-w-2xl text-balance leading-relaxed">Interactive web engineering curriculum, instant in-browser test feedback, and real-time execution. Build production-grade layout instincts without local config overhead.</p>
+<!-- CTA Action Group -->
+<div class="mt-space-xl flex flex-col sm:flex-row items-center gap-space-md w-full justify-center">
+<button class="w-full sm:w-auto px-space-xl py-3.5 rounded-xl bg-gradient-to-r from-secondary to-primary text-on-primary font-title-md text-title-md shadow-[0_8px_24px_-4px_rgba(61,82,160,0.35)] hover:shadow-[0_12px_32px_rgba(112,145,230,0.5)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-space-sm group" type="button">
+<span class="">Start Learning for Free</span>
+<span class="font-body-sm text-body-sm opacity-80">(No Credit Card)</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<a class="w-full sm:w-auto px-space-lg py-3.5 rounded-xl bg-surface-container-high hover:bg-surface-variant text-on-secondary-container font-title-md text-title-md shadow-sm transition-all flex items-center justify-center gap-space-sm" href="#curriculum">
+<span class="material-symbols-outlined text-secondary text-[22px]" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+<span class="">Explore 5 Core Lessons</span>
+</a>
+</div>
+<!-- Social Proof Stats Pill Row -->
+<div class="mt-space-xl flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-on-surface-variant font-body-md text-body-md"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">group</span><span class="font-headline-sm text-headline-sm text-on-surface font-bold">12,500+</span><span class="text-outline text-body-sm font-body-sm">Developers &amp; Engineers</span></div><span class="w-1.5 h-1.5 rounded-full bg-outline-variant hidden sm:inline-block"></span><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span><span class="font-headline-sm text-headline-sm text-on-surface font-bold">98%</span><span class="text-outline text-body-sm font-body-sm">Team completion rate</span></div><span class="w-1.5 h-1.5 rounded-full bg-outline-variant hidden sm:inline-block"></span><div class="flex items-center gap-space-xs"><div class="flex text-amber-500"><span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span></div><span class="font-headline-sm text-headline-sm text-on-surface font-bold">4.9/5</span><span class="text-outline text-body-sm font-body-sm">Engineer rating</span></div></div>
+</div>
+<!-- Hero Interactive Mockup Teaser -->
+<div class="mt-space-xl relative w-full rounded-2xl bg-inverse-surface shadow-[0_24px_64px_-12px_rgba(28,26,35,0.35)] overflow-hidden">
+<!-- Window Chrome / Metadata Bar -->
+<div class="w-full bg-[#131722] px-space-md py-3 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+<span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+<span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+</div>
+<div class="hidden sm:flex items-center gap-space-xs ml-space-md bg-[#252D4A] px- space-xs py-1 rounded-md text-[#ADBBDA]">
+<span class="material-symbols-outlined text-[15px]">terminal</span>
+<span class="font-label-code-sm text-label-code-sm">workspace-sandbox.html</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-label-code-sm text-label-code-sm text-[#ADBBDA] bg-[#252D4A] px-2.5 py-1 rounded-full">Lesson 01: HTML Structure</span>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-[#10B981]/20 text-[#10B981] font-label-code-sm text-label-code-sm font-semibold">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span class="">All Tests Passed! 🎉</span>
+</div>
+</div>
+</div>
+<!-- 3-Panel Split IDE Showcase -->
+<div class="grid grid-cols-1 lg:grid-cols-12 min-h-[460px] bg-[#1a1f30]">
+<!-- Left Panel: Guided Instructions (3 cols) -->
+<div class="lg:col-span-3 bg-[#131722] p-space-lg flex flex-col justify-between">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-secondary/30 text-secondary-fixed font-label-pill text-label-pill uppercase">Task 1 of 3</span>
+<span class="text-body-sm font-body-sm text-[#8697C4]">4 mins left</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-white font-semibold">Build a Semantic Card</h2>
+<p class="font-body-md text-body-md text-[#ADBBDA] mt-1">
+                Add an <code class="font-label-code-sm text-label-code-sm bg-[#252D4A] px-1.5 py-0.5 rounded text-secondary-fixed">&lt;article&gt;</code> element wrapping a heading and an action button styled with CSS flexbox.
+              </p>
+<!-- Live Requirements Checklist -->
+<div class="mt-space-md flex flex-col gap-2">
+<div class="flex items-center gap-2 p-2 rounded bg-[#10B981]/10 text-white font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[#10B981] text-[18px]">check_circle</span>
+<span class="">Root element contains &lt;article&gt;</span>
+</div>
+<div class="flex items-center gap-2 p-2 rounded bg-[#10B981]/10 text-white font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[#10B981] text-[18px]">check_circle</span>
+<span class="">Heading is h2 with class "title"</span>
+</div>
+<div class="flex items-center gap-2 p-2 rounded bg-[#10B981]/10 text-white font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[#10B981] text-[18px]">check_circle</span>
+<span class="">Primary CTA has rounded corners</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md flex items-center justify-between text-[#8697C4] text-body-sm font-body-sm">
+<span class="">Automated grading</span>
+<span class="text-[#10B981] font-semibold">3 / 3 Complete</span>
+</div>
+</div>
+<!-- Middle Panel: Code Editor (5 cols) -->
+<div class="lg:col-span-5 bg-[#171c2c] p-space-md flex flex-col font-label-code-sm text-label-code-sm shadow-inner">
+<div class="flex items-center justify-between pb-3 text-[#ADBBDA]">
+<div class="flex items-center gap-space-md">
+<span class="text-white font-semibold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> index.html
+                </span>
+<span class="text-[#8697C4] hover:text-white cursor-pointer transition-colors">style.css</span>
+</div>
+<span class="font-label-code-sm text-label-code-sm text-[#8697C4]">UTF-8</span>
+</div>
+<!-- Code Syntax Representation -->
+<div class="flex-1 font-label-code-sm text-label-code-sm leading-relaxed overflow-x-auto text-[#c5c5d3] py-2 flex flex-col gap-1">
+<div class="flex"><span class="w-7 text-[#505a7a] select-none">1</span><span class=""><span class="text-[#f97583]">&lt;article</span> <span class="text-[#b392f0]">class</span>=<span class="text-[#9ecbff]">"promo-card"</span><span class="text-[#f97583]">&gt;</span></span></div>
+<div class="flex"><span class="w-7 text-[#505a7a] select-none">2</span><span class="pl-4"><span class="text-[#f97583]">&lt;div</span> <span class="text-[#b392f0]">class</span>=<span class="text-[#9ecbff]">"badge"</span><span class="text-[#f97583]">&gt;</span>Interactive Lab<span class="text-[#f97583]">&lt;/div&gt;</span></span></div>
+<div class="flex"><span class="w-7 text-[#505a7a] select-none">3</span><span class="pl-4"><span class="text-[#f97583]">&lt;h2</span> <span class="text-[#b392f0]">class</span>=<span class="text-[#9ecbff]">"title"</span><span class="text-[#f97583]">&gt;</span>Modern Front-End<span class="text-[#f97583]">&lt;/h2&gt;</span></span></div>
+<div class="flex"><span class="w-7 text-[#505a7a] select-none">4</span><span class="pl-4"><span class="text-[#f97583]">&lt;p</span> <span class="text-[#b392f0]">class</span>=<span class="text-[#9ecbff]">"description"</span><span class="text-[#f97583]">&gt;</span></span></div>
+<div class="flex"><span class="w-7 text-[#505a7a] select-none">5</span><span class="pl-8 text-[#79b8ff]">Learn directly in your browser with zero latency.</span></div>
+<div class="flex"><span class="w-7 text-[#505a7a] select-none">6</span><span class="pl-4"><span class="text-[#f97583]">&lt;/p&gt;</span></span></div>
+<div class="flex"><span class="w-7 text-[#505a7a] select-none">7</span><span class="pl-4"><span class="text-[#f97583]">&lt;button</span> <span class="text-[#b392f0]">class</span>=<span class="text-[#9ecbff]">"cta-btn"</span><span class="text-[#f97583]">&gt;</span>Continue<span class="text-[#f97583]">&lt;/button&gt;</span></span></div>
+<div class="flex"><span class="w-7 text-[#505a7a] select-none">8</span><span class=""><span class="text-[#f97583]">&lt;/article&gt;</span></span></div>
+</div>
+<div class="pt-3 flex items-center justify-between">
+<span class="text-[#8697C4] text-body-sm font-body-sm">Auto-saves instantly</span>
+<button class="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-label-code-sm text-label-code-sm font-semibold flex items-center gap-1.5 shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+<span class="">Run Tests</span>
+<kbd class="ml-1 text-[10px] bg-emerald-700/60 px-1 py-0.5 rounded text-emerald-100">⌘↵</kbd>
+</button>
+</div>
+</div>
+<!-- Right Panel: Live Browser Preview (4 cols) -->
+<div class="lg:col-span-4 bg-surface p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 text-outline">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">Live Preview</span>
+</div>
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</div>
+<!-- Rendered Mock Component Card in Live Preview -->
+<div class="mt-space-md p-space-lg rounded-xl bg-surface-container-lowest shadow-md flex flex-col gap-space-sm transition-all hover:shadow-lg">
+<span class="self-start px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-pill text-label-pill uppercase">Interactive Lab</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Modern Front-End</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                  Learn directly in your browser with zero latency. Instant visual validation helps concepts stick faster.
+                </p>
+<button class="mt-2 w-full py-2 rounded-lg bg-primary text-on-primary font-title-md text-title-md hover:bg-primary-container transition-colors" type="button">
+                  Continue
+                </button>
+</div>
+</div>
+<!-- Toast-Style Notification -->
+<div class="mt-4 p-space-sm rounded-lg bg-emerald-50 text-emerald-900 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-600 text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-sm text-body-sm font-semibold">Test Suite: 100% Passed</span>
+</div>
+<span class="font-label-code-sm text-label-code-sm text-emerald-700">12ms</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- INTERACTIVE FEATURES SECTION: WHY UNI-PROJECT -->
+<section class="w-full py-20 bg-surface-container-low">
+<div class="w-full max-w-7xl mx-auto px-margin-desktop">
+<div class="text-center max-w-3xl mx-auto"><span class="font-label-pill text-label-pill uppercase tracking-widest text-secondary font-bold">Engineered for Accelerated Mastery</span><h2 class="font-headline-xl text-headline-xl text-on-surface mt-2 font-bold tracking-tight">Why Engineers Choose CodeCraft</h2><p class="font-body-lg text-body-lg text-on-surface-variant mt-space-sm">Passive video lectures create tutorial friction. CodeCraft replaces passive consumption with active, test-driven browser execution designed for modern software teams.</p></div>
+<!-- 3 Feature Cards with Metallic Chic Styling -->
+<div class="mt-space-xl grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Feature 1 -->
+<div class="relative group rounded-2xl bg-surface-container-lowest p-space-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1">
+<div class="flex flex-col">
+<div class="w-14 h-14 rounded-xl bg-secondary-fixed flex items-center justify-center text-primary shadow-sm mb-space-lg group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Read &amp; Understand</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-sm leading-relaxed">
+              Concise, bite-sized lessons focused on practical modern web fundamentals without endless walls of theoretical text.
+            </p>
+</div>
+<div class="mt-space-lg pt-space-md flex items-center gap-space-xs text-primary font-title-md text-title-md">
+<span class="">Learn in 5-minute sprints</span>
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="relative group rounded-2xl bg-surface-container-lowest p-space-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1">
+<div class="flex flex-col">
+<div class="w-14 h-14 rounded-xl bg-primary-fixed flex items-center justify-center text-primary shadow-sm mb-space-lg group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">code</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Live In-Browser IDE</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-sm leading-relaxed">
+              Write real HTML and CSS with instant hot-reloading preview right in your browser. No terminal commands or complex config.
+            </p>
+</div>
+<div class="mt-space-lg pt-space-md flex items-center gap-space-xs text-primary font-title-md text-title-md">
+<span class="">Real-time live DOM reload</span>
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="relative group rounded-2xl bg-surface-container-lowest p-space-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1">
+<div class="flex flex-col">
+<div class="w-14 h-14 rounded-xl bg-tertiary-fixed flex items-center justify-center text-tertiary shadow-sm mb-space-lg group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Instant Automated Testing</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-sm leading-relaxed">
+              Get immediate validation and helpful diagnostic hints as you type every line of code. Never get stuck without a path forward.
+            </p>
+</div>
+<div class="mt-space-lg pt-space-md flex items-center gap-space-xs text-primary font-title-md text-title-md">
+<span class="">Automated assertion checks</span>
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CURRICULUM & 5 CORE LESSONS PREVIEW -->
+<section class="w-full py-20 bg-surface" id="curriculum">
+<div class="w-full max-w-7xl mx-auto px-margin-desktop">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-xl"><div class=""><span class="font-label-pill text-label-pill uppercase tracking-widest text-primary font-bold">Frontend Engineering Track</span><h2 class="font-headline-xl text-headline-xl text-on-surface mt-2 font-bold tracking-tight">From Fundamentals to Responsive Production in 5 Modules</h2></div><p class="font-body-md text-body-md text-on-surface-variant max-w-md">Each module pairs focused architecture principles with automated test suites matching production frontend standards.</p></div>
+<!-- 5 Core Lessons List / Cards Mosaic -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+<!-- Lesson 1 Card -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-lg shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="px-2.5 py-1 rounded-md bg-primary-fixed text-primary font-label-code-sm text-label-code-sm font-semibold">Lesson 01</span>
+<span class="font-label-pill text-label-pill uppercase text-outline">Beginner</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+              HTML Structure &amp; Foundations
+            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+              Understand the core skeleton of all web pages: Doctype declaration, <code class="font-label-code-sm text-label-code-sm bg-surface-container px-1 rounded">&lt;head&gt;</code>, <code class="font-label-code-sm text-label-code-sm bg-surface-container px-1 rounded">&lt;body&gt;</code>, and viewport meta tags.
+            </p>
+<div class="mt-space-md flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">&lt;!DOCTYPE html&gt;</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">&lt;head&gt;</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">&lt;meta&gt;</span>
+</div>
+</div>
+<div class="mt-space-lg pt-space-sm flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-outline">15 mins · 3 Challenges</span>
+<span class="font-title-md text-title-md text-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Launch Lab <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</span>
+</div>
+</div>
+<!-- Lesson 2 Card -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-lg shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="px-2.5 py-1 rounded-md bg-secondary-fixed text-secondary font-label-code-sm text-label-code-sm font-semibold">Lesson 02</span>
+<span class="font-label-pill text-label-pill uppercase text-outline">Beginner</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+              Text Tags &amp; Semantic Content
+            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+              Master the art of accessible typography: heading hierarchies (h1-h6), paragraphs, strong/emphasis, quotes, and ordered/unordered lists.
+            </p>
+<div class="mt-space-md flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">&lt;h1&gt;..&lt;h6&gt;</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">&lt;p&gt;</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">&lt;ul&gt; &amp; &lt;ol&gt;</span>
+</div>
+</div>
+<div class="mt-space-lg pt-space-sm flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-outline">20 mins · 4 Challenges</span>
+<span class="font-title-md text-title-md text-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Launch Lab <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</span>
+</div>
+</div>
+<!-- Lesson 3 Card -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-lg shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="px-2.5 py-1 rounded-md bg-tertiary-fixed text-tertiary font-label-code-sm text-label-code-sm font-semibold">Lesson 03</span>
+<span class="font-label-pill text-label-pill uppercase text-outline">Core</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+              Hyperlinks, Assets &amp; Images
+            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+              Connect the web with anchor tags, navigation anchors, responsive images, alt accessibility attributes, and picture elements.
+            </p>
+<div class="mt-space-md flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">&lt;a href&gt;</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">&lt;img alt&gt;</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">target="_blank"</span>
+</div>
+</div>
+<div class="mt-space-lg pt-space-sm flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-outline">25 mins · 4 Challenges</span>
+<span class="font-title-md text-title-md text-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Launch Lab <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</span>
+</div>
+</div>
+<!-- Lesson 4 Card -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-lg shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="px-2.5 py-1 rounded-md bg-primary-fixed-dim text-primary font-label-code-sm text-label-code-sm font-semibold">Lesson 04</span>
+<span class="font-label-pill text-label-pill uppercase text-outline">Intermediate</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+              CSS Selectors &amp; Specificity
+            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+              Target elements precisely using Class, ID, descendent combinators, pseudo-classes (<code class="font-label-code-sm text-label-code-sm bg-surface-container px-1 rounded">:hover</code>), and unmask the cascade hierarchy.
+            </p>
+<div class="mt-space-md flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">.class-name</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">#element-id</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">:nth-child()</span>
+</div>
+</div>
+<div class="mt-space-lg pt-space-sm flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-outline">30 mins · 5 Challenges</span>
+<span class="font-title-md text-title-md text-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Launch Lab <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</span>
+</div>
+</div>
+<!-- Lesson 5 Card -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-lg shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="px-2.5 py-1 rounded-md bg-secondary-fixed-dim text-secondary font-label-code-sm text-label-code-sm font-semibold">Lesson 05</span>
+<span class="font-label-pill text-label-pill uppercase text-outline">Intermediate</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+              The CSS Box Model In-Depth
+            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs leading-relaxed">
+              Take complete control of layout space: margin collapse, border radius, padding bounds, and <code class="font-label-code-sm text-label-code-sm bg-surface-container px-1 rounded">box-sizing: border-box</code> mastery.
+            </p>
+<div class="mt-space-md flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">margin</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">padding</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-code-sm text-[11px]">border-box</span>
+</div>
+</div>
+<div class="mt-space-lg pt-space-sm flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-outline">35 mins · 5 Challenges</span>
+<span class="font-title-md text-title-md text-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Launch Lab <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</span>
+</div>
+</div>
+<!-- Quick Launch Spotlight / Callout Card -->
+<div class="rounded-2xl bg-gradient-to-br from-primary via-primary-container to-secondary p-space-xl text-on-primary shadow-lg flex flex-col justify-between">
+<div>
+<span class="px-2.5 py-1 rounded-full bg-white/20 text-white font-label-pill text-label-pill uppercase tracking-wider">Fast Start</span>
+<h3 class="font-headline-md text-headline-md text-white font-bold mt-space-md">
+              Try Lesson 1 Right Now
+            </h3>
+<p class="font-body-md text-body-md text-white/80 mt-space-xs leading-relaxed">
+              No account creation needed. Open the live sandbox and write your very first HTML doctype within 30 seconds.
+            </p>
+</div>
+<button class="mt-space-xl w-full py-3.5 px-space-md rounded-xl bg-white text-primary font-title-md text-title-md shadow-md hover:bg-surface-bright transition-colors flex items-center justify-center gap-space-xs font-semibold" type="button">
+<span class="">Launch Interactive Sandbox</span>
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- STUDENT TESTIMONIALS & SUCCESS STORIES -->
+<section class="w-full py-20 bg-surface-container-low">
+<div class="w-full max-w-7xl mx-auto px-margin-desktop">
+<div class="text-center max-w-2xl mx-auto mb-space-xl"><span class="font-label-pill text-label-pill uppercase tracking-widest text-secondary font-bold">ENGINEERING VELOCITY</span><h2 class="font-headline-xl text-headline-xl text-on-surface mt-2 font-bold tracking-tight">Trusted by 12,000+ Developers &amp; Modern Teams</h2><p class="font-body-lg text-body-lg text-on-surface-variant mt-space-sm">See how immediate feedback accelerates skill velocity from day one.</p></div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Testimonial 1 -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-xl shadow-md flex flex-col justify-between"><div class=""><div class="flex text-amber-500 mb-space-md"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span></div><p class="font-body-md text-body-md text-on-surface leading-relaxed italic">"I spent weeks on passive video courses without true layout independence. On CodeCraft, the immediate visual assertion tests explained margin behavior and flexbox instantly. Pure velocity."</p></div><div class="mt-space-lg pt-space-md flex items-center gap-space-md"><img class="w-12 h-12 rounded-full object-cover shadow-sm" data-alt="Warm portrait photograph of Elena Rostova, a smiling female junior frontend developer with glasses, natural daylight, soft bokeh studio background in cobalt blue tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD8QVWEOZOCay7XYEVlX1I-bU2zhEBXxkH7_HyIo_6vl7IEl8btCqz4Oq1-JW3cnFYUGCeJX2UWDDNPmYbhSxoaiHJeKXLl-iZpXnwkO7ZhJraNoh9LbCeMIuNr8JotUPvp10C0fLGJmcNNP9dmufC1_2haVvWoqxv3yrNcYBz-d-Q8pI9XMMM6B4-wt2EVPUj_XOTY6IIHSpyRQc0BoXiYKF7gYdSmrgCV3pABmM"><div><h4 class="font-title-md text-title-md text-on-surface font-bold">Elena Rostova</h4><p class="font-body-sm text-body-sm text-on-surface-variant">Frontend Engineer at Veloce</p></div></div></div>
+<!-- Testimonial 2 -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-xl shadow-md flex flex-col justify-between">
+<div>
+<div class="flex text-amber-500 mb-space-md">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed italic">
+              "The split-screen IDE feels as slick as VS Code, but with zero installation pain. The keyboard hotkey support (⌘ + Enter to test) makes the interactive flow super addictive."
+            </p>
+</div>
+<div class="mt-space-lg pt-space-md flex items-center gap-space-md">
+<img class="w-12 h-12 rounded-full object-cover shadow-sm" data-alt="Portrait photography of Marcus Chen, young male product designer transitioning into engineering, confident smile, clean indoor workspace background with soft lavender lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9mUSZK5oLp_w-ZDMZppHJOFYD9yKyGTAjOxnGx6OafrxxrtL_dyzXHD2KISsf_SBisa6jq4HIUzwdHdVPrbwf0OguDAwZDR9Op1N-Z8K3O_Clbw2OPM60HJEhHnAYRB_ljOYJ0vVgQDNvjHwxC8ZJxpMKLqRru4LG-Zor1PsTa0vTSZ7lZiUtxgW6eiOciHOvSR61fD0F2u-RoCteaFoCu-On7bWdZLiLYgmz62A">
+<div>
+<h4 class="font-title-md text-title-md text-on-surface font-bold">Marcus Chen</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Product Designer &amp; Builder</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-xl shadow-md flex flex-col justify-between"><div class=""><div class="flex text-amber-500 mb-space-md"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span></div><p class="font-body-md text-body-md text-on-surface leading-relaxed italic">"Our engineering cohort onboarded with CodeCraft during sprint prep. It eliminated syntax friction before our first sprint demo. Incredible interactive developer experience!"</p></div><div class="mt-space-lg pt-space-md flex items-center gap-space-md"><img class="w-12 h-12 rounded-full object-cover shadow-sm" data-alt="Close-up professional portrait of Tariq Al-Mansoor, software apprentice, neutral expression with friendly eyes, studio portrait with deep slate background accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAh5N78DjMNpd47mQd3mDlbawIAfIR-ayRUZ298OZ1V2cDEgvTzTpXfhSLX_m1xwh8MGDKPRkQm2R8w85j4L-QtEQiA5lUsXlU9zEfTsEirj3HszAivRWGXbJ8FFYEYb2wx0A1NNa-qkVMnBXGO5IwYwTQJb_UQ8pQZ6AHFuBZW3xaMuCjEGwXl864k6MLHEEUc9bgF8UUeD09tTQCAlFsGGDg9GC8nwlsMSo3Y4MA"><div><h4 class="font-title-md text-title-md text-on-surface font-bold">Tariq Al-Mansoor</h4><p class="font-body-sm text-body-sm text-on-surface-variant">Associate Software Engineer</p></div></div></div>
+</div>
+</div>
+</section>
+<!-- FINAL CTA BANNER SECTION -->
+<section class="w-full py-20 bg-surface">
+<div class="w-full max-w-7xl mx-auto px-margin-desktop">
+<div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-primary-container to-secondary p-space-xl md:p-16 text-on-primary shadow-2xl">
+<!-- Decorative Ambient Overlays -->
+<div class="absolute -right-20 -bottom-20 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -left-12 -top-12 w-64 h-64 bg-secondary-fixed/20 rounded-full blur-2xl pointer-events-none"></div>
+<div class="relative z-10 max-w-2xl mx-auto text-center flex flex-col items-center">
+<div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-white mb-space-md backdrop-blur-md">
+<span class="material-symbols-outlined text-[26px]">terminal</span>
+</div>
+<h2 class="font-headline-xl text-headline-xl text-white font-extrabold tracking-tight">
+            Ready to build your first website today?
+          </h2>
+<p class="font-body-lg text-body-lg text-white/90 mt-space-sm max-w-lg">Join 12,500+ engineers writing clean, modern HTML and CSS with instant automated verification.</p>
+<!-- Instant Signup Input Form -->
+<form class="mt-space-xl w-full max-w-md flex flex-col sm:flex-row gap-space-xs" onsubmit="event.preventDefault();">
+<input class="flex-1 px-space-md py-3.5 rounded-xl bg-white text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:ring-4 focus:ring-white/30 shadow-sm" placeholder="Enter your email address" required="" type="email">
+<button class="px-space-lg py-3.5 rounded-xl bg-inverse-surface text-inverse-on-surface font-title-md text-title-md hover:bg-black transition-colors shadow-md flex items-center justify-center gap-space-xs whitespace-nowrap font-semibold" type="submit">
+<span class="">Get Started</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</form>
+<p class="mt-space-md text-body-sm font-body-sm text-white/70 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span class="">Zero spam. No credit card required. Free instant access.</span>
+</p>
+</div>
+</div>
+</div>
+</section>
+</div></main><footer class="w-full bg-surface-container-lowest shadow-[0_-2px_16px_rgba(61,82,160,0.04)]"><div class="w-full max-w-7xl mx-auto px-margin-desktop py-space-xl flex flex-col md:flex-row items-center justify-between gap-space-lg"><div class="flex items-center gap-space-sm"><div class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white shadow-sm"><span class="material-symbols-outlined text-[16px]">terminal</span></div><span class="font-title-md text-title-md text-primary font-bold">CodeCraft</span><span class="font-body-sm text-body-sm text-outline ml-space-sm">© 2025 CodeCraft. Professional Interactive Learning Platform.</span></div><div class="flex items-center gap-space-lg font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-on-surface transition-colors" href="#">Curriculum</a><a class="hover:text-on-surface transition-colors" href="#">Documentation</a><a class="hover:text-on-surface transition-colors" href="#">API Reference</a><a class="hover:text-on-surface transition-colors" href="#">System Status</a></div></div></footer>
+
+</body></html>

@@ -3,29 +3,16 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import {
-  CheckCircle2,
-  XCircle,
-  Circle,
-  HelpCircle,
-  Play,
-  Sparkles,
-  Save,
-} from "lucide-react";
 import type { ClientChallenge } from "@/lib/challenges";
 import { checkSubmission, type CheckResult } from "@/lib/checker";
 import { MarkdownContent } from "@/components/MarkdownContent";
-import { ProgressBar } from "@/components/ui/ProgressBar";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Kbd } from "@/components/ui/Kbd";
 
 export interface ChallengePanelProps {
   challenge: ClientChallenge;
   html: string;
   css: string;
   nextLesson?: { id: string; title: string } | null;
-  onCheck?: () => void;
+  onCheck?: (result: CheckResult) => void;
 }
 
 export function ChallengePanel({
@@ -33,6 +20,7 @@ export function ChallengePanel({
   html,
   css,
   nextLesson,
+  onCheck,
 }: ChallengePanelProps) {
   const { data: session } = useSession();
 
@@ -116,6 +104,7 @@ export function ChallengePanel({
   const handleCheckCode = useCallback(async () => {
     const result = checkSubmission({ html, css }, challenge);
     setLastResult(result);
+    if (onCheck) onCheck(result);
 
     if (result.passed) {
       if (session?.user) {
@@ -145,7 +134,7 @@ export function ChallengePanel({
     } else {
       setSaveStatus("idle");
     }
-  }, [html, css, challenge, session?.user]);
+  }, [html, css, challenge, session?.user, onCheck]);
 
   // Keyboard shortcut Ctrl/Cmd+Enter
   useEffect(() => {
@@ -169,61 +158,37 @@ export function ChallengePanel({
   const passedRules = lastResult?.score.passed ?? 0;
 
   return (
-    <section
-      aria-label="Challenge Panel"
-      className="glass-panel space-y-6 rounded-2xl border border-[var(--border-glass)] p-5 shadow-xl sm:p-6"
-    >
-      {/* Header */}
-      <div className="flex flex-col gap-2 border-b border-[var(--border-glass)] pb-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <div className="mb-1 flex items-center gap-2">
-            <Badge variant="primary" dot>
-              Interactive Challenge
-            </Badge>
-            {lastResult?.passed && <Badge variant="success">All passed</Badge>}
+    <div className="space-y-space-lg">
+      {/* Challenge Objective Card */}
+      <div className="p-space-lg rounded-xl bg-surface-container-low shadow-sm space-y-space-md border border-surface-variant/50">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-space-xs">
+            <span className="material-symbols-outlined text-secondary text-[20px]">target</span>
+            <h2 className="font-title-md text-title-md text-on-surface font-semibold">
+              {challenge.title}
+            </h2>
           </div>
-          <h2 className="font-heading text-xl font-bold tracking-tight text-[var(--canvas-text)]">
-            {challenge.title}
-          </h2>
+          <span className="px-space-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-pill text-label-pill uppercase font-semibold">
+            Active
+          </span>
         </div>
-      </div>
-
-      {/* Task Description */}
-      <div className="glass-panel rounded-xl border border-[var(--border-glass)] bg-black/5 p-4 dark:bg-black/30">
-        <MarkdownContent content={challenge.task} />
+        <div className="font-body-md text-body-md text-on-surface leading-6">
+          <MarkdownContent content={challenge.task} />
+        </div>
       </div>
 
       {/* FreeCodeCamp-style Tests Checklist */}
-      <div className="space-y-3">
-        {/* Checklist header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <h3 className="text-xs font-bold tracking-wider text-[var(--canvas-text)] uppercase">
-              Test Checklist
-            </h3>
-            {lastResult && (
-              <span className="text-xs text-[var(--canvas-text-secondary)]">
-                ({passedRules}/{totalRules})
-              </span>
-            )}
-          </div>
-          {lastResult && (
-            <span className="text-xs font-medium text-[var(--canvas-text-secondary)]">
-              Status: {passedRules}/{totalRules} verified
-            </span>
-          )}
+      <div className="space-y-space-sm pt-space-xs">
+        <div className="flex items-center justify-between text-on-surface-variant mb-space-xs">
+          <span className="font-label-pill text-label-pill uppercase font-semibold text-outline">
+            Live Unit Assertions
+          </span>
+          <span className="font-label-code-sm text-label-code-sm text-primary font-semibold">
+            {lastResult ? `${passedRules} of ${totalRules} Passed` : `${totalRules} Specifications`}
+          </span>
         </div>
 
-        {/* Progress Bar */}
-        <ProgressBar
-          value={lastResult ? passedRules : 0}
-          max={totalRules}
-          variant={lastResult?.passed ? "success" : "primary"}
-          size="sm"
-        />
-
-        {/* Rule items */}
-        <div className="space-y-2 pt-1">
+        <div className="space-y-space-sm">
           {challenge.rules.map((rule, idx) => {
             const ruleResult = lastResult?.results.find(
               (r) => r.ruleIndex === idx
@@ -234,28 +199,43 @@ export function ChallengePanel({
             return (
               <div
                 key={idx}
-                className={`flex items-start gap-3 rounded-xl border p-3 text-xs transition-all duration-200 sm:text-sm ${
+                className={`flex items-center justify-between p-space-sm px-space-md rounded-lg shadow-sm border transition-all duration-200 ${
                   !isEvaluated
-                    ? "glass-panel border-[var(--border-glass)] text-[var(--canvas-text)]"
+                    ? "bg-surface-container-lowest border-surface-variant/40"
                     : isPassed
-                      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-900 shadow-sm shadow-emerald-500/5 dark:text-emerald-200"
-                      : "border-red-500/30 bg-red-500/10 text-red-900 shadow-sm shadow-red-500/5 dark:text-red-200"
+                      ? "bg-surface-container-lowest border-secondary/40 text-on-surface"
+                      : "bg-error-container/20 border-error/40 text-on-surface"
                 }`}
               >
-                <div className="mt-0.5 shrink-0">
-                  {!isEvaluated ? (
-                    <Circle className="h-4 w-4 text-[var(--brand-steel)]" />
-                  ) : isPassed ? (
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                  ) : (
-                    <XCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
-                  )}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <span className="leading-relaxed font-medium">
+                <div className="flex items-center gap-space-sm min-w-0 pr-2">
+                  <div
+                    className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${
+                      !isEvaluated
+                        ? "bg-surface-container-high text-outline"
+                        : isPassed
+                          ? "bg-secondary-fixed text-on-secondary-fixed"
+                          : "bg-error text-on-error"
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[14px]">
+                      {!isEvaluated ? "more_horiz" : isPassed ? "check" : "close"}
+                    </span>
+                  </div>
+                  <span className="font-body-sm text-body-sm leading-snug">
                     {rule.message}
                   </span>
                 </div>
+                <span
+                  className={`font-label-pill text-[10px] uppercase font-semibold shrink-0 ${
+                    !isEvaluated
+                      ? "text-outline"
+                      : isPassed
+                        ? "text-secondary"
+                        : "text-error"
+                  }`}
+                >
+                  {!isEvaluated ? "Pending" : isPassed ? "Passed" : "Failed"}
+                </span>
               </div>
             );
           })}
@@ -264,19 +244,19 @@ export function ChallengePanel({
 
       {/* Progressive Hints Section */}
       {challenge.hints.length > 0 && (
-        <div className="space-y-3 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
+        <div className="space-y-space-sm rounded-xl p-space-md bg-surface-container-low border border-surface-variant/40">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <HelpCircle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-              <h3 className="text-xs font-bold tracking-wider text-amber-900 uppercase dark:text-amber-300">
-                Hints ({revealedHints} of {challenge.hints.length} unlocked)
-              </h3>
+            <div className="flex items-center gap-space-xs text-primary font-title-md text-body-md font-semibold">
+              <span className="material-symbols-outlined text-[18px] text-secondary">
+                help_outline
+              </span>
+              <span>Hints ({revealedHints} of {challenge.hints.length} unlocked)</span>
             </div>
             {revealedHints < challenge.hints.length && (
               <button
                 type="button"
                 onClick={handleRevealNextHint}
-                className="text-xs font-semibold text-amber-700 underline hover:text-amber-800 focus-visible:ring-1 focus-visible:ring-amber-400 focus-visible:outline-none dark:text-amber-400 dark:hover:text-amber-300"
+                className="text-body-sm text-secondary hover:text-primary font-semibold underline cursor-pointer"
               >
                 Show hint {revealedHints + 1}
               </button>
@@ -288,9 +268,9 @@ export function ChallengePanel({
               {challenge.hints.slice(0, revealedHints).map((hint, index) => (
                 <div
                   key={index}
-                  className="rounded-lg border border-amber-500/20 bg-white/60 p-3 text-xs text-amber-950 dark:bg-black/50 dark:text-amber-200"
+                  className="rounded-lg border border-surface-variant/60 bg-surface-container-lowest p-3 text-body-sm text-on-surface"
                 >
-                  <span className="font-bold text-amber-900 dark:text-amber-300">
+                  <span className="font-bold text-primary font-label-code-sm">
                     Hint {index + 1}:
                   </span>{" "}
                   {hint}
@@ -302,108 +282,93 @@ export function ChallengePanel({
       )}
 
       {/* Action Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border-glass)] pt-2">
-        <div className="flex items-center gap-3">
-          <Button
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-surface-variant/40 pt-space-md">
+        <div className="flex items-center gap-space-sm">
+          <button
             type="button"
             onClick={handleCheckCode}
-            variant="primary"
-            size="md"
-            leftIcon={<Play className="h-4 w-4 fill-current" />}
-            className="font-semibold shadow-lg shadow-[#3D52A0]/25"
+            className="px-space-lg py-2.5 rounded-lg bg-gradient-to-r from-secondary to-primary text-on-primary font-title-md text-body-sm hover:shadow-md hover:shadow-secondary/20 transition-all flex items-center gap-space-xs shadow-sm font-semibold cursor-pointer"
           >
-            Check my code
-          </Button>
-          <div className="hidden items-center gap-1.5 text-xs text-[var(--canvas-text-secondary)] sm:flex">
-            <Kbd>Ctrl</Kbd>
+            <span className="material-symbols-outlined text-[18px]">play_arrow</span>
+            <span>Check my code</span>
+          </button>
+          <div className="hidden sm:flex items-center gap-1 font-label-code-sm text-outline text-[11px]">
+            <kbd className="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant">
+              Ctrl
+            </kbd>
             <span>+</span>
-            <Kbd>Enter</Kbd>
+            <kbd className="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant">
+              Enter
+            </kbd>
           </div>
         </div>
 
         {/* Live save indicator */}
         {session?.user && saveStatus !== "idle" && (
-          <div className="flex items-center gap-2 text-xs font-medium">
+          <div className="flex items-center gap-1.5 font-label-code-sm text-body-sm">
             {saveStatus === "saving" && (
-              <span className="flex animate-pulse items-center gap-1.5 text-[#7091E6]">
-                <Save className="h-3.5 w-3.5 animate-spin" />
+              <span className="flex items-center gap-1 text-secondary animate-pulse">
+                <span className="material-symbols-outlined text-[16px]">sync</span>
                 Saving progress...
               </span>
             )}
             {saveStatus === "saved" && (
-              <span className="flex items-center gap-1.5 font-semibold text-emerald-600 dark:text-emerald-400">
-                <CheckCircle2 className="h-3.5 w-3.5" />✓ Progress saved
+              <span className="flex items-center gap-1 text-emerald-600 font-semibold">
+                <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                Progress saved
               </span>
             )}
             {saveStatus === "error" && (
-              <span className="text-amber-600 dark:text-amber-400">
-                Could not save progress to server. Please try again.
-              </span>
+              <span className="text-amber-600">Could not save progress.</span>
             )}
           </div>
         )}
       </div>
 
-      {/* Results Region with aria-live */}
+      {/* Results Banner with aria-live */}
       {lastResult && (
-        <div
-          aria-live="polite"
-          className="glass-panel space-y-4 rounded-xl border border-[var(--border-glass)] p-4"
-        >
-          <div className="flex items-center justify-between border-b border-[var(--border-glass)] pb-3">
-            <span className="text-sm font-bold text-[var(--canvas-text)]">
-              {lastResult.score.passed} of {lastResult.score.total} checks
-              passed
-            </span>
-            <Badge variant={lastResult.passed ? "success" : "warning"} dot>
-              {lastResult.passed ? "All checks passed!" : "Needs work"}
-            </Badge>
-          </div>
-
-          {/* Success Banner */}
-          {lastResult.passed && (
-            <div className="space-y-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-950 dark:text-emerald-200">
-              <div className="flex items-center gap-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300">
-                <Sparkles className="h-4 w-4" />
-                <span>
-                  🎉 Great job! You successfully completed this challenge.
-                </span>
+        <div aria-live="polite" className="mt-space-md">
+          {lastResult.passed ? (
+            <div className="p-space-lg rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950 space-y-space-md">
+              <div className="flex items-center gap-2 font-headline-sm text-headline-sm text-emerald-800">
+                <span className="material-symbols-outlined text-[24px]">verified</span>
+                <span>🎉 Great job! All checks passed!</span>
               </div>
-
-              {/* Anonymous Visitor Prompt */}
+              <p className="font-body-sm text-emerald-900 font-medium">
+                {lastResult.score.passed} of {lastResult.score.total} checks passed.
+              </p>
               {!session?.user && (
-                <div className="rounded-lg border border-emerald-500/20 bg-white/60 p-3 text-xs text-[var(--canvas-text)] dark:bg-black/50">
-                  <span className="font-semibold text-[var(--canvas-text)]">
-                    Log in to save your progress
-                  </span>
-                  <p className="mt-1 text-[var(--canvas-text-secondary)]">
-                    You solved this challenge!{" "}
-                    <Link
-                      href={`/login?next=/lessons/${challenge.lessonId}`}
-                      className="font-medium text-[#3D52A0] underline hover:text-[#7091E6] dark:text-[#7091E6] dark:hover:text-[#ADBBDA]"
-                    >
-                      Log in or register
-                    </Link>{" "}
-                    to record this completion on your dashboard.
-                  </p>
+                <div className="p-space-md rounded-lg bg-white border border-emerald-200 text-body-sm text-on-surface">
+                  <span className="font-bold">Log in to save your progress: </span>
+                  <Link
+                    href={`/login?next=/lessons/${challenge.lessonId}`}
+                    className="text-primary font-semibold underline"
+                  >
+                    Log in or register
+                  </Link>{" "}
+                  to record this completion on your dashboard.
                 </div>
               )}
-
-              {/* Next Lesson CTA */}
               {nextLesson && (
                 <div>
                   <Link
                     href={`/lessons/${nextLesson.id}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 underline hover:text-emerald-950 dark:text-emerald-300 dark:hover:text-emerald-200"
+                    className="inline-flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-emerald-700 text-white font-title-md text-body-sm hover:bg-emerald-800 transition-colors shadow-sm"
                   >
                     <span>Continue to next lesson: {nextLesson.title} →</span>
                   </Link>
                 </div>
               )}
             </div>
+          ) : (
+            <div className="p-space-md rounded-lg bg-surface-container-high border border-outline-variant/60 text-on-surface flex items-center justify-between">
+              <span className="font-body-sm font-semibold">
+                {lastResult.score.passed} of {lastResult.score.total} checks passed. Check the assertion details above!
+              </span>
+            </div>
           )}
         </div>
       )}
-    </section>
+    </div>
   );
 }

@@ -1,35 +1,33 @@
 import Link from "next/link";
-import { Container } from "./ui/Container";
 
 export function SiteFooter() {
   return (
-    <footer className="glass-panel mt-auto w-full py-8 text-xs text-[var(--canvas-text-muted)] transition-colors duration-200">
-      <Container size="xl">
-        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
-            <span className="font-semibold text-[var(--canvas-text)]">
-              DevCraft • HTML/CSS Interactive Platform
-            </span>
-            <span className="hidden opacity-40 sm:inline">|</span>
-            <span>Local sandbox • Zero telemetry • Real-time AST checker</span>
+    <footer className="w-full bg-surface-container-lowest shadow-[0_-2px_16px_rgba(61,82,160,0.04)]">
+      <div className="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop py-space-xl flex flex-col md:flex-row items-center justify-between gap-space-lg">
+        <div className="flex items-center gap-space-sm flex-wrap">
+          <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white shadow-sm">
+            <span className="material-symbols-outlined text-[16px]">terminal</span>
           </div>
-
-          <div className="flex items-center gap-5">
-            <Link
-              href="/lessons"
-              className="font-medium transition-colors hover:text-[var(--canvas-text)]"
-            >
-              Curriculum
-            </Link>
-            <Link
-              href="/dashboard"
-              className="font-medium transition-colors hover:text-[var(--canvas-text)]"
-            >
-              Dashboard
-            </Link>
-          </div>
+          <span className="font-title-md text-title-md text-primary font-bold">CodeCraft</span>
+          <span className="font-body-sm text-body-sm text-outline ml-space-sm">
+            © 2025 CodeCraft. Professional Interactive Learning Platform.
+          </span>
         </div>
-      </Container>
+        <div className="flex items-center gap-space-lg font-body-sm text-body-sm text-on-surface-variant flex-wrap">
+          <Link className="hover:text-on-surface transition-colors" href="/lessons">
+            Curriculum
+          </Link>
+          <a className="hover:text-on-surface transition-colors" href="#curriculum">
+            Documentation
+          </a>
+          <a className="hover:text-on-surface transition-colors" href="/api/health">
+            API Reference
+          </a>
+          <a className="hover:text-on-surface transition-colors" href="/api/health">
+            System Status
+          </a>
+        </div>
+      </div>
     </footer>
   );
 }
