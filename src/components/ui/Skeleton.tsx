@@ -10,15 +10,15 @@ export function Skeleton({
   ...props
 }: SkeletonProps) {
   const variantClasses = {
-    text: "h-4 w-full rounded",
-    rectangular: "rounded-xl",
+    text: "h-4 w-full rounded-lg",
+    rectangular: "rounded-2xl",
     circular: "rounded-full",
   };
 
   return (
     <div
       aria-hidden="true"
-      className={`animate-pulse border border-white/5 bg-slate-800/80 ${variantClasses[variant]} ${className}`}
+      className={`animate-pulse border border-white/10 bg-black/10 dark:bg-white/10 ${variantClasses[variant]} ${className}`}
       {...props}
     />
   );

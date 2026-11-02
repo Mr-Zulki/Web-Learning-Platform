@@ -39,7 +39,7 @@ export function EditorTabs({ activeTab, onTabChange }: EditorTabsProps) {
     <div
       role="tablist"
       aria-label="Code Editor Tabs"
-      className="flex items-center gap-1 border-b border-white/10 bg-slate-950/70 px-3 pt-2"
+      className="flex items-center gap-1.5 border-b border-[var(--border-glass)] bg-black/10 px-3 pt-2 transition-colors duration-200 dark:bg-black/30"
     >
       <button
         ref={htmlTabRef}
@@ -51,13 +51,13 @@ export function EditorTabs({ activeTab, onTabChange }: EditorTabsProps) {
         tabIndex={activeTab === "html" ? 0 : -1}
         onClick={() => onTabChange("html")}
         onKeyDown={handleKeyDown}
-        className={`flex items-center gap-2 rounded-t-lg px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none ${
+        className={`flex items-center gap-2 rounded-t-xl px-4 py-2 text-xs font-bold tracking-wider uppercase transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none ${
           activeTab === "html"
-            ? "border-t-2 border-amber-400 bg-slate-900 text-amber-300 shadow-inner"
-            : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
+            ? "border-t-2 border-[#7091E6] bg-white/10 text-[var(--canvas-text)] shadow-inner dark:bg-black/40"
+            : "text-[var(--canvas-text-muted)] hover:bg-white/5 hover:text-[var(--canvas-text)]"
         }`}
       >
-        <FileCode2 className="h-3.5 w-3.5 text-amber-400" />
+        <FileCode2 className="h-4 w-4 text-[#7091E6]" />
         <span>HTML</span>
       </button>
 
@@ -71,13 +71,13 @@ export function EditorTabs({ activeTab, onTabChange }: EditorTabsProps) {
         tabIndex={activeTab === "css" ? 0 : -1}
         onClick={() => onTabChange("css")}
         onKeyDown={handleKeyDown}
-        className={`flex items-center gap-2 rounded-t-lg px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none ${
+        className={`flex items-center gap-2 rounded-t-xl px-4 py-2 text-xs font-bold tracking-wider uppercase transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none ${
           activeTab === "css"
-            ? "border-t-2 border-blue-400 bg-slate-900 text-blue-300 shadow-inner"
-            : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
+            ? "border-t-2 border-[#ADBBDA] bg-white/10 text-[var(--canvas-text)] shadow-inner dark:bg-black/40"
+            : "text-[var(--canvas-text-muted)] hover:bg-white/5 hover:text-[var(--canvas-text)]"
         }`}
       >
-        <Palette className="h-3.5 w-3.5 text-blue-400" />
+        <Palette className="h-4 w-4 text-[#ADBBDA]" />
         <span>CSS</span>
       </button>
     </div>

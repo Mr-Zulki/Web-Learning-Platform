@@ -37,41 +37,46 @@ export function SiteHeader() {
   };
 
   return (
-    <header className="glass-panel-elevated sticky top-0 z-40 w-full border-b border-white/10 backdrop-blur-md">
+    <header className="glass-panel-elevated sticky top-0 z-40 w-full transition-colors duration-200">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-2.5 text-lg font-bold tracking-tight text-white transition hover:text-blue-400 focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"
+          className="group flex items-center gap-3 text-lg font-bold tracking-tight focus-visible:rounded-xl focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 shadow-md shadow-blue-500/25">
-            <Code2 className="h-5 w-5 text-white" aria-hidden="true" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-[#3D52A0] via-[#7091E6] to-[#ADBBDA] shadow-md shadow-[#3D52A0]/25 transition-transform group-hover:scale-105">
+            <Code2 className="h-5 w-5 text-[#EDE8F5]" aria-hidden="true" />
           </div>
-          <span>HTML/CSS Platform</span>
+          <span className="font-heading font-extrabold tracking-tight text-[var(--canvas-text)]">
+            DevCraft
+          </span>
+          <span className="hidden text-xs font-semibold tracking-wider text-[var(--canvas-text-muted)] uppercase sm:inline">
+            HTML/CSS
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
         <nav
           aria-label="Main Navigation"
-          className="hidden items-center gap-3 md:flex"
+          className="hidden items-center gap-2 md:flex"
         >
           <Link
             href="/lessons"
-            className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"
+            className="rounded-xl px-3.5 py-2 text-sm font-medium text-[var(--canvas-text-secondary)] transition hover:bg-white/10 hover:text-[var(--canvas-text)] focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none"
           >
             Lessons
           </Link>
 
           {status === "loading" ? (
-            <div className="h-8 w-20 animate-pulse rounded-lg bg-slate-800" />
+            <div className="h-8 w-20 animate-pulse rounded-xl bg-white/10" />
           ) : session?.user ? (
             <div className="flex items-center gap-3">
               <Link
                 href="/dashboard"
-                className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"
+                className="rounded-xl px-3.5 py-2 text-sm font-medium text-[var(--canvas-text-secondary)] transition hover:bg-white/10 hover:text-[var(--canvas-text)] focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none"
               >
                 Dashboard
               </Link>
-              <span className="text-sm font-medium text-slate-400">
+              <span className="text-sm font-medium text-[var(--canvas-text-muted)]">
                 {session.user.name || session.user.email}
               </span>
               <Button
@@ -86,7 +91,7 @@ export function SiteHeader() {
             <div className="flex items-center gap-2">
               <Link
                 href="/login"
-                className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"
+                className="rounded-xl px-3.5 py-2 text-sm font-medium text-[var(--canvas-text-secondary)] transition hover:bg-white/10 hover:text-[var(--canvas-text)] focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none"
               >
                 Login
               </Link>
@@ -98,7 +103,7 @@ export function SiteHeader() {
             </div>
           )}
 
-          <div className="mx-1 h-5 w-px bg-white/10" />
+          <div className="mx-2 h-5 w-px bg-white/15" />
 
           {/* Theme Toggle Button */}
           <IconButton
@@ -106,12 +111,12 @@ export function SiteHeader() {
             size="sm"
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             onClick={toggleTheme}
-            className="text-slate-300 hover:text-white"
+            className="text-[var(--canvas-text-secondary)] hover:text-[var(--canvas-text)]"
           >
             {theme === "dark" ? (
-              <Sun className="h-4 w-4" />
+              <Sun className="h-4 w-4 text-[#ADBBDA]" />
             ) : (
-              <Moon className="h-4 w-4" />
+              <Moon className="h-4 w-4 text-[#3D52A0]" />
             )}
           </IconButton>
         </nav>
@@ -123,12 +128,12 @@ export function SiteHeader() {
             size="sm"
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             onClick={toggleTheme}
-            className="text-slate-300 hover:text-white"
+            className="text-[var(--canvas-text-secondary)] hover:text-[var(--canvas-text)]"
           >
             {theme === "dark" ? (
-              <Sun className="h-4 w-4" />
+              <Sun className="h-4 w-4 text-[#ADBBDA]" />
             ) : (
-              <Moon className="h-4 w-4" />
+              <Moon className="h-4 w-4 text-[#3D52A0]" />
             )}
           </IconButton>
           <IconButton
@@ -136,7 +141,7 @@ export function SiteHeader() {
             size="sm"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-slate-300 hover:text-white"
+            className="text-[var(--canvas-text-secondary)] hover:text-[var(--canvas-text)]"
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5" />
@@ -149,11 +154,11 @@ export function SiteHeader() {
 
       {/* Mobile menu dropdown */}
       {mobileMenuOpen && (
-        <div className="glass-modal space-y-3 border-b border-white/10 px-4 py-4 md:hidden">
+        <div className="glass-modal space-y-3 border-t border-white/10 px-4 py-4 md:hidden">
           <Link
             href="/lessons"
             onClick={() => setMobileMenuOpen(false)}
-            className="block rounded-lg px-3 py-2 text-base font-medium text-slate-200 hover:bg-white/10 hover:text-white"
+            className="block rounded-xl px-3 py-2 text-base font-medium text-[var(--canvas-text)] hover:bg-white/10"
           >
             Lessons
           </Link>
@@ -163,11 +168,11 @@ export function SiteHeader() {
               <Link
                 href="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block rounded-lg px-3 py-2 text-base font-medium text-slate-200 hover:bg-white/10 hover:text-white"
+                className="block rounded-xl px-3 py-2 text-base font-medium text-[var(--canvas-text)] hover:bg-white/10"
               >
                 Dashboard
               </Link>
-              <div className="px-3 py-1 text-xs text-slate-400">
+              <div className="px-3 py-1 text-xs text-[var(--canvas-text-muted)]">
                 Signed in as {session.user.name || session.user.email}
               </div>
               <Button
@@ -187,7 +192,7 @@ export function SiteHeader() {
               <Link
                 href="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block rounded-lg px-3 py-2 text-center text-base font-medium text-slate-200 hover:bg-white/10"
+                className="block rounded-xl px-3 py-2 text-center text-base font-medium text-[var(--canvas-text)] hover:bg-white/10"
               >
                 Login
               </Link>

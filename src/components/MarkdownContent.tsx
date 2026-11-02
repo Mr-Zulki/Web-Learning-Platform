@@ -7,49 +7,53 @@ interface MarkdownContentProps {
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
   return (
-    <article className="prose prose-invert max-w-none">
+    <article className="max-w-none text-[var(--canvas-text)]">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ children }) => (
-            <h1 className="font-heading mb-4 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+            <h1 className="font-heading mb-4 text-2xl font-extrabold tracking-tight text-[var(--canvas-text)] sm:text-3xl">
               {children}
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="font-heading mt-6 mb-3 border-b border-white/10 pb-2 text-xl font-bold tracking-tight text-white">
+            <h2 className="font-heading mt-6 mb-3 border-b border-[var(--border-glass)] pb-2 text-xl font-bold tracking-tight text-[var(--canvas-text)]">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="mt-5 mb-2 text-lg font-semibold text-slate-100">
+            <h3 className="mt-5 mb-2 text-lg font-semibold text-[var(--canvas-text)]">
               {children}
             </h3>
           ),
           p: ({ children }) => (
-            <p className="my-3 text-sm leading-relaxed text-slate-300 sm:text-base">
+            <p className="my-3 text-sm leading-relaxed text-[var(--canvas-text)] sm:text-base">
               {children}
             </p>
           ),
           ul: ({ children }) => (
-            <ul className="my-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300 sm:text-base">
+            <ul className="my-3 list-disc space-y-1.5 pl-5 text-sm text-[var(--canvas-text)] sm:text-base">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="my-3 list-decimal space-y-1.5 pl-5 text-sm text-slate-300 sm:text-base">
+            <ol className="my-3 list-decimal space-y-1.5 pl-5 text-sm text-[var(--canvas-text)] sm:text-base">
               {children}
             </ol>
           ),
           li: ({ children }) => <li className="leading-relaxed">{children}</li>,
           strong: ({ children }) => (
-            <strong className="font-semibold text-white">{children}</strong>
+            <strong className="font-semibold text-[var(--canvas-text)]">
+              {children}
+            </strong>
           ),
           em: ({ children }) => (
-            <em className="text-slate-200 italic">{children}</em>
+            <em className="text-[var(--canvas-text-secondary)] italic">
+              {children}
+            </em>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="glass-panel my-4 rounded-r-lg border-l-4 border-blue-500 py-2 pr-3 pl-4 text-sm text-slate-300 italic">
+            <blockquote className="glass-panel my-4 rounded-r-lg border-l-4 border-[#3D52A0] py-2 pr-3 pl-4 text-sm text-[var(--canvas-text)] italic dark:border-[#7091E6]">
               {children}
             </blockquote>
           ),
@@ -58,7 +62,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             if (isCodeBlock) {
               return (
                 <code
-                  className="font-mono text-xs text-blue-200 sm:text-sm"
+                  className="font-mono text-xs text-[var(--canvas-text)] sm:text-sm"
                   {...props}
                 >
                   {children}
@@ -67,7 +71,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             }
             return (
               <code
-                className="rounded-md border border-white/10 bg-slate-800/80 px-1.5 py-0.5 font-mono text-xs text-blue-300"
+                className="rounded-md border border-[var(--border-glass)] bg-black/5 px-1.5 py-0.5 font-mono text-xs text-[#3D52A0] dark:bg-black/30 dark:text-[#ADBBDA]"
                 {...props}
               >
                 {children}
@@ -75,7 +79,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             );
           },
           pre: ({ children }) => (
-            <pre className="my-4 overflow-x-auto rounded-xl border border-white/10 bg-slate-950/80 p-4 font-mono text-xs text-slate-200 shadow-inner sm:text-sm">
+            <pre className="my-4 overflow-x-auto rounded-xl border border-[var(--border-glass)] bg-[var(--code-bg)] p-4 font-mono text-xs text-[var(--canvas-text)] shadow-inner sm:text-sm">
               {children}
             </pre>
           ),
@@ -84,7 +88,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-blue-400 underline decoration-blue-500/50 underline-offset-2 transition hover:text-blue-300 hover:decoration-blue-400"
+              className="font-medium text-[#3D52A0] underline decoration-[#7091E6]/50 underline-offset-2 transition hover:text-[#7091E6] dark:text-[#7091E6] dark:hover:text-[#ADBBDA]"
             >
               {children}
             </a>

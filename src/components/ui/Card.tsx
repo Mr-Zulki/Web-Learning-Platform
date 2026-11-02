@@ -16,11 +16,11 @@ export function Card({
     base: "glass-panel rounded-2xl p-6",
     elevated: "glass-panel-elevated rounded-2xl p-6 shadow-xl",
     interactive:
-      "glass-panel rounded-2xl p-6 transition-all duration-200 hover:border-blue-500/40 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/10 cursor-pointer",
+      "glass-panel rounded-2xl p-6 transition-all duration-200 hover:border-[#7091E6] hover:-translate-y-1 hover:shadow-xl hover:shadow-[#7091E6]/15 cursor-pointer",
   };
 
   const glowStyle = glow
-    ? "shadow-lg shadow-blue-500/20 border-blue-500/30"
+    ? "shadow-lg shadow-[#7091E6]/20 border-[#7091E6]/40"
     : "";
 
   return (
@@ -55,7 +55,7 @@ export function CardTitle({
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h3
-      className={`text-lg font-semibold tracking-tight text-slate-100 ${className}`}
+      className={`text-lg font-bold tracking-tight text-[var(--canvas-text)] ${className}`}
       {...props}
     >
       {children}
@@ -69,7 +69,10 @@ export function CardDescription({
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={`text-sm text-slate-400 ${className}`} {...props}>
+    <p
+      className={`text-sm text-[var(--canvas-text-secondary)] ${className}`}
+      {...props}
+    >
       {children}
     </p>
   );
@@ -94,7 +97,7 @@ export function CardFooter({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={`mt-6 flex items-center justify-between gap-4 border-t border-white/5 pt-4 ${className}`}
+      className={`mt-6 flex items-center justify-between gap-4 border-t border-white/10 pt-4 ${className}`}
       {...props}
     >
       {children}

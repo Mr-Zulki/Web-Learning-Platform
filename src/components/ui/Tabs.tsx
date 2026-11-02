@@ -56,7 +56,7 @@ export function Tabs({
     <div
       role="tablist"
       aria-label={ariaLabel}
-      className={`glass-panel inline-flex items-center gap-1 rounded-xl border-white/10 p-1 ${className}`}
+      className={`glass-panel inline-flex items-center gap-1 rounded-xl p-1 ${className}`}
     >
       {tabs.map((tab, idx) => {
         const isActive = activeTab === tab.id;
@@ -74,10 +74,10 @@ export function Tabs({
             tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(tab.id)}
             onKeyDown={(e) => handleKeyDown(e, idx)}
-            className={`relative flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all duration-150 select-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none ${
+            className={`relative flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all duration-150 select-none focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:outline-none ${
               isActive
-                ? "bg-blue-600 text-white shadow-md shadow-blue-500/25"
-                : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
+                ? "border border-white/20 bg-[#3D52A0] text-[#EDE8F5] shadow-md shadow-[#3D52A0]/30"
+                : "text-[var(--canvas-text-secondary)] hover:bg-white/10 hover:text-[var(--canvas-text)]"
             }`}
           >
             {tab.icon}

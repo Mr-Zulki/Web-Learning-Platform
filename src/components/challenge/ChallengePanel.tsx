@@ -171,10 +171,10 @@ export function ChallengePanel({
   return (
     <section
       aria-label="Challenge Panel"
-      className="glass-panel space-y-6 rounded-2xl border border-white/10 p-5 shadow-xl sm:p-6"
+      className="glass-panel space-y-6 rounded-2xl border border-[var(--border-glass)] p-5 shadow-xl sm:p-6"
     >
       {/* Header */}
-      <div className="flex flex-col gap-2 border-b border-white/10 pb-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-2 border-b border-[var(--border-glass)] pb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="mb-1 flex items-center gap-2">
             <Badge variant="primary" dot>
@@ -182,14 +182,14 @@ export function ChallengePanel({
             </Badge>
             {lastResult?.passed && <Badge variant="success">All passed</Badge>}
           </div>
-          <h2 className="font-heading text-xl font-bold tracking-tight text-white">
+          <h2 className="font-heading text-xl font-bold tracking-tight text-[var(--canvas-text)]">
             {challenge.title}
           </h2>
         </div>
       </div>
 
       {/* Task Description */}
-      <div className="glass-panel rounded-xl border border-white/5 bg-slate-950/30 p-4">
+      <div className="glass-panel rounded-xl border border-[var(--border-glass)] bg-black/5 p-4 dark:bg-black/30">
         <MarkdownContent content={challenge.task} />
       </div>
 
@@ -198,17 +198,17 @@ export function ChallengePanel({
         {/* Checklist header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h3 className="text-xs font-bold tracking-wider text-slate-300 uppercase">
+            <h3 className="text-xs font-bold tracking-wider text-[var(--canvas-text)] uppercase">
               Test Checklist
             </h3>
             {lastResult && (
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-[var(--canvas-text-secondary)]">
                 ({passedRules}/{totalRules})
               </span>
             )}
           </div>
           {lastResult && (
-            <span className="text-xs font-medium text-slate-400">
+            <span className="text-xs font-medium text-[var(--canvas-text-secondary)]">
               Status: {passedRules}/{totalRules} verified
             </span>
           )}
@@ -236,19 +236,19 @@ export function ChallengePanel({
                 key={idx}
                 className={`flex items-start gap-3 rounded-xl border p-3 text-xs transition-all duration-200 sm:text-sm ${
                   !isEvaluated
-                    ? "glass-panel border-white/5 text-slate-300"
+                    ? "glass-panel border-[var(--border-glass)] text-[var(--canvas-text)]"
                     : isPassed
-                      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200 shadow-sm shadow-emerald-500/5"
-                      : "border-red-500/30 bg-red-500/10 text-red-200 shadow-sm shadow-red-500/5"
+                      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-900 shadow-sm shadow-emerald-500/5 dark:text-emerald-200"
+                      : "border-red-500/30 bg-red-500/10 text-red-900 shadow-sm shadow-red-500/5 dark:text-red-200"
                 }`}
               >
                 <div className="mt-0.5 shrink-0">
                   {!isEvaluated ? (
-                    <Circle className="h-4 w-4 text-slate-500" />
+                    <Circle className="h-4 w-4 text-[var(--brand-steel)]" />
                   ) : isPassed ? (
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   ) : (
-                    <XCircle className="h-4 w-4 text-red-400" />
+                    <XCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
@@ -264,11 +264,11 @@ export function ChallengePanel({
 
       {/* Progressive Hints Section */}
       {challenge.hints.length > 0 && (
-        <div className="space-y-3 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
+        <div className="space-y-3 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <HelpCircle className="h-4 w-4 text-amber-400" />
-              <h3 className="text-xs font-bold tracking-wider text-amber-300 uppercase">
+              <HelpCircle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+              <h3 className="text-xs font-bold tracking-wider text-amber-900 uppercase dark:text-amber-300">
                 Hints ({revealedHints} of {challenge.hints.length} unlocked)
               </h3>
             </div>
@@ -276,7 +276,7 @@ export function ChallengePanel({
               <button
                 type="button"
                 onClick={handleRevealNextHint}
-                className="text-xs font-semibold text-amber-400 underline hover:text-amber-300 focus-visible:ring-1 focus-visible:ring-amber-400 focus-visible:outline-none"
+                className="text-xs font-semibold text-amber-700 underline hover:text-amber-800 focus-visible:ring-1 focus-visible:ring-amber-400 focus-visible:outline-none dark:text-amber-400 dark:hover:text-amber-300"
               >
                 Show hint {revealedHints + 1}
               </button>
@@ -288,9 +288,9 @@ export function ChallengePanel({
               {challenge.hints.slice(0, revealedHints).map((hint, index) => (
                 <div
                   key={index}
-                  className="rounded-lg border border-amber-500/20 bg-slate-900/80 p-3 text-xs text-amber-200"
+                  className="rounded-lg border border-amber-500/20 bg-white/60 p-3 text-xs text-amber-950 dark:bg-black/50 dark:text-amber-200"
                 >
-                  <span className="font-bold text-amber-300">
+                  <span className="font-bold text-amber-900 dark:text-amber-300">
                     Hint {index + 1}:
                   </span>{" "}
                   {hint}
@@ -302,7 +302,7 @@ export function ChallengePanel({
       )}
 
       {/* Action Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-2">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border-glass)] pt-2">
         <div className="flex items-center gap-3">
           <Button
             type="button"
@@ -310,11 +310,11 @@ export function ChallengePanel({
             variant="primary"
             size="md"
             leftIcon={<Play className="h-4 w-4 fill-current" />}
-            className="font-semibold shadow-lg shadow-blue-500/25"
+            className="font-semibold shadow-lg shadow-[#3D52A0]/25"
           >
             Check my code
           </Button>
-          <div className="hidden items-center gap-1.5 text-xs text-slate-400 sm:flex">
+          <div className="hidden items-center gap-1.5 text-xs text-[var(--canvas-text-secondary)] sm:flex">
             <Kbd>Ctrl</Kbd>
             <span>+</span>
             <Kbd>Enter</Kbd>
@@ -325,18 +325,18 @@ export function ChallengePanel({
         {session?.user && saveStatus !== "idle" && (
           <div className="flex items-center gap-2 text-xs font-medium">
             {saveStatus === "saving" && (
-              <span className="flex animate-pulse items-center gap-1.5 text-blue-400">
+              <span className="flex animate-pulse items-center gap-1.5 text-[#7091E6]">
                 <Save className="h-3.5 w-3.5 animate-spin" />
                 Saving progress...
               </span>
             )}
             {saveStatus === "saved" && (
-              <span className="flex items-center gap-1.5 font-semibold text-emerald-400">
+              <span className="flex items-center gap-1.5 font-semibold text-emerald-600 dark:text-emerald-400">
                 <CheckCircle2 className="h-3.5 w-3.5" />✓ Progress saved
               </span>
             )}
             {saveStatus === "error" && (
-              <span className="text-amber-400">
+              <span className="text-amber-600 dark:text-amber-400">
                 Could not save progress to server. Please try again.
               </span>
             )}
@@ -348,10 +348,10 @@ export function ChallengePanel({
       {lastResult && (
         <div
           aria-live="polite"
-          className="glass-panel space-y-4 rounded-xl border border-white/10 p-4"
+          className="glass-panel space-y-4 rounded-xl border border-[var(--border-glass)] p-4"
         >
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <span className="text-sm font-bold text-white">
+          <div className="flex items-center justify-between border-b border-[var(--border-glass)] pb-3">
+            <span className="text-sm font-bold text-[var(--canvas-text)]">
               {lastResult.score.passed} of {lastResult.score.total} checks
               passed
             </span>
@@ -362,8 +362,8 @@ export function ChallengePanel({
 
           {/* Success Banner */}
           {lastResult.passed && (
-            <div className="space-y-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-200">
-              <div className="flex items-center gap-2 text-sm font-semibold text-emerald-300">
+            <div className="space-y-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-950 dark:text-emerald-200">
+              <div className="flex items-center gap-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300">
                 <Sparkles className="h-4 w-4" />
                 <span>
                   🎉 Great job! You successfully completed this challenge.
@@ -372,15 +372,15 @@ export function ChallengePanel({
 
               {/* Anonymous Visitor Prompt */}
               {!session?.user && (
-                <div className="rounded-lg border border-emerald-500/20 bg-slate-900/80 p-3 text-xs text-slate-300">
-                  <span className="font-semibold text-white">
+                <div className="rounded-lg border border-emerald-500/20 bg-white/60 p-3 text-xs text-[var(--canvas-text)] dark:bg-black/50">
+                  <span className="font-semibold text-[var(--canvas-text)]">
                     Log in to save your progress
                   </span>
-                  <p className="mt-1 text-slate-400">
+                  <p className="mt-1 text-[var(--canvas-text-secondary)]">
                     You solved this challenge!{" "}
                     <Link
                       href={`/login?next=/lessons/${challenge.lessonId}`}
-                      className="font-medium text-blue-400 underline hover:text-blue-300"
+                      className="font-medium text-[#3D52A0] underline hover:text-[#7091E6] dark:text-[#7091E6] dark:hover:text-[#ADBBDA]"
                     >
                       Log in or register
                     </Link>{" "}
@@ -394,7 +394,7 @@ export function ChallengePanel({
                 <div>
                   <Link
                     href={`/lessons/${nextLesson.id}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-300 underline hover:text-emerald-200"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 underline hover:text-emerald-950 dark:text-emerald-300 dark:hover:text-emerald-200"
                   >
                     <span>Continue to next lesson: {nextLesson.title} →</span>
                   </Link>

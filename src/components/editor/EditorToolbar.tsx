@@ -44,12 +44,12 @@ export function EditorToolbar({
   const isOverLimit = currentLength > maxLength;
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 bg-slate-950/50 px-3.5 py-1.5 text-xs text-slate-300">
+    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-glass)] bg-black/5 px-3.5 py-1.5 text-xs text-[var(--canvas-text-secondary)] dark:bg-black/20">
       <div className="flex items-center gap-2">
         <button
           type="button"
           onClick={handleReset}
-          className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 font-medium text-slate-300 transition hover:bg-white/10 hover:text-white focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:outline-none"
+          className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 font-semibold text-[var(--canvas-text-secondary)] transition hover:bg-white/10 hover:text-[var(--canvas-text)] focus-visible:ring-1 focus-visible:ring-[#7091E6] focus-visible:outline-none"
           title="Reset to starter code"
         >
           <RotateCcw className="h-3 w-3" />
@@ -59,13 +59,15 @@ export function EditorToolbar({
         <button
           type="button"
           onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 font-medium text-slate-300 transition hover:bg-white/10 hover:text-white focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:outline-none"
+          className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 font-semibold text-[var(--canvas-text-secondary)] transition hover:bg-white/10 hover:text-[var(--canvas-text)] focus-visible:ring-1 focus-visible:ring-[#7091E6] focus-visible:outline-none"
           title={`Copy ${activeTab.toUpperCase()} code to clipboard`}
         >
           {copied ? (
             <>
-              <Check className="h-3 w-3 text-emerald-400" />
-              <span className="font-semibold text-emerald-400">Copied!</span>
+              <Check className="h-3 w-3 text-emerald-500 dark:text-emerald-400" />
+              <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                Copied!
+              </span>
             </>
           ) : (
             <>
@@ -78,7 +80,9 @@ export function EditorToolbar({
 
       <div
         className={`font-mono text-[11px] ${
-          isOverLimit ? "font-bold text-red-400" : "text-slate-400"
+          isOverLimit
+            ? "font-bold text-red-500 dark:text-red-400"
+            : "text-[var(--canvas-text-muted)]"
         }`}
         aria-live="polite"
       >

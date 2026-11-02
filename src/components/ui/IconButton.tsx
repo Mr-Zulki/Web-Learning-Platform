@@ -10,20 +10,20 @@ export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
 }
 
 const sizeClasses = {
-  sm: "w-8 h-8 rounded-md text-sm",
-  md: "w-9 h-9 rounded-lg text-base",
+  sm: "w-8 h-8 rounded-lg text-sm",
+  md: "w-9 h-9 rounded-xl text-base",
   lg: "w-11 h-11 rounded-xl text-lg",
 };
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white shadow-md shadow-blue-500/20 border border-blue-400/30",
+    "bg-[#3D52A0] hover:bg-[#7091E6] active:bg-[#324484] text-[#EDE8F5] shadow-md shadow-[#3D52A0]/25 border border-white/20",
   secondary:
-    "glass-panel text-slate-200 hover:text-white hover:bg-white/10 active:bg-white/5 border-white/10",
+    "glass-panel text-[var(--canvas-text)] hover:bg-white/15 active:bg-white/5 border-[var(--border-glass)]",
   outline:
-    "border border-white/20 hover:border-white/40 hover:bg-white/5 text-slate-200 active:bg-white/10",
+    "border border-[var(--border-glass-strong)] hover:border-[#7091E6] hover:bg-white/10 text-[var(--canvas-text)] active:bg-white/5",
   ghost:
-    "text-slate-400 hover:text-slate-100 hover:bg-white/10 active:bg-white/5 border-transparent",
+    "text-[var(--canvas-text-secondary)] hover:text-[var(--canvas-text)] hover:bg-white/10 active:bg-white/5 border-transparent",
   danger:
     "bg-red-600 hover:bg-red-500 active:bg-red-700 text-white border border-red-400/30",
   success:
@@ -49,7 +49,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         ref={ref}
         aria-label={ariaLabel}
         disabled={disabled || isLoading}
-        className={`inline-flex items-center justify-center transition-all duration-150 select-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+        className={`inline-flex items-center justify-center transition-all duration-150 select-none focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
         {...props}
       >
         {isLoading ? (

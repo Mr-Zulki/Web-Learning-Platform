@@ -4,7 +4,6 @@ import {
   ShieldCheck,
   Layers,
   ArrowRight,
-  Sparkles,
   Terminal,
   Eye,
   Clock,
@@ -18,33 +17,56 @@ import { Button } from "@/components/ui/Button";
 export default function Home() {
   const lessons = getAllLessons();
 
+  const marqueeFeatures = [
+    "Sandboxed Live Preview (allow-scripts)",
+    "Deterministic AST Checking (parse5 & css-tree)",
+    "Non-Blocking Asynchronous crypto.scrypt",
+    "Stateless Signed JWT Sessions",
+    "Atomic PostgreSQL Distributed Rate Limiting",
+    "Zero Client Telemetry & Local Execution",
+    "Responsive 3-Pane Workspace & 4-Tab Mobile",
+  ];
+
   return (
     <main className="relative flex flex-col items-center justify-center overflow-hidden py-12 lg:py-20">
-      {/* Ambient background glows */}
+      {/* Floating subtle background orbs (Transform-only, GPU accelerated) */}
       <div
-        className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-blue-600/20 via-indigo-500/15 to-purple-500/10 blur-[120px]"
+        className="animate-float-slow pointer-events-none absolute -top-40 left-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-[var(--orb-1)] blur-[120px]"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute top-1/2 right-10 -z-10 h-[400px] w-[500px] rounded-full bg-blue-500/10 blur-[100px]"
+        className="animate-float-reverse pointer-events-none absolute top-1/3 right-10 -z-10 h-[450px] w-[450px] rounded-full bg-[var(--orb-2)] blur-[130px]"
+        aria-hidden="true"
+      />
+      <div
+        className="animate-float-slow pointer-events-none absolute bottom-10 left-10 -z-10 h-[400px] w-[400px] rounded-full bg-[var(--orb-3)] blur-[100px]"
         aria-hidden="true"
       />
 
       <Container size="xl" className="space-y-24">
         {/* HERO SECTION */}
         <section className="flex flex-col items-center space-y-8 pt-4 text-center">
-          <Badge variant="primary" dot className="px-3.5 py-1 text-xs">
+          <Badge
+            variant="primary"
+            dot
+            className="px-4 py-1.5 text-xs font-semibold tracking-wide"
+          >
             Interactive Web Development Curriculum
           </Badge>
 
-          <div className="max-w-4xl space-y-5">
-            <h1 className="font-heading text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              HTML/CSS Interactive Learning Platform
+          <div className="max-w-4xl space-y-6">
+            <h1 className="font-heading text-4xl font-black tracking-tight sm:text-6xl lg:text-7xl">
+              <span className="block text-[var(--canvas-text)]">
+                Master Modern
+              </span>
+              <span className="text-metallic block">
+                HTML & CSS Engineering
+              </span>
             </h1>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
-              Master modern HTML and CSS fundamentals through hands-on lessons,
-              live code previews, and automated static AST challenge
-              verification.
+            <p className="mx-auto max-w-2xl text-base leading-relaxed text-[var(--canvas-text-secondary)] sm:text-xl">
+              Learn web fundamentals in a freeCodeCamp-style 3-pane interactive
+              workspace. Write real code, see instant sandboxed output, and pass
+              deterministic AST checks.
             </p>
           </div>
 
@@ -54,98 +76,111 @@ export default function Home() {
                 size="lg"
                 variant="primary"
                 rightIcon={<ArrowRight className="h-4 w-4" />}
+                className="font-bold shadow-xl"
               >
-                Start learning →
+                Start Learning Now
               </Button>
             </Link>
             <Link href="/dashboard">
-              <Button size="lg" variant="secondary">
+              <Button size="lg" variant="secondary" className="font-semibold">
                 View Dashboard
               </Button>
             </Link>
           </div>
 
-          {/* REALISTIC CODE WORKSPACE MOCKUP */}
-          <div className="w-full max-w-4xl pt-6">
-            <div className="glass-panel-elevated overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-              {/* Fake window header */}
-              <div className="flex items-center justify-between border-b border-white/10 bg-slate-950/40 px-4 py-3">
+          {/* 3D-LOOKING GLASS STACK (Hero Visual with real Lesson 1 code) */}
+          <div className="w-full max-w-4xl pt-6 perspective-[1000px]">
+            <div className="glass-panel-elevated relative overflow-hidden rounded-3xl p-1 shadow-2xl transition-transform duration-300 sm:p-2">
+              {/* Top ambient highlight strip */}
+              <div className="h-1 w-full rounded-t-2xl bg-gradient-to-r from-[#ADBBDA] via-[#7091E6] to-[#3D52A0]" />
+
+              {/* Decorative Window Chrome */}
+              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-6">
                 <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-red-500/80" />
-                  <div className="h-3 w-3 rounded-full bg-amber-500/80" />
-                  <div className="h-3 w-3 rounded-full bg-emerald-500/80" />
-                  <span className="ml-2 font-mono text-xs text-slate-400">
-                    index.html — DevCraft Workspace
+                  <div className="h-3 w-3 rounded-full bg-red-500/80 shadow-sm" />
+                  <div className="h-3 w-3 rounded-full bg-amber-500/80 shadow-sm" />
+                  <div className="h-3 w-3 rounded-full bg-emerald-500/80 shadow-sm" />
+                  <span className="ml-3 font-mono text-xs font-medium text-[var(--canvas-text-muted)]">
+                    index.html — HTML Structure Workspace
                   </span>
                 </div>
-                <div className="flex items-center gap-2 font-mono text-xs text-emerald-400">
-                  <CheckCircle2 className="h-3.5 w-3.5" />
-                  <span>3 of 3 tests passed</span>
+                <div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-emerald-500 dark:text-emerald-400">
+                  <CheckCircle2 className="h-4 w-4" />
+                  <span>Verified AST Spec</span>
                 </div>
               </div>
 
-              {/* Code split mockup */}
-              <div className="grid grid-cols-1 divide-y divide-white/10 bg-slate-950/60 text-left font-mono text-xs md:grid-cols-2 md:divide-x md:divide-y-0">
-                {/* Editor side */}
-                <div className="space-y-1.5 overflow-x-auto p-5 text-slate-300">
-                  <div className="text-slate-500">
-                    {"// 1. Write HTML & CSS in real-time"}
+              {/* Real Code Split Mockup */}
+              <div className="grid grid-cols-1 divide-y divide-white/10 text-left font-mono text-xs md:grid-cols-2 md:divide-x md:divide-y-0">
+                {/* Real First Lesson Starter Code (HTML & CSS) */}
+                <div className="space-y-2 overflow-x-auto bg-black/20 p-5 text-[var(--canvas-text)] dark:bg-black/40">
+                  <div className="text-[var(--canvas-text-muted)]">
+                    {"<!-- Real Lesson 1 Starter Code -->"}
                   </div>
                   <div>
-                    <span className="text-blue-400">&lt;div</span>{" "}
-                    <span className="text-amber-300">class</span>=
-                    <span className="text-emerald-300">&quot;card&quot;</span>
-                    <span className="text-blue-400">&gt;</span>
-                  </div>
-                  <div className="pl-4">
-                    <span className="text-blue-400">&lt;h1&gt;</span>
-                    <span className="text-white">Hello, World!</span>
-                    <span className="text-blue-400">&lt;/h1&gt;</span>
-                  </div>
-                  <div className="pl-4">
-                    <span className="text-blue-400">&lt;p&gt;</span>
-                    <span className="text-slate-300">
-                      Building UI with precision.
+                    <span className="text-[#7091E6]">
+                      &lt;!DOCTYPE html&gt;
                     </span>
-                    <span className="text-blue-400">&lt;/p&gt;</span>
                   </div>
                   <div>
-                    <span className="text-blue-400">&lt;/div&gt;</span>
+                    <span className="text-[#7091E6]">&lt;html</span>{" "}
+                    <span className="text-[#ADBBDA]">lang</span>=
+                    <span className="text-emerald-400">&quot;en&quot;</span>
+                    <span className="text-[#7091E6]">&gt;</span>
                   </div>
-                  <div className="pt-2 text-slate-500">
-                    {"// 2. CSS with modern box-model"}
+                  <div className="pl-4">
+                    <span className="text-[#7091E6]">&lt;head&gt;</span>
+                  </div>
+                  <div className="pl-8">
+                    <span className="text-[#7091E6]">&lt;title&gt;</span>
+                    <span>My First Page</span>
+                    <span className="text-[#7091E6]">&lt;/title&gt;</span>
+                  </div>
+                  <div className="pl-4">
+                    <span className="text-[#7091E6]">&lt;/head&gt;</span>
+                  </div>
+                  <div className="pl-4">
+                    <span className="text-[#7091E6]">&lt;body&gt;</span>
+                  </div>
+                  <div className="pl-8">
+                    <span className="text-[#7091E6]">&lt;h1&gt;</span>
+                    <span className="font-bold">Hello, World!</span>
+                    <span className="text-[#7091E6]">&lt;/h1&gt;</span>
+                  </div>
+                  <div className="pl-8 text-[var(--canvas-text-secondary)]">
+                    <span className="text-[#7091E6]">&lt;p&gt;</span>
+                    <span>Welcome to HTML fundamentals.</span>
+                    <span className="text-[#7091E6]">&lt;/p&gt;</span>
+                  </div>
+                  <div className="pl-4">
+                    <span className="text-[#7091E6]">&lt;/body&gt;</span>
                   </div>
                   <div>
-                    <span className="text-purple-400">.card</span> &#123;
+                    <span className="text-[#7091E6]">&lt;/html&gt;</span>
                   </div>
-                  <div className="pl-4 text-slate-300">
-                    <span className="text-blue-300">padding</span>:{" "}
-                    <span className="text-amber-300">1.5rem</span>;
-                  </div>
-                  <div className="pl-4 text-slate-300">
-                    <span className="text-blue-300">border-radius</span>:{" "}
-                    <span className="text-amber-300">12px</span>;
-                  </div>
-                  <div>&#125;</div>
                 </div>
 
-                {/* Preview side */}
-                <div className="flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-950 p-6">
-                  <div className="w-full max-w-xs rounded-xl border border-white/10 bg-white/5 p-5 shadow-lg backdrop-blur-md">
-                    <div className="mb-3 flex items-center gap-2">
-                      <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-500/20 text-blue-400">
-                        <Sparkles className="h-3.5 w-3.5" />
+                {/* Styled Live Preview Card Representation */}
+                <div className="flex flex-col items-center justify-center bg-gradient-to-br from-[#3D52A0]/10 via-[#7091E6]/5 to-transparent p-6 sm:p-8">
+                  <div className="glass-panel w-full max-w-sm rounded-2xl p-6 shadow-xl">
+                    <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                        <span className="text-xs font-bold tracking-wider text-[var(--canvas-text-muted)] uppercase">
+                          Browser Preview
+                        </span>
                       </div>
-                      <span className="text-xs font-semibold text-slate-200">
-                        Sandboxed Preview
-                      </span>
+                      <Badge variant="primary">100% Zoom</Badge>
                     </div>
-                    <h3 className="mb-1 text-base font-bold text-white">
-                      Hello, World!
-                    </h3>
-                    <p className="text-xs text-slate-400">
-                      Building UI with precision.
-                    </p>
+                    <div className="space-y-2">
+                      <h3 className="font-heading text-xl font-extrabold text-[var(--canvas-text)]">
+                        Hello, World!
+                      </h3>
+                      <p className="text-xs leading-relaxed text-[var(--canvas-text-secondary)]">
+                        Welcome to HTML fundamentals. Rendered inside a secure,
+                        sandboxed null-origin container.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -153,56 +188,104 @@ export default function Home() {
           </div>
         </section>
 
-        {/* THREE CORE PILLARS */}
-        <section className="space-y-12">
+        {/* MARQUEE STRIP (Real platform features) */}
+        <section
+          className="glass-panel overflow-hidden rounded-2xl py-3"
+          aria-label="Platform Highlights"
+        >
+          <div className="animate-marquee flex w-max gap-8">
+            {[...marqueeFeatures, ...marqueeFeatures].map((feature, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-3 text-xs font-semibold whitespace-nowrap text-[var(--canvas-text-secondary)]"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-[#7091E6]" />
+                <span>{feature}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* BENTO GRID: 4 PLATFORM PILLARS */}
+        <section className="space-y-8">
           <div className="space-y-3 text-center">
-            <h2 className="font-heading text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              Why Learn With This Platform
+            <Badge variant="primary" dot>
+              Engineering Architecture
+            </Badge>
+            <h2 className="font-heading text-3xl font-extrabold tracking-tight text-[var(--canvas-text)] sm:text-4xl">
+              Built for Real Learning Outcomes
             </h2>
-            <p className="mx-auto max-w-xl text-sm text-slate-400 sm:text-base">
-              Engineered for genuine learning outcomes: immediate feedback,
-              sandboxed isolation, and zero arbitrary guesswork.
+            <p className="mx-auto max-w-2xl text-sm leading-relaxed text-[var(--canvas-text-secondary)] sm:text-base">
+              A high-performance pedagogical engine combining live feedback with
+              sandboxed isolation and deterministic evaluation.
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <Card variant="base" className="space-y-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-blue-500/20 bg-blue-500/10 text-blue-400">
+            {/* Tile 1: Large Span 2 */}
+            <Card
+              variant="base"
+              className="metallic-top-edge space-y-4 md:col-span-2"
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#3D52A0]/20 text-[#7091E6] shadow-inner">
                 <Terminal className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-semibold text-white">
-                Live CodeMirror Workspace
+              <h3 className="font-heading text-xl font-bold text-[var(--canvas-text)]">
+                Live CodeMirror 6 Workspace
               </h3>
-              <p className="text-sm leading-relaxed text-slate-400">
-                Full-featured in-browser code editor with HTML & CSS syntax
-                highlighting, auto-indentation, and local draft persistence.
+              <p className="text-sm leading-relaxed text-[var(--canvas-text-secondary)]">
+                Modular in-browser code editor with HTML & CSS syntax
+                highlighting, keyboard accessibility traps release via Escape
+                key, auto-indentation, and local draft persistence under
+                `uni:draft:&lt;lessonId&gt;`.
               </p>
             </Card>
 
-            <Card variant="base" className="space-y-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-400">
+            {/* Tile 2: Standard Span 1 */}
+            <Card variant="base" className="metallic-top-edge space-y-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-500 shadow-inner dark:text-emerald-400">
                 <Eye className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-semibold text-white">
+              <h3 className="font-heading text-xl font-bold text-[var(--canvas-text)]">
                 Instant Sandboxed Preview
               </h3>
-              <p className="text-sm leading-relaxed text-slate-400">
-                Renders user HTML and CSS inside an isolated iframe with a
-                strict Content Security Policy prohibiting outbound network
-                calls.
+              <p className="text-sm leading-relaxed text-[var(--canvas-text-secondary)]">
+                Renders user HTML/CSS inside an isolated iframe with
+                `sandbox=&quot;allow-scripts&quot;` and strict CSP prohibiting
+                network egress or cookie leakage.
               </p>
             </Card>
 
-            <Card variant="base" className="space-y-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-purple-500/20 bg-purple-500/10 text-purple-400">
+            {/* Tile 3: Standard Span 1 */}
+            <Card variant="base" className="metallic-top-edge space-y-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/20 text-purple-500 shadow-inner dark:text-purple-400">
                 <ShieldCheck className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-semibold text-white">
+              <h3 className="font-heading text-xl font-bold text-[var(--canvas-text)]">
                 Deterministic AST Checking
               </h3>
-              <p className="text-sm leading-relaxed text-slate-400">
-                Parse5 and CSS-Tree static analysis engine validates exact
-                HTML/CSS specifications with clear pass/fail checklist feedback.
+              <p className="text-sm leading-relaxed text-[var(--canvas-text-secondary)]">
+                Pure static AST parsing via parse5 and css-tree. Validates exact
+                structural specifications without arbitrary code execution or
+                browser DOM dependencies.
+              </p>
+            </Card>
+
+            {/* Tile 4: Large Span 2 */}
+            <Card
+              variant="base"
+              className="metallic-top-edge space-y-4 md:col-span-2"
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#7091E6]/20 text-[#7091E6] shadow-inner">
+                <Layers className="h-6 w-6" />
+              </div>
+              <h3 className="font-heading text-xl font-bold text-[var(--canvas-text)]">
+                Resilient Stateless Infrastructure
+              </h3>
+              <p className="text-sm leading-relaxed text-[var(--canvas-text-secondary)]">
+                Next.js multi-replica container instances balanced by Nginx with
+                round-robin failover, sub-millisecond edge caching, atomic
+                PostgreSQL rate limits, and stateless JWT sessions.
               </p>
             </Card>
           </div>
@@ -213,69 +296,60 @@ export default function Home() {
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
               <Badge variant="neutral" className="mb-2">
-                Beginner Track
+                Foundations Curriculum
               </Badge>
-              <h2 className="font-heading text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              <h2 className="font-heading text-3xl font-extrabold tracking-tight text-[var(--canvas-text)]">
                 Structured HTML & CSS Lessons
               </h2>
             </div>
             <Link
               href="/lessons"
-              className="flex items-center gap-1.5 text-sm font-medium text-blue-400 transition-colors hover:text-blue-300"
+              className="flex items-center gap-1.5 text-sm font-bold text-[#7091E6] transition-colors hover:text-[#ADBBDA]"
             >
-              Explore all lessons <ArrowRight className="h-4 w-4" />
+              Explore Full Curriculum <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {lessons.map((lesson) => (
-              <Link
-                key={lesson.id}
-                href={`/lessons/${lesson.id}`}
-                className="group"
-              >
-                <Card
-                  variant="interactive"
-                  className="flex h-full flex-col justify-between"
-                >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-xs text-slate-400">
-                      <span className="font-mono">Lesson {lesson.order}</span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-3.5 w-3.5" />
-                        {Math.max(3, Math.ceil(lesson.body.length / 500))} min
-                      </span>
-                    </div>
-                    <CardTitle className="transition-colors group-hover:text-blue-400">
-                      {lesson.title}
-                    </CardTitle>
-                    <p className="line-clamp-2 text-sm text-slate-400">
-                      {lesson.summary}
-                    </p>
-                  </div>
-                  <div className="mt-4 flex items-center gap-2 border-t border-white/5 pt-2 text-xs font-medium text-blue-400">
-                    <span>Open Lesson</span>
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </section>
+            {lessons.map((lesson) => {
+              // Word count calculation: ~150 words per minute average technical reading speed
+              const wordCount = lesson.body.trim().split(/\s+/).length;
+              const readingTime = Math.max(2, Math.ceil(wordCount / 150));
 
-        {/* TRUST & LOCAL EXECUTION */}
-        <section className="glass-panel space-y-4 rounded-2xl border border-white/10 p-8 text-center">
-          <div className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300">
-            <Layers className="h-4 w-4 text-blue-400" />
-            <span>
-              Stateless Architecture & Load-Balanced High Availability
-            </span>
+              return (
+                <Link
+                  key={lesson.id}
+                  href={`/lessons/${lesson.id}`}
+                  className="group block"
+                >
+                  <Card
+                    variant="interactive"
+                    className="metallic-top-edge flex h-full flex-col justify-between"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between text-xs text-[var(--canvas-text-muted)]">
+                        <Badge variant="primary">Lesson {lesson.order}</Badge>
+                        <span className="flex items-center gap-1 font-medium">
+                          <Clock className="h-3.5 w-3.5" />
+                          {readingTime} min read
+                        </span>
+                      </div>
+                      <CardTitle className="font-heading text-lg font-bold transition-colors group-hover:text-[#7091E6]">
+                        {lesson.title}
+                      </CardTitle>
+                      <p className="line-clamp-2 text-sm text-[var(--canvas-text-secondary)]">
+                        {lesson.summary}
+                      </p>
+                    </div>
+                    <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-3 text-xs font-bold text-[#7091E6]">
+                      <span>Open Workspace</span>
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1.5" />
+                    </div>
+                  </Card>
+                </Link>
+              );
+            })}
           </div>
-          <p className="mx-auto max-w-2xl text-xs text-slate-400 sm:text-sm">
-            All curriculum lessons and challenges run locally in Docker
-            containers behind an Nginx reverse proxy with round-robin load
-            balancing and sub-millisecond edge caching.
-          </p>
         </section>
       </Container>
     </main>

@@ -140,7 +140,7 @@ export function LessonWorkspace({
         id={`panel-${activeTab}`}
         role="tabpanel"
         aria-labelledby={`tab-${activeTab}`}
-        className="min-h-[350px] flex-1 bg-slate-950/80"
+        className="min-h-[350px] flex-1 bg-[var(--code-bg)]"
       >
         <CodeEditor
           language={activeTab}
@@ -172,7 +172,7 @@ export function LessonWorkspace({
         <div
           role="tablist"
           aria-label="Lesson workspace navigation"
-          className="glass-panel-elevated grid grid-cols-4 gap-1 rounded-xl border border-white/10 p-1"
+          className="glass-panel-elevated grid grid-cols-4 gap-1 rounded-xl border border-[var(--border-glass)] p-1"
         >
           <button
             type="button"
@@ -181,8 +181,8 @@ export function LessonWorkspace({
             onClick={() => setMobileTab("lesson")}
             className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-semibold transition ${
               mobileTab === "lesson"
-                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
-                : "text-slate-400 hover:bg-white/5 hover:text-white"
+                ? "bg-[#3D52A0] text-[#EDE8F5] shadow-md shadow-[#3D52A0]/20"
+                : "text-[var(--canvas-text-secondary)] hover:bg-white/10 hover:text-[var(--canvas-text)]"
             }`}
           >
             <BookOpen className="h-3.5 w-3.5" />
@@ -195,8 +195,8 @@ export function LessonWorkspace({
             onClick={() => setMobileTab("editor")}
             className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-semibold transition ${
               mobileTab === "editor"
-                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
-                : "text-slate-400 hover:bg-white/5 hover:text-white"
+                ? "bg-[#3D52A0] text-[#EDE8F5] shadow-md shadow-[#3D52A0]/20"
+                : "text-[var(--canvas-text-secondary)] hover:bg-white/10 hover:text-[var(--canvas-text)]"
             }`}
           >
             <Code2 className="h-3.5 w-3.5" />
@@ -209,8 +209,8 @@ export function LessonWorkspace({
             onClick={() => setMobileTab("preview")}
             className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-semibold transition ${
               mobileTab === "preview"
-                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
-                : "text-slate-400 hover:bg-white/5 hover:text-white"
+                ? "bg-[#3D52A0] text-[#EDE8F5] shadow-md shadow-[#3D52A0]/20"
+                : "text-[var(--canvas-text-secondary)] hover:bg-white/10 hover:text-[var(--canvas-text)]"
             }`}
           >
             <Eye className="h-3.5 w-3.5" />
@@ -223,8 +223,8 @@ export function LessonWorkspace({
             onClick={() => setMobileTab("challenge")}
             className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-semibold transition ${
               mobileTab === "challenge"
-                ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
-                : "text-slate-400 hover:bg-white/5 hover:text-white"
+                ? "bg-[#3D52A0] text-[#EDE8F5] shadow-md shadow-[#3D52A0]/20"
+                : "text-[var(--canvas-text-secondary)] hover:bg-white/10 hover:text-[var(--canvas-text)]"
             }`}
           >
             <Award className="h-3.5 w-3.5" />
@@ -263,8 +263,8 @@ export function LessonWorkspace({
             </div>
           </Panel>
 
-          <Separator className="mx-1 my-2 flex w-2 shrink-0 cursor-col-resize items-center justify-center rounded-full bg-white/5 transition-colors hover:bg-blue-500/30 active:bg-blue-500/50">
-            <div className="h-6 w-0.5 rounded-full bg-white/20" />
+          <Separator className="mx-1 my-2 flex w-2 shrink-0 cursor-col-resize items-center justify-center rounded-full bg-[var(--border-glass)] transition-colors hover:bg-[#7091E6]/40 active:bg-[#7091E6]/60">
+            <div className="h-6 w-0.5 rounded-full bg-[var(--brand-steel)]/40" />
           </Separator>
 
           {/* Center Panel: Code Editor */}
@@ -276,8 +276,8 @@ export function LessonWorkspace({
             {editorSection}
           </Panel>
 
-          <Separator className="mx-1 my-2 flex w-2 shrink-0 cursor-col-resize items-center justify-center rounded-full bg-white/5 transition-colors hover:bg-blue-500/30 active:bg-blue-500/50">
-            <div className="h-6 w-0.5 rounded-full bg-white/20" />
+          <Separator className="mx-1 my-2 flex w-2 shrink-0 cursor-col-resize items-center justify-center rounded-full bg-[var(--border-glass)] transition-colors hover:bg-[#7091E6]/40 active:bg-[#7091E6]/60">
+            <div className="h-6 w-0.5 rounded-full bg-[var(--brand-steel)]/40" />
           </Separator>
 
           {/* Right Panel: Sandboxed Preview */}

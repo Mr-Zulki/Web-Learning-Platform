@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { BookOpen } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "All Lessons | HTML/CSS Interactive Learning Platform",
+  title: "All Lessons | DevCraft HTML/CSS Platform",
   description:
     "Browse through our comprehensive HTML and CSS curriculum with hands-on coding lessons.",
 };
@@ -16,9 +16,9 @@ export default function LessonsPage() {
 
   return (
     <main className="relative overflow-hidden py-12 lg:py-16">
-      {/* Background glow */}
+      {/* Background ambient glow */}
       <div
-        className="pointer-events-none absolute top-10 left-1/2 -z-10 h-96 w-[600px] -translate-x-1/2 rounded-full bg-blue-500/10 blur-[100px]"
+        className="pointer-events-none absolute top-10 left-1/2 -z-10 h-96 w-[700px] -translate-x-1/2 rounded-full bg-[var(--orb-1)] blur-[120px]"
         aria-hidden="true"
       />
 
@@ -28,17 +28,17 @@ export default function LessonsPage() {
             Curriculum Roadmap
           </Badge>
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-500/20 bg-blue-500/10 text-blue-400">
-              <BookOpen className="h-5 w-5" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#3D52A0]/20 text-[#7091E6] shadow-inner">
+              <BookOpen className="h-6 w-6" />
             </div>
-            <h1 className="font-heading text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h1 className="font-heading text-3xl font-black tracking-tight text-[var(--canvas-text)] sm:text-4xl">
               Curriculum Lessons
             </h1>
           </div>
-          <p className="max-w-2xl text-base text-slate-300">
+          <p className="max-w-2xl text-base leading-relaxed text-[var(--canvas-text-secondary)]">
             Step-by-step interactive lessons covering modern HTML structure and
-            CSS design principles. Complete the challenges to test your
-            knowledge.
+            CSS design principles. Complete the challenges in the live workspace
+            to verify your knowledge.
           </p>
         </div>
 

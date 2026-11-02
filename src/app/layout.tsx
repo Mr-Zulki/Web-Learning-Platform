@@ -58,11 +58,11 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="flex min-h-full flex-col bg-[#090d16] font-sans text-slate-100 transition-colors duration-200 selection:bg-blue-500/30 selection:text-blue-200">
+      <body className="flex min-h-full flex-col font-sans transition-colors duration-200 selection:bg-[#7091E6]/30 selection:text-[#EDE8F5]">
         <AuthProvider>
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-white focus:shadow-lg focus:outline-none"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-xl focus:border focus:border-white/30 focus:bg-[#3D52A0] focus:px-4 focus:py-2.5 focus:text-[#EDE8F5] focus:shadow-2xl focus:outline-none"
           >
             Skip to main content
           </a>

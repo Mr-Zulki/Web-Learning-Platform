@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- UI: metallic chic liquid glass redesign and dark mode contrast fix — redesigned entire site (navbar to footer) using Shopify Metallic Chic palette (#3D52A0, #7091E6, #8697C4, #ADBBDA, #EDE8F5) with derived deep navy (#0D1326) and dark background (#0E1328); fixed dark mode contrast to guarantee WCAG AA (>4.5:1 for body text, >7:1 for headings) across all surfaces including CodeMirror, ChallengePanel, MarkdownContent, Dashboard, and Auth pages; implemented liquid glass elevation styling, metallic top edges, and GPU-accelerated backdrop filters with reduced-motion fallbacks.
+
 - Fix: trusted client IP — `getClientIp` now prefers Vercel-verified `x-real-ip` over spoofable `x-forwarded-for`; local dev/Docker fallback preserved. Atomic progress downgrade prevention replaces read-then-check-then-upsert with a create-on-conflict + unconditional COMPLETED upsert. Proxy middleware guards `/dashboard` and all sub-paths, redirecting unauthenticated users to `/login?next=<path>`. RateLimit schema `@default(0)` corrected to `@default(1)`. Added `RATE_LIMIT_PROFILE` to `.env.example`.
 
 - Fix: login fails after registration on Vercel+Neon — authorize() DB/password errors were unhandled (thrown to NextAuth, shown as "Invalid email or password"). Added try/catch with diagnostic logging. Documented `pgbouncer=true` requirement for pooled Neon connections.

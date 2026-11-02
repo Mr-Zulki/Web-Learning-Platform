@@ -20,7 +20,7 @@ import { ProgressRing } from "@/components/ui/ProgressRing";
 export const instant = false;
 
 export const metadata = {
-  title: "Dashboard - HTML/CSS Platform",
+  title: "Learner Dashboard - DevCraft HTML/CSS Platform",
 };
 
 export default async function DashboardPage() {
@@ -55,7 +55,7 @@ export default async function DashboardPage() {
     <main className="relative overflow-hidden py-10 sm:py-14">
       {/* Background glow */}
       <div
-        className="pointer-events-none absolute top-10 left-1/2 -z-10 h-96 w-[700px] -translate-x-1/2 rounded-full bg-blue-600/10 blur-[120px]"
+        className="pointer-events-none absolute top-10 left-1/2 -z-10 h-96 w-[700px] -translate-x-1/2 rounded-full bg-[var(--orb-1)] blur-[120px]"
         aria-hidden="true"
       />
 
@@ -63,15 +63,15 @@ export default async function DashboardPage() {
         {/* Header Greeting */}
         <div className="flex flex-col justify-between gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-center">
           <div className="space-y-1">
-            <h1 className="font-heading text-3xl font-extrabold tracking-tight text-white">
+            <h1 className="font-heading text-3xl font-black tracking-tight text-[var(--canvas-text)]">
               Learner Dashboard
             </h1>
-            <p className="text-sm text-slate-400 sm:text-base">
+            <p className="text-sm text-[var(--canvas-text-secondary)] sm:text-base">
               Welcome back,{" "}
-              <span className="font-semibold text-slate-200">
+              <span className="font-bold text-[var(--canvas-text)]">
                 {session.user.name || session.user.email}
               </span>
-              ! Here is your learning journey so far.
+              ! Here is your verified curriculum progress.
             </p>
           </div>
           <Badge variant="primary" dot className="self-start sm:self-auto">
@@ -84,11 +84,11 @@ export default async function DashboardPage() {
           {/* Circular Progress & Metrics */}
           <Card
             variant="elevated"
-            className="flex flex-col items-center justify-center space-y-4 p-8 text-center lg:col-span-1"
+            className="metallic-top-edge flex flex-col items-center justify-center space-y-5 p-8 text-center lg:col-span-1"
           >
-            <div className="flex items-center gap-2 text-xs font-bold tracking-wider text-slate-400 uppercase">
-              <TrendingUp className="h-4 w-4 text-blue-400" />
-              <span>Course Completion</span>
+            <div className="flex items-center gap-2 text-xs font-bold tracking-wider text-[var(--canvas-text-muted)] uppercase">
+              <TrendingUp className="h-4 w-4 text-[#7091E6]" />
+              <span>Curriculum Completion</span>
             </div>
 
             <ProgressRing
@@ -99,15 +99,15 @@ export default async function DashboardPage() {
               strokeWidth={10}
               variant={percentage === 100 ? "success" : "primary"}
             >
-              <span className="text-3xl font-extrabold tracking-tight text-white">
+              <span className="text-3xl font-black tracking-tight text-[var(--canvas-text)]">
                 {percentage}%
               </span>
-              <span className="text-[11px] font-medium text-slate-400">
+              <span className="text-[11px] font-semibold text-[var(--canvas-text-muted)]">
                 completed
               </span>
             </ProgressRing>
 
-            <div className="text-sm font-semibold text-blue-400">
+            <div className="text-sm font-bold text-[#7091E6]">
               {completedCount} of {totalCount} completed ({percentage}%)
             </div>
 
@@ -118,10 +118,10 @@ export default async function DashboardPage() {
               aria-valuemin={0}
               aria-valuemax={100}
               aria-label="Overall curriculum progress"
-              className="h-2 w-full overflow-hidden rounded-full border border-white/5 bg-slate-800/80"
+              className="h-2 w-full overflow-hidden rounded-full border border-white/10 bg-black/15 dark:bg-white/10"
             >
               <div
-                className="h-full rounded-full bg-gradient-to-r from-blue-600 to-indigo-500 transition-all duration-500"
+                className="h-full rounded-full bg-gradient-to-r from-[#3D52A0] via-[#7091E6] to-[#ADBBDA] transition-all duration-500"
                 style={{ width: `${percentage}%` }}
               />
             </div>
@@ -131,38 +131,40 @@ export default async function DashboardPage() {
           {nextLessonToStudy && (
             <Card
               variant="elevated"
-              className="flex flex-col justify-between border-blue-500/20 bg-gradient-to-br from-blue-950/30 to-slate-900/60 p-8 lg:col-span-2"
+              className="metallic-top-edge flex flex-col justify-between p-8 lg:col-span-2"
             >
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <Badge variant="primary" dot>
                     Resume Learning
                   </Badge>
-                  <span className="text-xs text-slate-400">
+                  <span className="text-xs font-semibold text-[var(--canvas-text-muted)]">
                     Lesson {nextLessonToStudy.order} of {totalCount}
                   </span>
                 </div>
 
-                <h2 className="font-heading text-2xl font-bold tracking-tight text-white">
+                <h2 className="font-heading text-2xl font-bold tracking-tight text-[var(--canvas-text)] sm:text-3xl">
                   {nextLessonToStudy.title}
                 </h2>
-                <p className="max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
+                <p className="max-w-xl text-sm leading-relaxed text-[var(--canvas-text-secondary)] sm:text-base">
                   {nextLessonToStudy.summary}
                 </p>
               </div>
 
               <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
-                <div className="flex items-center gap-4 text-xs text-slate-400">
+                <div className="flex items-center gap-4 text-xs font-semibold text-[var(--canvas-text-muted)]">
                   <span className="flex items-center gap-1.5">
                     <Clock className="h-4 w-4" />
                     {Math.max(
-                      3,
-                      Math.ceil(nextLessonToStudy.body.length / 500)
+                      2,
+                      Math.ceil(
+                        nextLessonToStudy.body.trim().split(/\s+/).length / 150
+                      )
                     )}{" "}
                     min read
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <Sparkles className="h-4 w-4 text-amber-400" />
+                    <Sparkles className="h-4 w-4 text-amber-500 dark:text-amber-400" />
                     Interactive Challenge Included
                   </span>
                 </div>
@@ -172,6 +174,7 @@ export default async function DashboardPage() {
                     variant="primary"
                     size="md"
                     rightIcon={<ArrowRight className="h-4 w-4" />}
+                    className="font-bold shadow-lg"
                   >
                     {progressMap.get(nextLessonToStudy.id) === "STARTED"
                       ? "Continue Lesson"
@@ -185,9 +188,9 @@ export default async function DashboardPage() {
 
         {/* Lessons Roadmap List */}
         <div className="space-y-6">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-blue-400" />
-            <h2 className="font-heading text-xl font-bold tracking-tight text-white">
+          <div className="flex items-center gap-2.5">
+            <BookOpen className="h-5 w-5 text-[#7091E6]" />
+            <h2 className="font-heading text-xl font-bold tracking-tight text-[var(--canvas-text)]">
               Curriculum Roadmap
             </h2>
           </div>
@@ -201,32 +204,32 @@ export default async function DashboardPage() {
               return (
                 <div
                   key={lesson.id}
-                  className="glass-panel flex flex-col justify-between gap-4 rounded-2xl border border-white/10 p-5 shadow-md transition-all duration-150 hover:border-white/20 sm:flex-row sm:items-center sm:p-6"
+                  className="glass-panel flex flex-col justify-between gap-4 rounded-2xl p-5 shadow-lg transition-all duration-150 hover:border-[#7091E6]/40 sm:flex-row sm:items-center sm:p-6"
                 >
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-xs font-semibold tracking-wider text-slate-400">
+                      <span className="font-mono text-xs font-bold tracking-wider text-[var(--canvas-text-muted)]">
                         Lesson {lesson.order}
                       </span>
                       {isCompleted ? (
-                        <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2.5 py-0.5 text-xs font-medium text-emerald-400">
-                          <CheckCircle2 className="h-3 w-3" />
+                        <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2.5 py-0.5 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                          <CheckCircle2 className="h-3.5 w-3.5" />
                           Completed
                         </span>
                       ) : isStarted ? (
-                        <span className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-500/15 px-2.5 py-0.5 text-xs font-medium text-amber-400">
+                        <span className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-500/15 px-2.5 py-0.5 text-xs font-bold text-amber-600 dark:text-amber-400">
                           In Progress
                         </span>
                       ) : (
-                        <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-800 px-2.5 py-0.5 text-xs font-medium text-slate-400">
+                        <span className="inline-flex items-center rounded-full border border-white/10 bg-white/10 px-2.5 py-0.5 text-xs font-medium text-[var(--canvas-text-muted)] dark:bg-black/30">
                           Not Started
                         </span>
                       )}
                     </div>
-                    <h3 className="text-lg font-bold text-white">
+                    <h3 className="font-heading text-lg font-bold text-[var(--canvas-text)]">
                       {lesson.title}
                     </h3>
-                    <p className="max-w-2xl text-xs text-slate-300 sm:text-sm">
+                    <p className="max-w-2xl text-xs leading-relaxed text-[var(--canvas-text-secondary)] sm:text-sm">
                       {lesson.summary}
                     </p>
                   </div>
@@ -236,6 +239,7 @@ export default async function DashboardPage() {
                       <Button
                         variant={isCompleted ? "outline" : "primary"}
                         size="sm"
+                        className="font-semibold"
                       >
                         {isCompleted
                           ? "Review Lesson"

@@ -21,7 +21,7 @@ export function SectionHeading({
 
   return (
     <div
-      className={`flex flex-col gap-2 ${alignClass} ${className}`}
+      className={`flex flex-col gap-2.5 ${alignClass} ${className}`}
       {...props}
     >
       {badge && (
@@ -29,11 +29,11 @@ export function SectionHeading({
           {badge}
         </Badge>
       )}
-      <h2 className="text-2xl font-bold tracking-tight text-slate-100 sm:text-3xl">
+      <h2 className="font-heading text-2xl font-extrabold tracking-tight text-[var(--canvas-text)] sm:text-3xl">
         {title}
       </h2>
       {description && (
-        <p className="max-w-2xl text-sm text-slate-400 sm:text-base">
+        <p className="max-w-2xl text-sm leading-relaxed text-[var(--canvas-text-secondary)] sm:text-base">
           {description}
         </p>
       )}

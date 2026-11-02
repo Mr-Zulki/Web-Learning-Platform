@@ -10,24 +10,27 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 const variantStyles: Record<BadgeVariant, { badge: string; dot: string }> = {
   neutral: {
-    badge: "bg-slate-800/80 text-slate-300 border-white/10",
-    dot: "bg-slate-400",
+    badge: "bg-[#8697C4]/15 text-[var(--canvas-text)] border-[#8697C4]/30",
+    dot: "bg-[#8697C4]",
   },
   primary: {
-    badge: "bg-blue-500/15 text-blue-400 border-blue-500/30",
-    dot: "bg-blue-400",
+    badge:
+      "bg-[#3D52A0]/15 text-[#3D52A0] dark:text-[#ADBBDA] border-[#7091E6]/40",
+    dot: "bg-[#7091E6]",
   },
   success: {
-    badge: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-    dot: "bg-emerald-400",
+    badge:
+      "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30",
+    dot: "bg-emerald-500",
   },
   warning: {
-    badge: "bg-amber-500/15 text-amber-400 border-amber-500/30",
-    dot: "bg-amber-400",
+    badge:
+      "bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30",
+    dot: "bg-amber-500",
   },
   error: {
-    badge: "bg-red-500/15 text-red-400 border-red-500/30",
-    dot: "bg-red-400",
+    badge: "bg-red-500/15 text-red-700 dark:text-red-400 border-red-500/30",
+    dot: "bg-red-500",
   },
 };
 
@@ -42,7 +45,7 @@ export function Badge({
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium backdrop-blur-sm select-none ${styles.badge} ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold backdrop-blur-sm select-none ${styles.badge} ${className}`}
       {...props}
     >
       {dot && (

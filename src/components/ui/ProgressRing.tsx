@@ -11,7 +11,7 @@ export interface ProgressRingProps extends React.SVGAttributes<SVGSVGElement> {
 }
 
 const colorMap = {
-  primary: "text-blue-500",
+  primary: "text-[#7091E6]",
   success: "text-emerald-500",
   warning: "text-amber-500",
 };
@@ -56,7 +56,7 @@ export function ProgressRing({
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          className="text-slate-800"
+          className="text-black/15 dark:text-white/10"
           strokeWidth={strokeWidth}
           stroke="currentColor"
           fill="transparent"
@@ -76,7 +76,7 @@ export function ProgressRing({
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         {children ?? (
-          <span className="text-xl font-bold tracking-tight text-slate-100">
+          <span className="text-xl font-extrabold tracking-tight text-[var(--canvas-text)]">
             {percentage}%
           </span>
         )}

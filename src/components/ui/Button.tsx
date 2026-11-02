@@ -16,13 +16,13 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white shadow-lg shadow-blue-500/20 border border-blue-400/30",
+    "bg-[#3D52A0] hover:bg-[#7091E6] active:bg-[#324484] text-[#EDE8F5] shadow-lg shadow-[#3D52A0]/25 border border-white/20",
   secondary:
-    "glass-panel text-slate-100 hover:bg-white/10 active:bg-white/5 border-white/10",
+    "glass-panel text-[var(--canvas-text)] hover:bg-white/15 active:bg-white/5 border-[var(--border-glass)]",
   outline:
-    "border border-white/20 hover:border-white/40 hover:bg-white/5 text-slate-200 active:bg-white/10",
+    "border border-[var(--border-glass-strong)] hover:border-[#7091E6] hover:bg-white/10 text-[var(--canvas-text)] active:bg-white/5",
   ghost:
-    "text-slate-300 hover:text-white hover:bg-white/10 active:bg-white/5 border-transparent",
+    "text-[var(--canvas-text-secondary)] hover:text-[var(--canvas-text)] hover:bg-white/10 active:bg-white/5 border-transparent",
   danger:
     "bg-red-600 hover:bg-red-500 active:bg-red-700 text-white shadow-lg shadow-red-500/20 border border-red-400/30",
   success:
@@ -30,8 +30,8 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "text-xs px-3 py-1.5 rounded-md gap-1.5",
-  md: "text-sm px-4 py-2 rounded-lg gap-2",
+  sm: "text-xs px-3 py-1.5 rounded-lg gap-1.5",
+  md: "text-sm px-4 py-2 rounded-xl gap-2",
   lg: "text-base px-5 py-2.5 rounded-xl gap-2.5 font-medium",
 };
 
@@ -54,7 +54,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         disabled={disabled || isLoading}
-        className={`inline-flex items-center justify-center font-medium transition-all duration-150 select-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+        className={`inline-flex items-center justify-center font-medium transition-all duration-150 select-none focus-visible:ring-2 focus-visible:ring-[#7091E6] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
         {...props}
       >
         {isLoading ? (

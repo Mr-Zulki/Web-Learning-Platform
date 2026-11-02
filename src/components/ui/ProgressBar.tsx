@@ -9,9 +9,9 @@ export interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const colorMap = {
-  primary: "bg-gradient-to-r from-blue-600 to-indigo-500",
-  success: "bg-gradient-to-r from-emerald-500 to-teal-400",
-  warning: "bg-gradient-to-r from-amber-500 to-orange-400",
+  primary: "bg-gradient-to-r from-[#3D52A0] via-[#7091E6] to-[#ADBBDA]",
+  success: "bg-gradient-to-r from-emerald-600 to-teal-400",
+  warning: "bg-gradient-to-r from-amber-600 to-orange-400",
 };
 
 const sizeMap = {
@@ -42,7 +42,7 @@ export function ProgressBar({
         aria-valuemin={0}
         aria-valuemax={max}
         aria-label={`Progress: ${percentage}%`}
-        className={`w-full overflow-hidden rounded-full border border-white/5 bg-slate-800/80 ${sizeMap[size]}`}
+        className={`w-full overflow-hidden rounded-full border border-white/10 bg-black/15 dark:bg-white/10 ${sizeMap[size]}`}
       >
         <div
           className={`h-full rounded-full transition-all duration-300 ease-out ${colorMap[variant]}`}
@@ -50,7 +50,7 @@ export function ProgressBar({
         />
       </div>
       {showLabel && (
-        <div className="mt-1 text-right text-xs font-medium text-slate-400">
+        <div className="mt-1.5 text-right text-xs font-semibold text-[var(--canvas-text-muted)]">
           {percentage}%
         </div>
       )}

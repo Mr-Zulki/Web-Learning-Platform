@@ -16,11 +16,11 @@ export default function LessonsError({
 
   return (
     <main className="flex min-h-[60vh] flex-col items-center justify-center p-8 text-center">
-      <div className="max-w-md space-y-4">
-        <h1 className="text-3xl font-extrabold text-red-600 dark:text-red-400">
+      <div className="glass-panel-elevated metallic-top-edge max-w-md space-y-4 rounded-2xl border border-[var(--border-glass)] p-8">
+        <h1 className="font-heading text-3xl font-extrabold text-red-600 dark:text-red-400">
           Something went wrong
         </h1>
-        <p className="text-slate-600 dark:text-slate-400">
+        <p className="text-sm leading-relaxed text-[var(--canvas-text-secondary)]">
           An error occurred while loading lesson content. Please try again or
           return to the home page.
         </p>
@@ -28,13 +28,13 @@ export default function LessonsError({
           <button
             type="button"
             onClick={() => reset()}
-            className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            className="rounded-xl bg-[#3D52A0] px-5 py-2.5 text-sm font-semibold text-[#EDE8F5] shadow-lg shadow-[#3D52A0]/25 transition hover:bg-[#7091E6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#3D52A0]"
           >
             Try again
           </button>
           <Link
             href="/"
-            className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+            className="glass-panel rounded-xl border border-[var(--border-glass)] px-5 py-2.5 text-sm font-semibold text-[var(--canvas-text)] transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#3D52A0]"
           >
             Go to Home
           </Link>
